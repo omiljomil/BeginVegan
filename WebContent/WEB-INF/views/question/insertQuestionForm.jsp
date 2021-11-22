@@ -1,5 +1,10 @@
+
+<%@page import="question.model.vo.Question"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+		Question q = (Question)request.getAttribute("q");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,29 +79,38 @@ h3 {
 			</div>
 
 		</div>
+		<form action="<%= request.getContextPath()%>/insertQuestion.qs" method="post">
 		<div class="insertTable1">
 			<table>
 				<tr>
 					<td>말머리</td>
-					<td>제품</td>
+					<td><select name="brackets" id="brackets">
+						<option value="(주문)">주문</option>
+						<option value="(회원 정보)">회원 정보</option>
+						<option value="(제품)">제품</option>
+						<option value="(기타)">기타</option>
+					</select></td>
 
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td colspan="2" width="260px;"><input type="text" /></td>
+					<td colspan="2" width="260px;"><input type="text" name="title"/></td>
 
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td colspan="2"><input type="text" /></td>
+					<td colspan="2"><input type="text"  value="<%= loginUser.getUserId() %>" disabled/>
+									<input type="hidden" name="userId" value="<%= loginUser.getUserId()%>"/></td>
 				</tr>
 			</table>
 		</div>
 		<h3 style="margin-top: 20px;">문의 작성</h3>
 		<div class="QuestionTextArea">
-			<textarea name="questionContent" id="questionContent" cols="140"
-				rows="13"></textarea>
+			<textarea name="questionContent" id="questionContent" cols="140"rows="13"></textarea>
 		</div>
+		<div><input type="submit" value="등록하기"/></div>
+		</form>
+		<!-- 
 		<div class="quesImgArea">
 			<label for="quesImg"> -이미지 등록- </label>
 
@@ -107,14 +121,14 @@ h3 {
 			<input type="file" id="quesImg" name="quesImg" />
 
 		</div>
-
+ -->
 
 
 
 	</div>
 </body>
 <script>
-
+/*
 	$('#quesImg').change(function(){
 			
 		if(this.files && this.files[0]){
@@ -125,9 +139,8 @@ h3 {
 			reader.readAsDataURL(this.files[0]);
 		}
 	});
-</script>
+	
 
-<script>
 	$(function(){
 		$("#quesImg").hide();
 		
@@ -135,5 +148,9 @@ h3 {
 			$("#quesImg").click();
 		});
 	});
+	*/
+	
+	
 	</script>
+	
 </html>
