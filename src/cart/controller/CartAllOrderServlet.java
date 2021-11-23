@@ -41,9 +41,6 @@ public class CartAllOrderServlet extends HttpServlet {
 		
 		String page = "";
 		
-		System.out.println(userId);
-		System.out.println(list);
-		
 		if(list != null) {
 			request.setAttribute("list", list);
 			page = "WEB-INF/views/paiement/paiementPage.jsp";

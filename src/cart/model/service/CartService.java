@@ -17,7 +17,7 @@ public class CartService {
 		int result = cDAO.insertCart(conn, cart);
 //		int result2 = cDAO.insertOption(conn, cart, option, count1, count2, count3);
 		
-		if(result > 0/* && result2 > 0*/) {
+		if(result > 0/* && result2 > 0 */) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -38,10 +38,10 @@ public class CartService {
 		return list;
 	}
 	
-	public Cart cartOption(Cart cart) {
+	public Cart cartOptionList(Cart cart) {
 		Connection conn = getConnection();
 		
-		Cart c = cDAO.cartOption(conn, cart);
+		Cart c = cDAO.cartOptionList(conn, cart);
 		
 		close(conn);
 		
@@ -96,10 +96,10 @@ public class CartService {
 //		return result;
 //	}
 
-	public int cartCheckDelete(String userId, String[] carts) {
+	public int cartSelectDelete(String userId, String[] carts) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.cartCheckDelete(conn, userId, carts);
+		int result = cDAO.cartSelectDelete(conn, userId, carts);
 		
 		if(result > 0) {
 			commit(conn);
@@ -174,10 +174,10 @@ public class CartService {
 		return list;
 	}
 	
-	public ArrayList<Cart> cartCheckOrder(String userId, String[] carts) {
+	public ArrayList<Cart> cartSelectOrder(String userId, String[] carts) {
 		Connection conn = getConnection();
 		
-		ArrayList<Cart> list = cDAO.cartCheckOrder(conn, userId, carts);
+		ArrayList<Cart> list = cDAO.cartSelectOrder(conn, userId, carts);
 		
 		close(conn);
 		

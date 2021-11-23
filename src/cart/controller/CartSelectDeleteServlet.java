@@ -15,16 +15,16 @@ import cart.model.service.CartService;
 import cart.model.vo.Cart;
 
 /**
- * Servlet implementation class OptionChangeServlet
+ * Servlet implementation class CartCheckDeleteServlet
  */
-@WebServlet("/cartOptionChangeForm.me")
-public class CartOptionChangeListServlet extends HttpServlet {
+@WebServlet("/cartSelectDelete.me")
+public class CartSelectDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOptionChangeListServlet() {
+    public CartSelectDeleteServlet() {
         super();
     }
 
@@ -37,25 +37,16 @@ public class CartOptionChangeListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int cartId = Integer.parseInt(request.getParameter("cartNo"));
+		String[] carts = request.getParameterValues("one");
 		
-		Cart cart = new Cart();
-		cart.setUserId(userId);
-		cart.setCartNo(cartId);
+		int result = new CartService().cartSelectDelete(userId, carts);
 		
-		Cart c = new CartService().cartOptionList(cart);
-		
-		String page = "";
-		
-		if(c != null) {
-			page = "WEB-INF/views/cart/cartOptionList.jsp";
-			request.setAttribute("c", c);
+		if(result > 0) {
+			response.sendRedirect("cartList.me");
 		} else {
-			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 옵션 조회 실패");
+			request.setAttribute("msg", "선택 상품 삭제 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
-		
-		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**
@@ -64,5 +55,4 @@ public class CartOptionChangeListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
