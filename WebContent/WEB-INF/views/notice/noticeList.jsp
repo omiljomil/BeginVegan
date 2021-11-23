@@ -45,8 +45,8 @@ section {
 	position: absolute;
 	padding-left: 10px;
 	width: 500px;
-	left: 550px;
-	font-size: 26px;
+	left: 480px;
+	font-size: 30px;
 }
 
 #route a {
@@ -59,7 +59,7 @@ section {
 }
 
 #route a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 	color: yellowgreen;
 }
 
@@ -68,7 +68,7 @@ section {
 	width: 140px;
 	height: 49px;
 	text-align: center;
-	font-size: 18px;
+	font-size: 20px;
 }
 
 #search {
@@ -129,7 +129,7 @@ section {
 #paising {
 	position: absolute;
 	top: 1270px;
-	left: 900px;
+	left: 870px;
 	display: flex;
 	text-align: center;
 	border-radius: 10px;
