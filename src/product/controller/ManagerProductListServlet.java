@@ -58,7 +58,7 @@ public class ManagerProductListServlet extends HttpServlet {
 		
 		//3. boardLimit와 pageLimit설정
 		pageLimit = 10;
-		boardLimit = 10;
+		boardLimit = 5;
 		
 		//4. 각 변수 계산식 작성
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
