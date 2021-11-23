@@ -168,7 +168,7 @@ section {
 			</div>
 		</div>
 
-		<div id="search">
+		<!-- <div id="search">
 			<form action="#" method="#">
 				<div id="search-box-bind">
 					<select name="search-box-option" id="search-box-option">
@@ -178,8 +178,8 @@ section {
 						<option value="">글 내용</option>
 					</select> <input type="text" id="search-box">
 			</form>
-		</div>
-		</div>
+		</div> -->
+		<!-- </div> -->
 	</section>
 
 

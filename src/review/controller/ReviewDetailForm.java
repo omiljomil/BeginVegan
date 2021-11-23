@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import review.model.service.ReviewService;
+import review.model.vo.Comment;
 import review.model.vo.Photo;
 import review.model.vo.Review;
 
@@ -36,10 +37,12 @@ public class ReviewDetailForm extends HttpServlet {
 		int bId=Integer.parseInt(request.getParameter("bId"));
 		  
 		  ReviewService service=new ReviewService();
+		  ArrayList<Comment>cList=service.selectCList(bId);
 		  Review  review= service.selectReview(bId);
 		  ArrayList<Photo> fileList=service.selectPhoto(bId);
 		  String page=null;
 		  if(fileList!=null) {
+			  request.setAttribute("cList", cList);
 			  request.setAttribute("review", review);
 			  request.setAttribute("fileList", fileList);
 			  page="WEB-INF/views/review/reviewDetail.jsp";

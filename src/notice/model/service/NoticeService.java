@@ -77,4 +77,10 @@ public class NoticeService {
 		close(conn);
 		return result;
 	}
+	public ArrayList<Notice> selectNTitle() {
+		Connection conn=getConnection();
+		ArrayList<Notice>list=nDAO.selectNTitle(conn);
+        close(conn);
+		return list;
+	}
 }	

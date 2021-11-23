@@ -15,6 +15,7 @@ import java.util.Properties;
 
 
 import page.PageInfo;
+import review.model.vo.Comment;
 import review.model.vo.Photo;
 import review.model.vo.Review;
 
@@ -298,8 +299,135 @@ private Properties prop=null;
 		}
 		return result;
 	}
+	public ArrayList<Comment> selectCList(Connection conn, int bId) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		ArrayList<Comment>list=null;
+		
+		String query=prop.getProperty("selectCList");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset=pstmt.executeQuery();
+		    list=new ArrayList<Comment>();
+			while(rset.next()) {
+				list.add(new Comment(rset.getInt("RE_COMT_NO"),
+						             rset.getString("RE_CONT"),
+						             rset.getString("USER_ID"),
+						             rset.getString("USER_NAME"),
+						             rset.getInt("RE_NO"),
+						             rset.getDate("ENROLL_DATE"),
+						             rset.getDate("MODIFY_DATE")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 
-	
-	
+	public int inserComment(Connection conn, Comment c) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("insertComment");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, c.getCommentCont());
+			pstmt.setString(2, c.getUserId());
+			pstmt.setInt(3, c.getReviewNo());
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteComment(Connection conn, Comment c) {
+	    PreparedStatement pstmt=null;
+	    int result=0;
+	    
+	    String query=prop.getProperty("deleteComment");
+	    
+	    try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, c.getReviewNo());
+			pstmt.setInt(2, c.getCommentNo());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Review> selectRTitle(Connection conn) {
+		Statement stmt=null;
+		ResultSet rset=null;
+		ArrayList<Review>rList=null;
+		
+		String query=prop.getProperty("selectRTitle");
+		
+		try {
+			stmt=conn.createStatement();
+			rList=new ArrayList<Review>();
+			rset=stmt.executeQuery(query);
+			while(rset.next()) {
+			rList.add(new Review(rset.getInt("RE_NO"),
+							     rset.getString("RE_TITLE"),
+							     rset.getString("RE_CONT"),
+							     rset.getString("USER_ID"),
+							     rset.getString("USER_NAME"),
+							     rset.getDate("ENROLL_DATE"),
+							     rset.getDate("MODIFY_DATE"),
+							     rset.getString("STATUS")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		return rList;
+	}
+
+	public ArrayList<Photo> selectFTitle(Connection conn) {
+		Statement stmt=null;
+		ResultSet rset=null;
+		ArrayList<Photo>fList=null;
+		
+		String query=prop.getProperty("selectFTitle");
+		
+		try {
+			stmt=conn.createStatement();
+			fList=new ArrayList<Photo>();
+			rset=stmt.executeQuery(query);
+			while(rset.next()) {
+				Photo p=new Photo();
+		    	 p.setImgNo(rset.getInt("IMG_NO"));
+		    	 p.setReviewNo(rset.getInt("RE_NO"));
+		    	 p.setImgName(rset.getNString("IMG_NAME"));
+		    	 p.setImgChangeName(rset.getString("IMG_CHANGE_NAME"));
+		    	 p.setFilePath(rset.getString("PATH"));
+		    	 p.setFileLevel(rset.getInt("FILE_LEVEL"));
+		    	 p.setStatus(rset.getString("STATUS"));
+		    	 fList.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		return fList;
+	}
 	
 }	
