@@ -1,8 +1,6 @@
 package cart.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,25 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cart.model.service.CartService;
-import cart.model.vo.Cart;
 import User.model.vo.User;
-
-import product.model.service.ProductService;
-import product.model.vo.Photo;
-import product.model.vo.Product;
+import cart.model.service.CartService;
 
 /**
- * Servlet implementation class CartListServlet
+ * Servlet implementation class CartAmountChangeServlet
  */
-@WebServlet("/cartList.me")
-public class CartListServlet extends HttpServlet {
+@WebServlet("/amountUpdate.me")
+public class CartAmountUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartListServlet() {
+    public CartAmountUpdateServlet() {
         super();
     }
 
@@ -41,24 +34,17 @@ public class CartListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		ArrayList<Cart> list = new CartService().cartList(userId);
+		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
 		
-		ProductService pService = new ProductService();
-		ArrayList<Photo> fList = pService.selectFList();
+		int result = new CartService().amountUpdate(userId, cartNo, amount);
 		
-		String page = null;
-		
-		if(list != null) {
-			page = "WEB-INF/views/cart/cartList.jsp";
-			request.setAttribute("list", list);
-			request.setAttribute("fList", fList);
-			session.getAttribute("userId");
+		if(result > 0) {
+			response.sendRedirect("cartList.me");
 		} else {
-			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 조회 실패");
+			request.setAttribute("msg", "상품 수량 변경 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
-		
-		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**

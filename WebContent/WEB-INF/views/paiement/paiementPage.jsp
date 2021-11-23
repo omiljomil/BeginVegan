@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart" %>
+<% ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list"); %>
+<%
+	int result = 0;
+	for(int i = 0; i < list.size(); i++) {
+		result += list.get(i).getTotal();
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -231,17 +238,19 @@ input {
 						<td style="width: 130px;">배송비</td>
 						<td style="width: 130px;">합계</td>
 					</tr>
-					<tr>
-						<td style="height: 130px; border-bottom: 1px solid #E2E2E2">이미지</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">상품 정보</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">판매가</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">수량</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">배송비</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">합계</td>
-					</tr>
+					<% for(int i = 0; i < list.size(); i++) { %>
+						<tr>
+							<td style="height: 130px; border-bottom: 1px solid #E2E2E2">이미지</td>
+							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getProdName() %></td>
+							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getPrice() %></td>
+							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getAmount() %></td>
+							<td style="height: 130px; border: 1px solid #E2E2E2">0원</td>
+							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getTotal() %></td>
+						</tr>
+					<% } %>
 					<tr>
 						<td colspan="5"></td>
-						<td>합계 :</td>
+						<td>합계 : <%= result %></td>
 					</tr>
 				</table>
 			</div>
@@ -416,8 +425,8 @@ input {
 				</table>
 
 			</div>
+		</form>
 	</div>
-	</form>
 	<script>
 			$('#all_orderBtn2').on('click', function(){
 				window.open('realPaiement.me', 'order', 'width=900, height=800');

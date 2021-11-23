@@ -37,19 +37,31 @@ public class InsertCartServlet extends HttpServlet {
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int count1 = (request.getParameter("numBox1") == null ? 0 : Integer.parseInt(request.getParameter("numBox1")));
+		int count2 = (request.getParameter("numBox2") == null ? 0 : Integer.parseInt(request.getParameter("numBox2")));
+		int count3 = (request.getParameter("numBox3") == null ? 0 : Integer.parseInt(request.getParameter("numBox3")));
 		int amount = Integer.parseInt(request.getParameter("numBox"));
+		int count = new CartService().countCart(userId, pNo);
+		String[] option = request.getParameterValues("optionName");
+		
+		int result = 0;
 		
 		Cart cart = new Cart();
 		cart.setAmount(amount);
 		cart.setUserId(userId);
 		cart.setProdNo(pNo);
 		
-		int result = new CartService().insertCart(cart);
+		if(count == 0) {
+			result = new CartService().insertCart(cart, option, count1, count2, count3);
+			
+		} else {
+			result = new CartService().updateCart(cart);
+		}
 		
 		if(result > 0) {
 			response.sendRedirect("cartList.me");
 		} else {
-			request.setAttribute("msg", "장바구니 담기 실패");
+			request.setAttribute("msg", "장바구니 등록 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
 	}
