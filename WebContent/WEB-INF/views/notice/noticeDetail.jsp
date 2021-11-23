@@ -129,15 +129,15 @@ section {
 #go-button {
 	position: relative;
 	width: 80px;
-	left: 800px;
-	top: 300px;
+	left: 750px;
+	top: 150px;
 }
 
 #delete-button, #modify-button, #go-button {
 	text-decoration: none;
 	font-size: 18px;
 	font-weight: 800;
-	color: gray;
+	color: black;
 }
 
 #delete-button:hover, #modify-button:hover, #go-button:hover {
@@ -229,7 +229,7 @@ section {
 		</form>
 
 
-		<div id="next-or-back">
+	<!-- 	<div id="next-or-back">
 
 			<table>
 				<tr>
@@ -242,7 +242,7 @@ section {
 					<th><a href="#"></a></th>
 				</tr>
 			</table>
-		</div>
+		</div> -->
 
 		<button type="button" id="go-button"
 			onclick="location.href='<%=request.getContextPath()%>/noticeList.me'">목록</button>

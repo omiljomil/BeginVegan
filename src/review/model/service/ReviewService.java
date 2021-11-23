@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import page.PageInfo;
 import review.model.dao.ReviewDAO;
+import review.model.vo.Comment;
 import review.model.vo.Photo;
 import review.model.vo.Review;
 
@@ -95,6 +96,66 @@ public class ReviewService {
 		close(conn);
 		return result1+result2;
 	}
+	
+	public ArrayList<Comment> selectCList(int bId) {
+		Connection conn=getConnection();
+		ArrayList<Comment>list=rDAO.selectCList(conn,bId);
+		
+		close(conn);
+		return list;
+	}
+
+
+	public ArrayList<Comment> insertComment(Comment c) {
+		Connection conn=getConnection();
+		int result=rDAO.inserComment(conn,c);
+		
+		ArrayList<Comment>list=null;
+		if(result>0){
+			list=rDAO.selectCList(conn, c.getReviewNo());
+		 if(list!=null) {
+			 commit(conn);
+		 }else {
+			 rollback(conn);
+		 }
+	}else {
+		rollback(conn);
+	}
+		close(conn);
+		return list;
+	}
+
+
+	public int deleteComment(Comment c) {
+		Connection conn=getConnection();
+		int result=rDAO.deleteComment(conn,c);
+		 if(result>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			close(conn);
+		
+		return result;
+	}
+
+
+	public ArrayList<Review> selectRTitle() {
+		Connection conn=getConnection();
+	    ArrayList<Review>rList=rDAO.selectRTitle(conn);
+	    close(conn);
+		return rList;
+	}
+	
+	public ArrayList<Photo> selectFTitle() {
+		Connection conn=getConnection();
+	    ArrayList<Photo>fList=rDAO.selectFTitle(conn);
+	    close(conn);
+		return fList;	
+	}
+
+	
+	
 
 
 	

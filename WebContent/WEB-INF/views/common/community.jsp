@@ -1,29 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-<title>커뮤니티 페이지</title>
-<style>
-* {
-	margin: 0;
-	padding: 0;
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>커뮤니티 페이지</title>
+    <style>
+    
+    * {
+  margin: 0;
+  padding: 0;
 }
 
-body {
-	margin: 0 auto;
-	font-family: sans-serif;
+ body {
+  margin: 0 auto;
+  font-family: sans-serif;
 }
 
 section a {
-	color: black;
-	text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 /* hearder부분 */
@@ -32,298 +31,296 @@ section a {
 
 /*커뮤니티 제목부분*/
 #comunity-bar {
-	position: absolute;
-	top: 330px;
-	left: 850px;
+  position: absolute;
+  top: 330px;
+  left: 850px;
 }
 
 #comunity-title {
-	font-size: 60px;
+  font-size: 60px;
 }
 
 #route {
-	display: inline-flex;
-	position: relative;
-	font-size: 28px;
-	left: 300px;
+  display: inline-flex;
+  position: relative;
+  font-size: 28px;
+  left: 300px;
 }
 
-#route, #route a {
-	color: #888;
+#route,
+#route a {
+  color: #888;
 }
-
 #route span {
-	padding-left: 20px;
+  padding-left: 20px;
 }
 
 #route a:hover {
-	text-decoration: underline;
-	color: yellowgreen;
+  text-decoration: underline;
+  color: yellowgreen;
 }
 
 /*여기까지 타이틀과 경로부분*/
 
 /*문의 사항*/
 #want-list {
-	font-size: 25px;
-	position: absolute;
-	left: 250px;
-	top: 560px;
+  font-size: 25px;
+  position: absolute;
+  left: 250px;
+  top: 560px;
 }
-
 #want-list li:hover {
-	cursor: pointer;
-	text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
-
 #want-list li {
-	padding-bottom: 15px;
+  padding-bottom: 15px;
 }
-
 #want-list div {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-
+#want-list ul{
+padding-left:0px;
+}
 #want-button {
-	font-weight: 700;
-	font-size: 15px;
-	border: 1px solid darkgray;
-	width: 100px;
-	height: 30px;
-	position: absolute;
-	left: 380px;
-	top: 10px;
-	background-color: darkgray;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid darkgray;
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  left: 380px;
+  top: 10px;
+  background-color: darkgray;
 }
-
 #want-more-button {
-	font-weight: 700;
-	font-size: 15px;
-	border: 1px solid darkgray;
-	width: 100px;
-	height: 30px;
-	position: absolute;
-	left: 490px;
-	top: 10px;
-	background-color: darkgray;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid darkgray;
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  left: 490px;
+  top: 10px;
+  background-color: darkgray;
 }
 
 #want-list-title {
-	width: 362px;
-	position: relative;
-	background-color: gray;
-	color: white;
-	text-align: center;
-	border: 2px solid gray;
-	border-radius: 5px;
+  width: 362px;
+  position: relative;
+  background-color: gray;
+  color: white;
+  text-align: center;
+  border: 2px solid gray;
+  border-radius: 5px;
 }
 
 /*문의사항 리스트 클릭했을때 나올 메시지박스*/
+
 .want-list-answer {
-	display: none;
-	list-style: none;
-	width: 400px;
-	height: 90px;
-	border: 2px solid gray;
-	border-radius: 5px;
-	text-align: center;
-	margin-bottom: 20px;
+  display: none;
+  list-style: none;
+  width: 400px;
+  height: 90px;
+  border: 2px solid gray;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 /*여기까지 문의사항*/
 
 /*공지 사항*/
 #notice-list {
-	position: absolute;
-	font-size: 25px;
-	left: 1220px;
-	top: 560px;
+  position: absolute;
+  font-size: 25px;
+  left: 1220px;
+  top: 560px;
 }
 
 #notice-more-button {
-	font-weight: 700;
-	font-size: 15px;
-	position: absolute;
-	left: 105%;
-	top: 10px;
-	width: 100px;
-	height: 30px;
-	background-color: darkgray;
-	border: 1px solid darkgray;
+  font-weight: 700;
+  font-size: 15px;
+  position: absolute;
+  left: 105%;
+  top: 10px;
+  width: 100px;
+  height: 30px;
+  background-color: darkgray;
+  border: 1px solid darkgray;
+}
+#notice-write-button {
+  font-weight: 700;
+  font-size: 15px;
+  position: absolute;
+  left: 135%;
+  top: 10px;
+  width: 100px;
+  height: 30px;
+  background-color: darkgray;
+  border: 1px solid darkgray;
 }
 
-#notice-write-button {
-	font-weight: 700;
-	font-size: 15px;
-	position: absolute;
-	left: 135%;
-	top: 10px;
-	width: 100px;
-	height: 30px;
-	background-color: darkgray;
-	border: 1px solid darkgray;
-}
+
 
 #notice-list li {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
+  list-style: none;
+  width:370px;
 }
-
-#notice-list li:hover {
-	cursor: pointer;
-	text-decoration: underline;
+#notice-list li a:hover {
+  color:black;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 #notice-list-title {
-	background-color: grey;
-	color: white;
-	margin-bottom: 20px;
-	width: 350px;
-	border: 2px solid gray;
-	border-radius: 5px;
-	text-align: center;
+  background-color: grey;
+  color: white;
+  margin-bottom: 20px;
+  width: 350px;
+  border: 2px solid gray;
+  border-radius: 5px;
+  text-align: center;
 }
 
+#notice-h2{
+ width:370px;
+}
+
+/*공지사항 부분  */
+
+
 #review {
-	position: absolute;
-	top: 1080px;
-	left: 40px;
-	margin-top: 50px;
+  position: absolute;
+  top: 1080px;
+  left: 40px;
+  margin-top: 50px;
 }
 
 #review-titlebar {
-	position: absolute;
-	left: 740px;
+  position: absolute;
+  left: 740px;
 }
-
 #review-title {
-	width: 340px;
-	background-color: gray;
-	text-align: center;
-	color: white;
-	font-size: 28px;
-	border: 1px solid gray;
-	border-radius: 5px;
+  width: 340px;
+  background-color: gray;
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
-
 #review-button {
-	font-weight: 700;
-	font-size: 15px;
-	position: absolute;
-	left: 365px;
-	top: 10px;
-	width: 100px;
-	height: 30px;
-	background-color: darkgray;
-	border: 1px solid darkgray;
+  font-weight: 700;
+  font-size: 15px;
+  position: absolute;
+  left: 365px;
+  top: 10px;
+  width: 100px;
+  height: 30px;
+  background-color: darkgray;
+  border: 1px solid darkgray;
 }
 
 #review-list {
-	position: absolute;
-	display: flex;
-	left: 15px;
-	top: 150px;
+  position: absolute;
+  width:900px;
+  margin-left: 110px;
+  top: 150px;
+  display:flex;
+}
+#review-list h2{
+ width:500px;
+ margin-left: 560px;
+ margin-right: 0px, auto;
 }
 
 .review-list-box {
-	border: 2px solid gray;
-	margin-left: 110px;
-	width: 300px;
-	height: 336px;
+  border: 2px solid gray;
+  margin-left: 110px;
+  width: 300px;
+  height: 336px;
 }
-
 .review-list-innerbox {
-	border-bottom: 2px solid gray;
-	width: 300px;
-	height: 200px;
+  border-bottom: 2px solid gray;
+  width: 300px;
+  height: 200px;
 }
-
 .review-list-innerbox a {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: contain;
-	display: block;
-	width: 290px;
-	height: 200px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  width: 290px;
+  height:198px;
 }
-
 .review-list-text {
-	justify-content: center;
-	line-height: 30px;
-	text-align: center;
+  justify-content: center;
+  line-height: 30px;
+  text-align: center;
 }
-
 #review-more-button {
-	font-weight: 700;
-	position: absolute;
-	font-size: 18px;
-	top: 530px;
-	left: 1700px;
-	width: 150px;
-	height: 40px;
-	background-color: darkgray;
-	border: 1px solid darkgray;
+  font-weight: 700;
+  position: absolute;
+  font-size: 18px;
+  top: 530px;
+  left: 1700px;
+  width: 150px;
+  height: 40px;
+  background-color: darkgray;
+  border: 1px solid darkgray;
 }
-
-button:hover {
-	cursor: pointer;
+.review-list-box:hover,
+button:hover{
+cursor: pointer;
 }
-
-#review-button:hover, #notice-more-button:hover, #notice-write-button:hover,
-	#want-more-button:hover, #want-write-button:hover, #want-button:hover:hover,
-	#review-more-button:hover {
-	color: gray;
-}
-</style>
+#review-button:hover,
+#notice-more-button:hover,
+#notice-write-button:hover,
+#want-more-button:hover,
+#want-write-button:hover,
+#want-button:hover:hover,
+#review-more-button:hover {
+  color: gray;
+}  
+  </style>
 </head>
 <body>
-
-
-	<%@include file="./header.jsp"%>
-	<!--  메인 페이지  -->
-
-	<form action="#" method="post">
-		<section id="comunity-bar">
-			<span id="comunity-title"> 커뮤니티
-				<div id="route">
-					<span><a href="#"
-						onclick="location.href='<%=request.getContextPath() %>'">홈</a></span> <span
-						id="pointer">--></span> <span><a href="#"
-						onclick="location.href='<%=request.getContextPath()%>/community.me'">커뮤니티</a></span>
-				</div>
-			</span>
-		</section>
-
-
-
-
-		<section id="want-list">
-			<button type="button" id="want-button">문의하기</button>
-			<button type="button" id="want-more-button"
-				onclick="location.href='<%=request.getContextPath() %>/questionList.bo'">더보기</button>
-			<div id=want-list-title>문의 사항</div>
-			<ul>
-				<li class="want-list-QA">배송 비용은 얼마인가요?</li>
-				<div class="want-list-answer">
-					<p>베송비용은 지역마다 조금씩 차이가있습니다</p>
-				</div>
-				<li class="want-list-QA">비회원도 주문 가능한가요?</li>
-				<div class="want-list-answer">
-					<p>Begin Vegan에서는 비회원은 주문이 불가합니다.</p>
-				</div>
-				<li class="want-list-QA">전화 주문도 가능한가요?</li>
-				<div class="want-list-answer">
-					<p>Begin Vegan에서는 비회원은 전화 주문이 불가합니다.</p>
-				</div>
-				<li class="want-list-QA">배송 일자를 지정할 수 있나요?</li>
-				<div class="want-list-answer">
-					<p></p>
-				</div>
-				<li class="want-list-QA">산간 지역도 배송이 가능하나요?</li>
-				<div class="want-list-answer">
-					<p></p>
-				</div>
-			</ul>
-		</section>
-		<script>
+ 
+      
+       <%@include file ="./header.jsp" %>
+      <!--  메인 페이지  -->
+   
+     <form action="#" method="post">
+     <section id="comunity-bar">
+      <span id="comunity-title"> 커뮤니티
+      <div id="route">
+        <span ><a href="#" onclick="location.href='<%=request.getContextPath() %>'" >홈</a></span>
+        <span id="pointer" >--></span>
+        <span><a href="#" onclick="location.href='<%=request.getContextPath()%>/community.me'">커뮤니티</a></span>
+       </div>
+      </span>
+     </section>
+    
+     
+    <section id="want-list">
+      <button type="button" id="want-button">문의하기</button>
+       <button type="button" id="want-more-button" onclick="location.href='<%=request.getContextPath() %>/questionList.bo'" >더보기</button>
+      <div id=want-list-title>문의 사항</div> 
+      <ul>
+     <li class="want-list-QA">배송 비용은 얼마인가요?</li>
+     <div class="want-list-answer" ><p>베송비용은 지역마다 조금씩 차이가있습니다</p></div>
+     <li class="want-list-QA">비회원도 주문 가능한가요?</li>
+     <div class="want-list-answer"><p>Begin Vegan에서는 비회원은 주문이 불가합니다.</p></div>
+     <li class="want-list-QA">전화 주문도 가능한가요?</li>
+     <div class="want-list-answer"><p>Begin Vegan에서는 비회원은 전화 주문이 불가합니다.</p></div>
+     <li class="want-list-QA">배송 일자를 지정할 수 있나요?</li>
+     <div class="want-list-answer"><p></p></div>
+     <li class="want-list-QA">산간 지역도 배송이 가능하나요?</li>
+     <div class="want-list-answer"><p></p></div>
+      </ul>
+    </section>
+    <script>
       $(".want-list-QA").on('click',function(){
         if($(this).next().css('display')=='none'){
           $(this).next().slideDown();
@@ -334,90 +331,135 @@ button:hover {
       });
     </script>
 
-		<section id="notice-list">
+    <section id="notice-list">
 
-			<button type="button" id="notice-more-button"
-				onclick="location.href='noticeList.me'">더보기</button>
-			<%if(loginUser!=null&&loginUser.getUserName().equals("운영자")){%>
-			<button type="button" id="notice-write-button"
-				onclick="location.href='noticeWrite.me'">글작성하기</button>
-			<% }%>
-			<div id="notice-list-title">공지 사항</div>
-			<ul>
-				<li><a href="#"><strong>(공지)</strong>공지 사항</a></li>
-				<li><a href="#"><strong>(공지)</strong>공지 사항2</a></li>
-				<li><a href="#">이벤트 공지사항</a></li>
-				<li><a href="#">비긴 비건 공지사항</a></li>
-				<li><a href="#">사용자 공지 사항</a></li>
-				<li><a href="#">문의 사항 작성시 공지 사항</a></li>
-				<li><a href="#">주문 폭주로 인한 공지 사항</a></li>
-			</ul>
-		</section>
+      <button type="button" id="notice-more-button" onclick="location.href='noticeList.me'">더보기</button>
+      <%if(loginUser!=null&&loginUser.getUserName().equals("운영자")){%>
+      <button type="button" id="notice-write-button" onclick="location.href='noticeWrite.me'">글작성하기</button>
+      <% }%>
+      <div id="notice-list-title">공지 사항</div>
+      <ul id="notice-list">
+     </ul>
+    </section>
+    
+    <script >
+     $(document).ready(function(){
+    	 $.ajax({
+    		 url:"noticeTitle.me",
+    		 data:{},
+    		 success:function(data){
+    			 console.log(data);
+    			 $noticeList=$('#notice-list');
+    			 
+    			 if(data.length==0){
+    				 console.log("데이터의 사이즈가 0");
+    				 $h2=$('<h3>').text('게시된 공지사항이 없습니다.').attr('id','notice-h2');
+    				 $noticeList.after($h2);
+    			 }else{
+    				for(var i in data){
+    					 $ul=$('<ul>');
+        				 $li=$('<li>');
+        				 $a=$('<a>').text(data[i].noticeTitle).css('color','blck').attr('href','<%=request.getContextPath()%>/noticeDetail.me?me='+ data[i].noticeNo);
+        				 $li.append($a);
+        				 $noticeList.append($li);
+    				}
+    			 }
+    		 },
+    		 error:function(data){
+    			 console.log(data);
+    		 }
+    	 });
+     });
+    </script>
+    
+ <section id="review">
+      <div id="review-titlebar">
+        <!-- <button type="button" id="review-button">후기 작성하기</button> -->
+        <div id="review-title" >상품 후기</div>
+      </div>
 
+    <div id="review-list">
 
-
-
-		<section id="review">
-			<div id="review-titlebar">
-				<!-- <button type="button" id="review-button">후기 작성하기</button> -->
-				<div id="review-title">상품 후기</div>
-			</div>
-
-			<div id="review-list">
-
-				<div class="review-list-box">
-					<div class="review-list-innerbox">
-						<a href="#" style="background-image: url(img/logo.png);"></a>
-					</div>
-					<div class="review-list-text">
-						<a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹
-							샐러드(상품정보)<br>2021-10-20
-						</a>
-					</div>
-				</div>
-
-				<div class="review-list-box">
-					<div class="review-list-innerbox">
-						<a href="#" style="background-image: url(img/logo.png);"></a>
-					</div>
-					<div class="review-list-text">
-						<a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹
-							샐러드(상품정보)<br>2021-10-20
-						</a>
-					</div>
-				</div>
-
-				<div class="review-list-box">
-					<div class="review-list-innerbox">
-						<a href="#" style="background-image: url(img/logo.png);"></a>
-					</div>
-					<div class="review-list-text">
-						<a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹
-							샐러드(상품정보)<br>2021-10-20
-						</a>
-					</div>
-				</div>
-
-				<div class="review-list-box">
-					<div class="review-list-innerbox">
-						<a href="#" style="background-image: url(img/logo.png);"></a>
-					</div>
-					<div class="review-list-text">
-						<a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹
-							샐러드(상품정보)<br>2021-10-20
-						</a>
-					</div>
-				</div>
-
-			</div>
-			<button type="button" id="review-more-button"
-				onclick="location.href='<%=request.getContextPath()%>/reviewList.bo'">후기
-				더보기</button>
-
-
-		</section>
-	</form>
-
+     <!--  <div class="review-list-box">
+          <div class="review-list-innerbox"><a href="#" style="background-image: url(img/logo.png);"></a></div>
+             <div class="review-list-text"><a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹 샐러드(상품정보)<br>2021-10-20</a></div>
+          </div> -->
+        
+     </div> 
+      <button type="button" id="review-more-button" onclick="location.href='<%=request.getContextPath()%>/reviewList.bo'">후기 더보기</button>
+  </section>
+  </form>
+  
+   <script>
+    $(document).ready(function(){
+    	$.ajax({
+    		url:"selectRTitle.bo",
+    		data:{},
+    		success:function(data){
+    			console.log(data);
+    			console.log(data.rList.length);
+    			console.log(data.length);
+    			console.log(data.fList);
+    			$reviewList=$('#review-list');
+    			for(var i in data.rList){
+    				console.log(data.rList[i].reviewNo);
+    			}
+    			
+    			if(data.rList.length==0){
+    			   $h2=$('<h2>').text('등록된 상품후기가 없습니다');
+    			   $reviewList.append($h2);
+    			}else{
+	    				for(var i in data.rList){
+	    					for(var j in data.fList){
+	    					  if(data.rList[i].reviewNo==data.fList[j].reviewNo){
+	    						  $listBox=$('<div>').attr('class','review-list-box').attr('onclick','clickReview('+data.rList[i].reviewNo+');')/* .hover($('.review-list-box').css('cursor','pointer'));  */
+	    						
+	  		    				$innerBox=$('<div>').attr('class','review-list-innerbox');
+	  		    				$innerA=$('<a>').attr({
+	  		    					<%-- href:'<%=request.getContextPath()%>/reviewDetail.bo?bId='+data.rList[i].reviewNo , --%>
+	  		    					style:"background-image: url(thumbnail_uploadFiles/"+data.fList[j].imgChangeName+")",
+	  		    					'class':'review-image'
+	  		    					
+	  		    				});
+	  		    				
+	  		    				$textBox=$('<div>').attr('class','review-list-text');
+	  		    				$textA=$('<a>').html('제목 :'+data.rList[i].reviewTitle+'<br>'+'작성자: '+data.rList[i].userName+'<br>'+'작성일 :'+data.rList[i].modifyDate);
+	  		    				
+	  		    				
+	  		    				$textBox.append($textA);
+	  		    				
+	  		    			    $innerBox.append($innerA);
+	  		    				
+	  		    				
+	  		    				$listBox.append($innerBox);
+	  		    				$listBox.append($textBox);
+	  		    				
+	  		    				$reviewList.append($listBox);
+	    					  }
+		    				
+	    				}
+	    			}		
+    			}
+    		},
+    		error:function(data){
+    			console.log(data);
+    		}
+    	});
+    });
+    
+   
+    function clickReview(no){
+    	var reviewNo=no;
+    	if('<%=loginUser%>' != "null"){
+    		 location.href='<%=request.getContextPath()%>/reviewDetail.bo?bId='+reviewNo;
+    	}else{
+    		var bool=confirm('회원만 이용하실 수 있는 서비스입니다. 로그인하시겠습니까?');
+    		if(bool){
+    			location.href='<%=request.getContextPath()%>/loginForm.me';
+    		}
+    	}
+    }
+   </script>
 
 </body>
 </html>
