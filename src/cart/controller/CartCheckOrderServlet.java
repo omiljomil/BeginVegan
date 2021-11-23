@@ -10,25 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
-import User.model.vo.User;
-
-import product.model.service.ProductService;
-import product.model.vo.Photo;
-import product.model.vo.Product;
 
 /**
- * Servlet implementation class CartListServlet
+ * Servlet implementation class CartCheckOrderServlet
  */
-@WebServlet("/cartList.me")
-public class CartListServlet extends HttpServlet {
+@WebServlet("/cartCheckOrder.me")
+public class CartCheckOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartListServlet() {
+    public CartCheckOrderServlet() {
         super();
     }
 
@@ -41,21 +37,18 @@ public class CartListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		ArrayList<Cart> list = new CartService().cartList(userId);
+		String[] carts = request.getParameterValues("one");
 		
-		ProductService pService = new ProductService();
-		ArrayList<Photo> fList = pService.selectFList();
+		ArrayList<Cart> list = new CartService().cartCheckOrder(userId, carts);
 		
-		String page = null;
+		String page = "";
 		
 		if(list != null) {
-			page = "WEB-INF/views/cart/cartList.jsp";
 			request.setAttribute("list", list);
-			request.setAttribute("fList", fList);
-			session.getAttribute("userId");
+			page = "WEB-INF/views/paiement/paiementPage.jsp";
 		} else {
+			request.setAttribute("msg", "주문페이지 로딩 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 조회 실패");
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);

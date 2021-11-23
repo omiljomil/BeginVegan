@@ -10,25 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
-import User.model.vo.User;
-
-import product.model.service.ProductService;
-import product.model.vo.Photo;
-import product.model.vo.Product;
 
 /**
- * Servlet implementation class CartListServlet
+ * Servlet implementation class OrderServlet
  */
-@WebServlet("/cartList.me")
-public class CartListServlet extends HttpServlet {
+@WebServlet("/cartOneOrder.me")
+public class CartOneOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartListServlet() {
+    public CartOneOrderServlet() {
         super();
     }
 
@@ -41,21 +37,24 @@ public class CartListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		ArrayList<Cart> list = new CartService().cartList(userId);
+		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
-		ProductService pService = new ProductService();
-		ArrayList<Photo> fList = pService.selectFList();
+		Cart c = new Cart();
+		c.setCartNo(cartNo);
+		c.setUserId(userId);
+		c.setProdNo(prodNo);
 		
-		String page = null;
+		ArrayList<Cart> list = new CartService().cartOneOrder(c);
+		
+		String page = "";
 		
 		if(list != null) {
-			page = "WEB-INF/views/cart/cartList.jsp";
 			request.setAttribute("list", list);
-			request.setAttribute("fList", fList);
-			session.getAttribute("userId");
+			page = "WEB-INF/views/paiement/paiementPage.jsp";
 		} else {
+			request.setAttribute("msg", "주문페이지 로딩 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 조회 실패");
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);

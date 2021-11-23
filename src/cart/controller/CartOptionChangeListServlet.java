@@ -10,25 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
-import User.model.vo.User;
-
-import product.model.service.ProductService;
-import product.model.vo.Photo;
-import product.model.vo.Product;
 
 /**
- * Servlet implementation class CartListServlet
+ * Servlet implementation class OptionChangeServlet
  */
-@WebServlet("/cartList.me")
-public class CartListServlet extends HttpServlet {
+@WebServlet("/cartOptionChangeForm.me")
+public class CartOptionChangeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartListServlet() {
+    public CartOptionChangeListServlet() {
         super();
     }
 
@@ -40,22 +36,22 @@ public class CartListServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
+		int cartId = Integer.parseInt(request.getParameter("cartNo"));
 		
-		ArrayList<Cart> list = new CartService().cartList(userId);
+		Cart cart = new Cart();
+		cart.setUserId(userId);
+		cart.setCartNo(cartId);
 		
-		ProductService pService = new ProductService();
-		ArrayList<Photo> fList = pService.selectFList();
+		Cart c = new CartService().cartOption(cart);
 		
-		String page = null;
+		String page = "";
 		
-		if(list != null) {
-			page = "WEB-INF/views/cart/cartList.jsp";
-			request.setAttribute("list", list);
-			request.setAttribute("fList", fList);
-			session.getAttribute("userId");
+		if(c != null) {
+			page = "WEB-INF/views/cart/cartOptionList.jsp";
+			request.setAttribute("c", c);
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 조회 실패");
+			request.setAttribute("msg", "장바구니 옵션 조회 실패");
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);
