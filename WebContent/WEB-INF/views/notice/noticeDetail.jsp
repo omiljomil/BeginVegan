@@ -124,6 +124,7 @@ section {
 
 #next-or-back a:hover {
 	color: rgb(4, 88, 4);
+	text-decoration: none;
 }
 
 #go-button {
@@ -171,15 +172,15 @@ section {
 <body>
 
 	<!--  헤더 부분 -->
-	``
+	
 	<%@ include file="../common/header.jsp"%>
 
 	<section>
 		<div id="notice">
 			<span id="notice-title">공지사항</span>
 			<div id="notice-route">
-				<span><a href="#">홈</a></span> <span>-></span> <span><a
-					href="#">커뮤니티</a></span> <span>-></span> <span><a href="#">공지사항</a></span>
+				<span><a href="<%=request.getContextPath()%>/">홈</a></span> <span>-></span> <span><a
+					href="<%=request.getContextPath()%>/community.me">커뮤니티</a></span> <span>-></span> <span><a href="<%=request.getContextPath()%>/noticeList.me">공지사항</a></span>
 			</div>
 		</div>
 		<form action="<%= request.getContextPath() %>/noticeUpdate.me"
