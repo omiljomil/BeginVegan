@@ -15,16 +15,16 @@ import cart.model.service.CartService;
 import cart.model.vo.Cart;
 
 /**
- * Servlet implementation class OptionChangeServlet
+ * Servlet implementation class CartCheckOrderServlet
  */
-@WebServlet("/cartOptionChangeForm.me")
-public class CartOptionChangeListServlet extends HttpServlet {
+@WebServlet("/cartSelectOrder.me")
+public class CartSelectOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOptionChangeListServlet() {
+    public CartSelectOrderServlet() {
         super();
     }
 
@@ -37,22 +37,18 @@ public class CartOptionChangeListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int cartId = Integer.parseInt(request.getParameter("cartNo"));
+		String[] carts = request.getParameterValues("one");
 		
-		Cart cart = new Cart();
-		cart.setUserId(userId);
-		cart.setCartNo(cartId);
-		
-		Cart c = new CartService().cartOptionList(cart);
+		ArrayList<Cart> list = new CartService().cartSelectOrder(userId, carts);
 		
 		String page = "";
 		
-		if(c != null) {
-			page = "WEB-INF/views/cart/cartOptionList.jsp";
-			request.setAttribute("c", c);
+		if(list != null) {
+			request.setAttribute("list", list);
+			page = "WEB-INF/views/paiement/paiementPage.jsp";
 		} else {
+			request.setAttribute("msg", "주문페이지 로딩 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("msg", "장바구니 옵션 조회 실패");
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);
@@ -64,5 +60,4 @@ public class CartOptionChangeListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

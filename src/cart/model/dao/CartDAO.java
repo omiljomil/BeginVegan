@@ -90,12 +90,12 @@ public class CartDAO {
 		return list;
 	}
 	
-	public Cart cartOption(Connection conn, Cart cart) {
+	public Cart cartOptionList(Connection conn, Cart cart) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Cart c = null;
 		
-		String query = prop.getProperty("cartOption");
+		String query = prop.getProperty("cartOptionList");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -194,7 +194,7 @@ public class CartDAO {
 //		return result;
 //	}
 	
-	public int cartCheckDelete(Connection conn, String userId, String[] carts) {
+	public int cartSelectDelete(Connection conn, String userId, String[] carts) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -316,7 +316,7 @@ public class CartDAO {
 			}
 		}
 		
-		
+		// ㅠㅠ...
 		
 		
 		return result;
@@ -373,7 +373,7 @@ public class CartDAO {
 			
 			list = new ArrayList<Cart>();
 			
-			if(rset.next()) {
+			while(rset.next()) {
 				int prodNo = rset.getInt("prod_no");
 				String prodName = rset.getString("prod_name");
 				int amount = rset.getInt("amount");
@@ -394,7 +394,7 @@ public class CartDAO {
 		return list;
 	}
 	
-	public ArrayList<Cart> cartCheckOrder(Connection conn, String userId, String[] carts) {
+	public ArrayList<Cart> cartSelectOrder(Connection conn, String userId, String[] carts) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Cart> list = null;
@@ -422,7 +422,7 @@ public class CartDAO {
 			
 			list = new ArrayList<Cart>();
 			
-			if(rset.next()) {
+			while(rset.next()) {
 				int prodNo = rset.getInt("prod_no");
 				String prodName = rset.getString("prod_name");
 				int amount = rset.getInt("amount");
