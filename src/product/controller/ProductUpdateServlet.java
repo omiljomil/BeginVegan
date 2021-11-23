@@ -40,7 +40,7 @@ public class ProductUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//해당 상품클릭시 그 번호를 찾아 데이터 가져옴
-		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 					
@@ -70,6 +70,7 @@ public class ProductUpdateServlet extends HttpServlet {
 					}
 					
 			//productWriterForm에서 입력받은 데이터 가져오기
+			int pNo = Integer.parseInt(multiRequest.getParameter("pNo"));	
 			String productName = multiRequest.getParameter("productName");
 			int productPrice = Integer.parseInt(multiRequest.getParameter("productPrice"));
 			String ctgryName = multiRequest.getParameter("detailCategory");
@@ -77,37 +78,56 @@ public class ProductUpdateServlet extends HttpServlet {
 			String productInfo = multiRequest.getParameter("productInfo");
 			String hashtag = multiRequest.getParameter("hashtag");
 			String shortInfo = multiRequest.getParameter("shortInfo");
-
-					//productWriterForm에서 받은 데이터들을 p객체로 만들어서 한 번에 데이터 전달하기
-			Product p = new Product(0, productName, productPrice, ctgryName, mtrlName, null, shortInfo, productInfo, hashtag, null, 0);
-					
+			String thumbnailImg1 = multiRequest.getParameter("thumbnailImg1");
+			String thumbnailImg2 = multiRequest.getParameter("thumbnailImg2");
+			String thumbnailImg3 = multiRequest.getParameter("thumbnailImg3");
+			String thumbnailImg4 = multiRequest.getParameter("thumbnailImg4");
+			
+			ArrayList<String> thumb = new ArrayList<String>();
+			
+			thumb.add(thumbnailImg1);
+			thumb.add(thumbnailImg2);
+			thumb.add(thumbnailImg3);
+			thumb.add(thumbnailImg4);
+			
+			System.out.println("ArrayList사진:"+ thumb);
+			//productWriterForm에서 받은 데이터들을 p객체로 만들어서 한 번에 데이터 전달하기
+			Product p = new Product(pNo, productName, productPrice, ctgryName, mtrlName, null, shortInfo, productInfo, hashtag, null);
+			System.out.println("p:" + p );		
 			ArrayList<Photo> fileList = new ArrayList<Photo>();
-					
+				//사진을 전부 수정해야지 됌.. 안그러면 사진 도배됌..	
 				for(int i = originFiles.size()-1; i>=0; i--) {
 					Photo ph = new Photo();
+					ph.setProdNo(pNo);
+					ph.setFileLevel(i);
 					ph.setPath(savePath);
 					ph.setImgName(originFiles.get(i));
 					ph.setImgChangeName(saveFiles.get(i));
 						
 						if(i == originFiles.size() - 1) {
-							ph.setType(0);//썸네일인지 아닌지 구분
+							ph.setFileLevel(0);//썸네일인지 아닌지 구분
 						}else {
-							ph.setType(1);
+							ph.setFileLevel(1);
 						}
 						
 						fileList.add(ph);
-					}			
+					}	
+				System.out.println("fileList:" + fileList);
 				int result = new ProductService().updateProduct(p, fileList);
 					
 				if(result >= 1+fileList.size()) {
+					//기존의 파일은 삭제
+					for(int i = 0; i < thumb.size(); i++) {
 						
+						File fail = new File(savePath + thumb.get(i));
+						fail.delete();
+					}	
 					response.sendRedirect("ManagerProductList.pr");
 
 				}else {
 					request.setAttribute("msg", "상품 수정 실패");
 					request.getRequestDispatcher("WEB-INF/Views/common/errorPage.jsp").forward(request, response);
 						//실패하면 안에 있는 사진 삭제
-						//아 진짜 바보.. else문 밖에 있어서 계속 사진이 삭제되서 조회가 안되었음
 						for(int i = 0; i < saveFiles.size(); i++) {
 							File fail = new File(savePath + saveFiles.get(i));
 							fail.delete();
