@@ -15,6 +15,7 @@ import page.PageInfo;
 
 import static common.JDBCTemplate.*;
 import question.model.vo.Question;
+import question.model.vo.Question_Comment;
 
 public class QuestionDAO {
 	private Properties prop = null;
@@ -227,4 +228,67 @@ public class QuestionDAO {
 		}
 		return q;
 	}
+
+
+
+	public ArrayList<Question_Comment> selectCommentList(Connection conn, int qId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Question_Comment> list = null;
+		String query = prop.getProperty("selectCommentList");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qId);
+			rset = pstmt.executeQuery();
+			list= new ArrayList<Question_Comment>();
+			while(rset.next()) {
+				list.add(new Question_Comment(rset.getInt(1),
+											rset.getString(2),
+											rset.getString(3),
+											rset.getInt(4),
+											rset.getDate(5),
+											rset.getDate(6),
+											rset.getString(7)
+											));	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return list;
+	}
+
+
+
+	public int insertQuestionCommont(Connection conn, Question_Comment qc) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		String query = prop.getProperty("insertQuestionComment");
+		try {
+			pstmt =conn.prepareStatement(query);
+			
+			pstmt.setString(1, qc.getQst_cont());
+			pstmt.setString(2, qc.getUser_id());
+			pstmt.setInt(3, qc.getQst_no());
+			
+			result =pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+
+
+
+	
 }
