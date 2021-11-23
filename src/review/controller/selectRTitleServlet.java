@@ -13,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import review.model.service.ReviewService;
 import review.model.vo.Photo;
@@ -43,7 +44,9 @@ public class selectRTitleServlet extends HttpServlet {
 		ArrayList<Photo> fList=new ReviewService().selectFTitle();
 		
 		response.setContentType("application/json; charset=UTF-8");
-		Gson gson=new Gson();
+		GsonBuilder gb=new GsonBuilder();
+		GsonBuilder gb2=gb.setDateFormat("yyyy-MM-dd");
+		Gson gson=gb2.create();
 		JSONObject review=new JSONObject();
 		
 		review.put("fList", fList);
