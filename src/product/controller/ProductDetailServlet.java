@@ -3,13 +3,14 @@ package product.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import material.model.service.MaterialService;
+import material.model.vo.Material;
 import product.model.service.ProductService;
 import product.model.vo.Photo;
 import product.model.vo.Product;
@@ -33,24 +34,32 @@ public class ProductDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//상품, 사진 갖고 와야하니까 2번 서버에 가야함
+
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		
 		ProductService service = new ProductService();
 		Product product = service.selectProduct(pNo);
-		
-//		HashMap<String,String> productDetail = new HashMap<String,String>();// hashmap 으로 가져오기
-//		
-//		productDetail = service.selectProductDetail(pNo);
-		
 		ArrayList<Photo> fileList = service.selectPhoto(pNo);
-				
+		
+		MaterialService mService = new MaterialService();
+		Material m = mService.selectMatrial(pNo);
+		//split사용해서 mtrlName분리시키기
+		
+		//System.out.println(material.getMtrlName());
+		//System.out.println(material.getMtrlPrice());
+		
+		String mtrlName = m.getMtrlName();
+		String mtrlPrice = m.getMtrlPrice();
+		
+		//int mtrIno=Integer.parseInt(splitMaterial[0]);
+		//int prodNo=Integer.parseInt(splitMaterial[1]);
+		
 		String page = null;
-		if(fileList != null) {
-					
+		if(fileList != null) {					
 			request.setAttribute("product",product);
 			request.setAttribute("fileList", fileList);
-//			request.setAttribute("mapProductDetail", productDetail);
+			request.setAttribute("material", m);			
+
 			page = "WEB-INF/views/product/productDetail.jsp";
 			
 		}else {
