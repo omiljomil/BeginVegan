@@ -10,6 +10,7 @@ import page.PageInfo;
 
 import question.model.dao.QuestionDAO;
 import question.model.vo.Question;
+import question.model.vo.Question_Comment;
 
 public class QuestionService {
 	private QuestionDAO qDAO = new QuestionDAO();
@@ -71,6 +72,35 @@ public class QuestionService {
 		Connection conn = getConnection();
 		ArrayList<Question> q = qDAO.communitiyQuestion(conn);
 		return q;
+	}
+
+	public ArrayList<Question_Comment> selectCommentList(int qId) {
+		Connection conn = getConnection();
+		ArrayList<Question_Comment> list = qDAO.selectCommentList(conn,qId);
+		close(conn);
+		
+		return list;
+	}
+
+	public ArrayList<Question_Comment> insertQuestionCommont(Question_Comment qc) {
+		Connection conn = getConnection();
+		int result = qDAO.insertQuestionCommont(conn,qc);
+		ArrayList<Question_Comment> list = null;
+		
+		if(result>0) {
+			list = new ArrayList<Question_Comment>();
+			list  = qDAO.selectCommentList(conn,qc.getQst_no());
+			if(result >0 && list !=null) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return list;
 	}
 	
 }

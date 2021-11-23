@@ -1,4 +1,3 @@
-
 <%@page import="question.model.vo.Question"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -75,7 +74,7 @@ h3 {
 		<div class="insertTitle">
 			<div style="font-size: 30px; font-weight: bold;">문의사항</div>
 			<div style="margin-left: 350px;">
-				<a href="#">홈</a>--><a href="#">커뮤니티</a>--> <a href="#">문의 사항</a>
+				<a href="<%= request.getContextPath()%>">홈</a>--><a href="<%= request.getContextPath()%>/community.me">커뮤니티</a>--> <a href="questionList.bo">문의 사항</a>
 			</div>
 
 		</div>

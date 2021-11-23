@@ -9,21 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import question.model.service.QuestionService;
-import question.model.vo.Question;
 import question.model.vo.Question_Comment;
 
 /**
- * Servlet implementation class QuestionDetailForm
+ * Servlet implementation class InsertQuestionCommont
  */
-@WebServlet("/questionDetailForm.qs")
-public class QuestionDetailForm extends HttpServlet {
+@WebServlet("/insertQuestionCommont.qs")
+public class InsertQuestionCommont extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionDetailForm() {
+    public InsertQuestionCommont() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +34,24 @@ public class QuestionDetailForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String writer = request.getParameter("writer");
+		String content = request.getParameter("content");
 		int qId = Integer.parseInt(request.getParameter("qId"));
 		
-		Question q = new QuestionService().questionDetail(qId);
-		int idx = q.getQst_title().indexOf(")");
-
-		ArrayList<Question_Comment> list = new QuestionService().selectCommentList(qId);
-			String brackets = q.getQst_title().substring(0,idx+1);
-			String title = q.getQst_title().substring(idx+1);
-			request.setAttribute("brackets", brackets);
-			request.setAttribute("title", title);
-			request.setAttribute("q", q);
-			request.setAttribute("list", list);
-			request.getRequestDispatcher("WEB-INF/views/question/questionDetail.jsp").forward(request, response);
+		Question_Comment qc = new Question_Comment();
+		qc.setQst_no(qId);
+		qc.setUser_id(writer);
+		qc.setQst_cont(content);
 		
 		
+		ArrayList<Question_Comment> list = new QuestionService().insertQuestionCommont(qc);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-mm-dd");
+		Gson gson = gb2.create();
+		gson.toJson(list, response.getWriter());
 	}
 
 	/**
