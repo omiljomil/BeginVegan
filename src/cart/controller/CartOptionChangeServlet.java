@@ -37,16 +37,10 @@ public class CartOptionChangeServlet extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
-		int option1 = Integer.parseInt(request.getParameter("amount1"));
-		int option2 = Integer.parseInt(request.getParameter("amount2"));
-		int option3 = Integer.parseInt(request.getParameter("amount3"));
 		
 		Cart c = new Cart();
 		c.setUserId(userId);
 		c.setCartNo(cartNo);
-		c.setOption1(option1);
-		c.setOption2(option2);
-		c.setOption3(option3);
 		
 		int result = new CartService().cartOptionUpdate(c);
 		

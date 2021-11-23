@@ -16,7 +16,7 @@
 	
 	/* 정보수정 폼 */
 	[name=amount_change] {
-		height: 30px; width: 100px; background: #6CB174; color:white;
+		height: 30px; width: 100px; background: #3B9E3E; color:white;
 		border-radius: 0px; border: none; margin-top: 5px; font-size: 14px;
 	}
 /* 	input[type="button"] {height: 30px; background : white;	border : none; margin-top:10px;	margin-right:20px;} */
@@ -94,8 +94,8 @@
 	#continue_shopping {border: 1px solid #BEBEBE; background: #BEBEBE; color:white;}
 	#continue_shopping:hover {border: 1px solid #3C7F44; background: #3C7F44;}
 	
-	#check_order {border: 1px solid #BEBEBE; background: #BEBEBE; color:white;}
-	#check_order:hover {border: 1px solid #3C7F44; background: #3C7F44;}
+	#select_order {border: 1px solid #BEBEBE; background: #BEBEBE; color:white;}
+	#select_order:hover {border: 1px solid #3C7F44; background: #3C7F44;}
 	
 	#all_order {border: 1px solid #BEBEBE; background: #BEBEBE; color:white;}
 	#all_order:hover {border: 1px solid #3C7F44; background: #3C7F44;}
@@ -109,7 +109,7 @@
 			window.location.href='<%=request.getContextPath() %>/loginForm.me';
 		</script>
 	<% } else if(loginUser != null) { %> 
-		<form action="<%=request.getContextPath() %>/order.me" method="post" id="cartListForm">
+		<form action="<%=request.getContextPath() %>/cartAllOrder.me" method="post" id="cartListForm">
 			<!-- 장바구니 -->
 			<div class="layout" id="space4"></div>
 			<div class="layout" id="subject2">장바구니</div>
@@ -190,7 +190,7 @@
 								</div>
 							</td>
 							<td>
-								<div><input type="button" name="one_order" id="one_order<%= (list.size() - 1) - i %>" value="주문하기" onclick="cartOneOrder('<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>', '<%= list.get(i).getPrice() %>', '<%= list.get(i).getAmount() %>', '<%= list.get(i).getTotal() %>')"></div>
+								<div><input type="button" name="one_order" id="one_order<%= (list.size() - 1) - i %>" value="주문하기" onclick="cartOneOrder('<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>')"></div>
 								<div><input type="button" name="one_delete" id="one_delete<%= (list.size() - 1) - i %>" value="삭제" onclick="oneDelete('<%= list.get(i).getCartNo() %>');"></div>
 							</td>
 						</tr>
@@ -203,7 +203,7 @@
 			<% } else { %>
 			<div class="layout2" id="space9">
 				<input type="checkbox" name="all" id="all2" onclick="selectAllC();"><!-- 
-				--><div class="what-delete" id="what-delete1"><input type="button" id="check_delete" name="check_delete" value="선택상품삭제"></div><!-- 
+				--><div class="what-delete" id="what-delete1"><input type="button" id="select_delete" name="select_delete" value="선택상품삭제"></div><!-- 
 				--><div class="what-delete" id="what-delete2"><input type="button" id="all_delete" name="all_delete" value="전체삭제"></div>
 			<% } %>
 			</div>
@@ -226,13 +226,17 @@
 		 	<div class="layout" id="space10"></div>
 			<div class="layout" id="space11">
 				<div class="selectbtn">
-					<input type="button" id="continue_shopping" value="쇼핑 계속하기">
-					<input type="button" id="check_order" value="선택 상품 주문">
-					<input type="submit" id="all_order" value="전체 상품 주문">
+					<% if(list.isEmpty()) { %>
+						<input type="button" id="continue_shopping" value="쇼핑 계속하기">
+					<% } else { %>
+						<input type="button" id="continue_shopping" value="쇼핑 계속하기">
+						<input type="button" id="select_order" value="선택 상품 주문">
+						<input type="submit" id="all_order" value="전체 상품 주문">
+					<% } %>
 				</div>
 			</div>
 		</form>
-		<div class="layout" id="space12"></div>
+		<div class="layout" id="space4"></div>
 		
 		<script>
 			$(function() {
@@ -354,8 +358,8 @@
 				}
 			}
 			
-			function cartOneOrder(cartNo, prodNo, price, amount, total) {
-				location.href="<%= request.getContextPath() %>/cartOneOrder.me?cartNo=" + cartNo + "&prodNo=" + prodNo + "&price=" + price + "&amount=" + amount + "&total=" + total;
+			function cartOneOrder(cartNo, prodNo) {
+				location.href="<%= request.getContextPath() %>/cartOneOrder.me?cartNo=" + cartNo + "&prodNo=" + prodNo;
 			}
 		</script>
 								
@@ -470,7 +474,7 @@
 		</script>
 		
 		<script>
-			$('#check_delete').on('click', function(event) {
+			$('#select_delete').on('click', function(event) {
 				var bool = window.confirm("선택하신 상품을 장바구니에서 삭제하시겠습니까?");
 				var one = document.getElementsByName('one');
 				var count = 0;
@@ -486,7 +490,7 @@
 						alert('선택한 상품이 없습니다.');
 						event.stopImmediatePropagation();
 					} else {
-						$('#cartListForm').attr('action', 'cartCheckDelete.me');
+						$('#cartListForm').attr('action', 'cartSelectDelete.me');
 						$('#cartListForm').submit();
 						alert('선택하신 상품을 장바구니에서 삭제 완료하였습니다.');
 					}
@@ -508,7 +512,7 @@
 				location.href='<%=request.getContextPath()%>';
 			});
 			
-			$('#check_order').on('click', function(event) {
+			$('#select_order').on('click', function(event) {
 				var one = document.getElementsByName('one');
 				var count = 0;
 				
@@ -522,7 +526,7 @@
 					alert('선택한 상품이 없습니다.');
 					event.stopImmediatePropagation();
 				} else {
-					$('#cartListForm').attr('action', 'cartCheckOrder.me');
+					$('#cartListForm').attr('action', 'cartSelectOrder.me');
 					$('#cartListForm').submit();
 				}
 			});
