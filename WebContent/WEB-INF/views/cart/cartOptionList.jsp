@@ -45,7 +45,7 @@
 					<div class="optionName">콩고기 추가</div>
 					<div class="optionChange">
 						<input type="button" id="minus1" class="minus_product" value="-" onclick="count('amount1', 'minus');"><!-- 
-						 --><input type="text" id="amount1" name="amount1" min="1" max=10 value="<%= c.getOption1() %>" readonly><!-- 
+						 --><input type="text" id="amount1" name="amount1" min="1" max=10 value="" readonly><!-- 
 						 --><input type="button" id="plus1" class="add_product" value="+" onclick="count('amount1', 'plus');" >
 					</div>
 			 	</div>
@@ -60,7 +60,7 @@
 					<div class="optionName">야채 추가</div>
 					<div class="optionChange">
 						<input type="button" id="minus2" class="minus_product" value="-" onclick="count('amount2', 'minus');"><!--
-						 --><input type="text" id="amount2" name="amount2" min="1" max=10 value="<%= c.getOption2() %>" readonly><!--
+						 --><input type="text" id="amount2" name="amount2" min="1" max=10 value="" readonly><!--
 						 --><input type="button" id="plus2" class="add_product" value="+" onclick="count('amount2', 'plus');">
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 					<div class="optionName">소스 추가</div>
 					<div class="optionChange">
 						<input type="button" id="minus3" class="minus_product" value="-" onclick="count('amount3', 'minus');"><!--
-						 --><input type="text" id="amount3" name="amount3" min="1" max=10 value="<%= c.getOption3() %>" readonly><!--
+						 --><input type="text" id="amount3" name="amount3" min="1" max=10 value="" readonly><!--
 						 --><input type="button" id="plus3" class="add_product" value="+" onclick="count('amount3', 'plus');">
 					</div>
 				</div>
