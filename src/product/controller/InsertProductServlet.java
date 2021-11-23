@@ -16,13 +16,8 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 
 import common.MyFileRenamePolicy;
-   
-
-
-
-
-
-
+import material.model.service.MaterialService;
+import material.model.vo.Material;
 import product.model.service.ProductService;
 import product.model.vo.Photo;
 import product.model.vo.Product;
@@ -80,13 +75,41 @@ public class InsertProductServlet extends HttpServlet {
 			String productName = multiRequest.getParameter("productName");
 			int productPrice = Integer.parseInt(multiRequest.getParameter("productPrice"));
 			String ctgryName = multiRequest.getParameter("detailCategory");
-			String mtrlName = multiRequest.getParameter("mainMtrl");
+			String[] mtrlName = multiRequest.getParameterValues("addOption");//옵션재료명
+			String[] optionPrice = multiRequest.getParameterValues("addPrice");//옵션가격
+ 			
 			String productInfo = multiRequest.getParameter("productInfo");
 			String hashtag = multiRequest.getParameter("hashtag");
 			String shortInfo = multiRequest.getParameter("shortInfo");
-
+			
+			// 옵션재료명 배열을 String으로 바꾸기
+			String strMtrlName = "";
+			if(mtrlName != null) {
+				for(int i = 0; i < mtrlName.length; i++) {
+					if(i == 0) {
+						strMtrlName += mtrlName[i];
+					}else {
+						strMtrlName += ", " + mtrlName[i];
+					}
+				}
+			}
+			System.out.println("재료:"+strMtrlName);
+			
+			String stroptionPrice = "";
+			if(optionPrice != null) {
+				for(int i = 0; i < optionPrice.length; i++) {
+					if(i == 0) {
+						stroptionPrice += optionPrice[i];
+					}else {
+						stroptionPrice += ", " + optionPrice[i];
+					}
+				}
+			}
+			System.out.println("가격:"+stroptionPrice);
+			
 			//productWriterForm에서 받은 데이터들을 p객체로 만들어서 한 번에 데이터 전달하기
-			Product p = new Product(0, productName, productPrice, ctgryName, mtrlName, null, shortInfo, productInfo, hashtag, null,0);
+			Product p = new Product(0, productName, productPrice, ctgryName, strMtrlName, null, shortInfo, productInfo, hashtag, null);
+			Material m = new Material(0, 0, strMtrlName,stroptionPrice ,null, null);
 			
 			ArrayList<Photo> fileList = new ArrayList<Photo>();
 			
@@ -97,14 +120,14 @@ public class InsertProductServlet extends HttpServlet {
 				ph.setImgChangeName(saveFiles.get(i));
 				
 				if(i == originFiles.size() - 1) {
-					ph.setType(0);//썸네일인지 아닌지 구분
+					ph.setFileLevel(0);//썸네일인지 아닌지 구분
 				}else {
-					ph.setType(1);
+					ph.setFileLevel(1);
 				}
 				
 				fileList.add(ph);
 			}			
-			int result = new ProductService().insertProduct(p, fileList);
+			int result = new ProductService().insertProduct(p, fileList, m);
 			
 			if(result >= 1+fileList.size()) {
 				
