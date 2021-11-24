@@ -3,6 +3,7 @@ package manager.model.vo;
 import java.sql.Date;
 
 public class OrderManager {
+	private int rnum;
 	private int orderNo;
 	private String prodName;
 	private int amount;
@@ -16,9 +17,10 @@ public class OrderManager {
 	
 	public OrderManager() {}
 
-	public OrderManager(int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
+	public OrderManager(int rnum, int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
 			String receiver, String phone, String status) {
 		super();
+		this.rnum = rnum;
 		this.orderNo = orderNo;
 		this.prodName = prodName;
 		this.amount = amount;
@@ -30,9 +32,10 @@ public class OrderManager {
 		this.status = status;
 	}
 	
-//	public OrderManager(int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
+//	public OrderManager(int rnum, int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
 //			String receiver, String address, String phone, String status) {
 //		super();
+//		this.rnum = rnum;
 //		this.orderNo = orderNo;
 //		this.prodName = prodName;
 //		this.amount = amount;
@@ -45,10 +48,19 @@ public class OrderManager {
 //		this.status = status;
 //	}
 
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+	
 	public int getOrderNo() {
 		return orderNo;
 	}
-
+	
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
@@ -127,7 +139,7 @@ public class OrderManager {
 
 	@Override
 	public String toString() {
-		return "Order [orderNo=" + orderNo + ", prodName=" + prodName + ", amount=" + amount + ", orderPrice="
+		return "Order [rnum=" + rnum + "orderNo=" + orderNo + ", prodName=" + prodName + ", amount=" + amount + ", orderPrice="
 				+ orderPrice + ", orderDate=" + orderDate + ", userId=" + userId + ", receiver=" + receiver
 				/* + ", address=" + address */ + ", phone=" + phone + ", status=" + status + "]";
 	}

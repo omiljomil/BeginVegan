@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.OrderManager, java.text.DecimalFormat" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.OrderManager, java.text.DecimalFormat, page.PageInfo" %>
 <%
 	ArrayList<OrderManager> list = (ArrayList<OrderManager>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>
 <html>
@@ -47,6 +48,22 @@
 	#list {text-align: center; width: 1230px;}
 	#address {text-align: left;}
 	
+	.pagingArea input, button {
+	background: white;
+	width: 40px;
+	height: 40px;
+	font-size: 14px;
+	color: black;
+	border: 0px;
+	}
+
+	#choosen {
+		font-weight: bold;
+		border: 1px solid #ddd;
+		background: white;
+		cursor: text;
+	}
+
 	/* 하단 버튼 */
 	#space2 {height: 105px; text-align: center;}
 	#space3 {height: 70px; text-align: center;}
@@ -152,6 +169,66 @@
 			</table>
 		</form>
 		
+		
+	<div class="layout" id="space7"></div>
+
+	<div class="pagingArea" align="center">
+	<% if(list.isEmpty()) { %>
+		<div class="layout" id="space7"></div>
+	<% } else { %>
+		<!-- 맨 처음으로 -->
+		<input type="button" id="firstBtn"
+			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=1'"
+			value="처음">
+		<script>
+			if(<%= pi.getCurrentPage() %> <= 1) {
+				$('#firstBtn').prop('disabled', true);
+				$('#firstBtn').css('cursor', 'text');
+			}
+		</script>
+		<!-- 이전 페이지로 -->
+		<input type="button" id="beforeBtn"
+			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+			value="이전">
+		<script>
+			if(<%= pi.getCurrentPage() %> <= 1) {
+				$('#beforeBtn').prop('disabled', true);
+				$('#beforeBtn').css('cursor', 'text');
+			}
+		</script>
+		<!-- 숫자 버튼 -->
+		<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+		<% if(p == pi.getCurrentPage()) { %>
+		<input type="button" id="choosen" disabled value="<%= p %>">
+		<% } else { %>
+		<input type="button" id="numBtn"
+			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= p %>'"
+			value="<%= p %>">
+		<% } %>
+		<%  } %>
+		<!-- 다음 페이지로 -->
+		<input type="button" id="afterBtn"
+			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+			value="다음">
+		<script>
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+				$('#afterBtn').prop('disabled', true);
+				$('#afterBtn').css('cursor', 'text');
+			}
+		</script>
+		<!-- 맨 끝으로 -->
+		<input type="button" id="lastBtn"
+			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getMaxPage() %>'"
+			value="끝">
+		<script>
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+				$('#lastBtn').prop('disabled', true);
+				$('#lastBtn').css('cursor', 'text');
+			}
+		</script>
+	<% } %>
+	</div>
+	
 		<script>
 			var all = document.getElementById('all');
 			var order = document.getElementsByName('order');

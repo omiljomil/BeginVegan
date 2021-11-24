@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import manager.model.vo.OrderManager;
+import page.PageInfo;
 
 public class OrderManagerDAO {
 	private Properties prop = null;
@@ -33,21 +34,27 @@ public class OrderManagerDAO {
 		}
 	}
 	
-	public ArrayList<OrderManager> orderList(Connection conn) {
-		Statement stmt = null;
+	public ArrayList<OrderManager> orderList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<OrderManager> list = null;
 		
 		String query = prop.getProperty("orderList");
 		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
 			
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("order_no"),
+				OrderManager o = new OrderManager(rset.getInt("rnum"),
+									rset.getInt("order_no"),
 									rset.getString("prod_name"),
 									rset.getInt("amount"),
 									rset.getInt("order_price"),
@@ -58,10 +65,17 @@ public class OrderManagerDAO {
 									rset.getString("status"));
 				
 				list.add(o);
+				
+				System.out.println(o);
 			}
 			System.out.println(list);
+			System.out.println(startRow);
+			System.out.println(endRow);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		
 		return list;
@@ -95,15 +109,20 @@ public class OrderManagerDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
 		
 		return result;
 	}
 	
-	public ArrayList<OrderManager> orderSearch(Connection conn, String cond, String search) {
+	public ArrayList<OrderManager> orderSearch(Connection conn, String cond, String search, PageInfo pi) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<OrderManager> list = null;
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
 		
 		String selectQuery = "";
 		
@@ -144,8 +163,12 @@ public class OrderManagerDAO {
 			
 			if(cond.equals("orderno") || cond.equals("orderprice")) {
 				pstmt.setString(1, search);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 			} else {
 				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 			}
 			
 			rset = pstmt.executeQuery();
@@ -153,7 +176,8 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("order_no"),
+				OrderManager o = new OrderManager(rset.getInt("ROWNUM"),
+									rset.getInt("order_no"),
 									rset.getString("prod_name"),
 									rset.getInt("amount"),
 									rset.getInt("order_price"),
@@ -173,5 +197,95 @@ public class OrderManagerDAO {
 		}
 		
 		return list;
+	}
+
+	public int getListCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		
+		String query = prop.getProperty("getListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return listCount;
+	}
+
+	public int getSearchCount(Connection conn, String cond, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		
+		String selectQuery = "";
+		
+		switch(cond) {
+		case "orderno":
+			selectQuery = "getSearchCount1";
+			break;
+		case "prodname":
+			selectQuery = "getSearchCount2";
+			break;
+		case "orderprice":
+			selectQuery = "getSearchCount3";
+			break;
+		case "orderdate":
+			selectQuery = "getSearchCount4";
+			break;
+		case "userid":
+			selectQuery = "getSearchCount5";
+			break;
+		case "receiver":
+			selectQuery = "getSearchCount6";
+			break;
+		case "address":
+			selectQuery = "getSearchCount7";
+			break;
+		case "phone":
+			selectQuery = "getSearchCount8";
+			break;
+		case "status":
+			selectQuery = "getSearchCount9";
+			break;
+		}
+		
+		String query = prop.getProperty(selectQuery);
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(cond.equals("orderno") || cond.equals("orderprice")) {
+				pstmt.setString(1, search);
+			} else {
+				pstmt.setString(1, "%" + search + "%");
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+			System.out.println(count);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
 	}
 }
