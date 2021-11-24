@@ -106,7 +106,7 @@ h2 {
 							<li><a href="<%=request.getContextPath() %>/paie.me"
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 문의하기</a></li>
-							<li><a href=# class="sub_depth_href"><i
+							<li><a href="<%=request.getContextPath() %>/myQuestionList.qs?userId=<%= loginUser.getUserId() %>" class="sub_depth_href" class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 문의 내역 확인</a></li>
 							<li><a href="#" class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 리뷰 관리</a></li>

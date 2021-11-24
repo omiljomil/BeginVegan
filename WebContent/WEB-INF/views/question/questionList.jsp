@@ -54,6 +54,9 @@
 	margin: 0 auto;
 	justify-content: flex-end;
 }
+#listArea tr td{
+	text-align: center;
+}
 </style>
 <body>
 	<%@ include file="../common/header.jsp"%>
@@ -77,7 +80,7 @@
 			<tr>
 				<th width="100px;">번호</th>
 				<th width="700px;">제목</th>
-				<th>작성</th>
+				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
 			<% if(list.isEmpty()){ %>

@@ -102,6 +102,13 @@
 		font-size : 12px;
 		padding-left: 5px;
 	}
+	#replyQuestionSelectTable tr td input{
+		color : red;
+		font-size : 8px;
+		padding-left: 5px;
+		border-style: none;
+		background-color: white;
+	}
 	
 	
 	.replyInsert{
@@ -188,7 +195,15 @@
 					<tr><td colspan="3">댓글이 없습니다.</td></tr>
 				<%}else{ %>
 					<%for(int i = 0; i<list.size(); i++){ %>			
-						<tr><td width="50px"><%=list.get(i).getUser_id() %><span><%=list.get(i).getEnroll_date() %></span></td></tr>
+						<tr>
+							<td width="50px"><%=list.get(i).getUser_id() %>
+								<span><%=list.get(i).getEnroll_date() %></span>
+								<%if(list.get(i).getUser_id().equals(loginUser.getUserId())){ %>
+									<input type="button" onclick="deleteReply(<%=list.get(i).getQst_comt_no() %>);" value="x">
+								<%}%>
+									
+							</td>
+						</tr>
 						<tr>
 							<td colspan="2" width="400px" class="contentTable"><%=list.get(i).getQst_cont() %></td>
 						</tr>
@@ -272,6 +287,22 @@
 		});
 	});
 	
+	function deleteReply(de){
+		var bool = confirm("정말 삭제하시겠습니까?");
+		if(bool){
+			$.ajax({
+				url:'deleteQuestionComment.qs',
+				data:{no:de},
+				success:function(data){
+					window.location.reload();
+				},
+				error:function(data){
+					a;ert("삭제하지 못했습니다.")
+				}
+			});
+		}
+		
+	}
 	</script>
 	
 </html>
