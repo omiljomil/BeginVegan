@@ -90,7 +90,7 @@ public class ProductDAO {
 	}
 
 	public ArrayList<Product> selectList(Connection conn, PageInfo pi) {
-		//�긽�뭹由ъ뒪�듃 遺덈윭�삤湲�
+	
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
@@ -394,12 +394,14 @@ public class ProductDAO {
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
 			pstmt = conn.prepareStatement(query);
+			
 			pstmt.setString(1, fileList.get(i).getImgName());
 			pstmt.setString(2, fileList.get(i).getImgChangeName());
 			pstmt.setString(3, fileList.get(i).getPath());
 			pstmt.setInt(4, fileList.get(i).getFileLevel());
 			pstmt.setInt(5, fileList.get(i).getType());
-			
+			pstmt.setInt(6, fileList.get(i).getProdNo());
+
 			result += pstmt.executeUpdate();
 			}
 
@@ -408,11 +410,11 @@ public class ProductDAO {
 		}finally {
 			close(pstmt);
 		}
-		
+		System.out.println("사진:" + result);
 		return result;
 	}
 	
-public int updateProduct(Connection conn, Product p) {
+	public int updateProduct(Connection conn, Product p) {
 		
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -427,6 +429,7 @@ public int updateProduct(Connection conn, Product p) {
 			pstmt.setString(5, p.getProdTag());
 			pstmt.setString(6,  p.getShortInfo());
 			pstmt.setString(7, p.getMtrlName());
+			pstmt.setInt(8, p.getProdNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -435,9 +438,11 @@ public int updateProduct(Connection conn, Product p) {
 		}finally {
 			close(pstmt);
 		}
-		
+		System.out.println("상품카테고리:" + p.getCtgryName());
+		System.out.println("상품:" + result);
 		return result;
 	}
+	
 	public int insertMaterial(Connection conn, Material m) {
 		PreparedStatement pstmt = null;
 		int result = 0;

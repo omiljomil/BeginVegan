@@ -99,7 +99,6 @@ public class ReviewUpdateServlet extends HttpServlet {
 					File delete=new File(savePath+imgName);
 					delete.delete();
 					response.sendRedirect("reviewDetail.bo?bId="+reviewNo);
-					
 					}else {
 							request.setAttribute("msg", "사진 게시판 수정 실패");
 				            request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);	

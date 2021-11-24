@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList,User.model.vo.User, page.PageInfo"%>
+	import="java.util.ArrayList, User.model.vo.User, page.PageInfo" %>
 <%
 	ArrayList<User> list = (ArrayList)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
@@ -10,8 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Begin Vegan</title>
-</head>
-<title>회원 목록 조회</title>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 <link
@@ -338,18 +336,25 @@ input[type="checkbox"] {
 
 	<div class="pagingArea" align="center">
 		<!-- 맨 처음으로 -->
-		<input type="button"
+		<input type="button" id="firstBtn"
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=1'"
 			value="처음">
+		<script>
+			if(<%= pi.getCurrentPage() %> <= 1) {
+				$('#firstBtn').prop('disabled', true);
+				$('#firstBtn').css('cursor', 'text');
+			}
+		</script>
 		<!-- 이전 페이지로 -->
 		<input type="button" id="beforeBtn"
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
 			value="이전">
 		<script>
-				if(<%= pi.getCurrentPage() %> <= 1) {
-					$('#beforeBtn').prop('disabled', true);
-				}
-			</script>
+			if(<%= pi.getCurrentPage() %> <= 1) {
+				$('#beforeBtn').prop('disabled', true);
+				$('#beforeBtn').css('cursor', 'text');
+			}
+		</script>
 		<!-- 숫자 버튼 -->
 		<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
 		<% if(p == pi.getCurrentPage()) { %>
@@ -365,14 +370,21 @@ input[type="checkbox"] {
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
 			value="다음">
 		<script>
-				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
-					$('#afterBtn').prop('disabled', true);
-				}
-			</script>
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+				$('#afterBtn').prop('disabled', true);
+				$('#afterBtn').css('cursor', 'text');
+			}
+		</script>
 		<!-- 맨 끝으로 -->
-		<input type="button"
+		<input type="button" id="lastBtn"
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getMaxPage() %>'"
 			value="끝">
+		<script>
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+				$('#lastBtn').prop('disabled', true);
+				$('#lastBtn').css('cursor', 'text');
+			}
+		</script>
 	</div>
 
 	<script>

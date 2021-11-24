@@ -96,39 +96,64 @@
 			<table class="productTable">
 				<tr>
 					<td class="tableName">메인카테고리</td>
-					<td><select id="updateMainCategory" name="mainCategory">
-							<option value="default">선택</option>
-							<option value="100">채식유형별</option>
-							<option value="200">메인재료별</option>
-					</select></td>
-					<td class="tableName">상세카테고리</td>
-					<td><select id="updateDetailCategory" name="detailCategory">
-							<option value="101">비건</option>
-							<option value="102">락토</option>
-							<option value="103">오보</option>
-							<option value="104">락토오보</option>
-							<option value="105">폴로</option>
-							<option value="106">페스코</option>
-							<option value="107">플렉시테리안</option>
-
-							<option value="201">콩고기</option>
-							<option value="202">유제품</option>
-							<option value="203">생선</option>
-							<option value="204">야채</option>
-							<option value="205">육류</option>
-
-					</select></td>
+					<td>
+					<select id="mainCategory" name="mainCategory" class="mainCategory">
+						<option>대분류</option>
+						<option value="100" >채식유형별</option>
+						<option value="200" >메인재료별</option>
+					</select>
+				</td>
+				<td class="tableName">상세카테고리</td>
+				<td class="detail">
+					<select id="detailCategory1" name="detailCategory" class="detailCategory">
+						 <option>소분류</option>
+						 <!-- 
+						<option value="101">비건</option>
+						<option value="102">락토</option>
+						<option value="103">오보</option>
+						<option value="104">락토오보</option>
+						<option value="105">폴로</option>
+						<option value="106">페스코</option>
+						<option value="107">플렉시테리안</option>				
+						<option value="201">콩고기</option>		
+						<option value="202">유제품</option>		
+						<option value="203">생선</option>		
+						<option value="204">야채</option>		
+						<option value="205">육류</option>
+					</select>
+					 -->
+				</td>
 				</tr>
 				<tr>
 					<td class="tableName">상품명</td>
 					<td colspan="3"><input type="text" id="updateProductName"
-						name="productName" value="<%= p.getProdName() %>"></td>
+						name="productName" value="<%= p.getProdName() %>">
+						<input type="hidden" name="pNo" value="<%= p.getProdNo() %>"></td>
 				</tr>
-				<tr>
-					<td class="tableName">재료명</td>
-					<td colspan="3"><input type="text" id="updateMainMtrl"
-						name="mainMtrl" value="<%= p.getMtrlName() %>"></td>
-				</tr>
+				<tr name="add">
+					<td class="tableName">재료옵션</td>
+					
+					<td class="addOptionTd"  colspan="3">
+						<select name="addOption" class="addOption">
+							<option value="콩고기">콩고기</option>
+							<option value="야채">야채</option>
+							<option value="콩">콩</option>
+							<option value="치즈">치즈</option>
+							<option value="연어">연어</option>
+						</select>
+						<select name="addPrice" class="addPrice">						
+							<option value="1000">1000원</option>
+							<option value="2000">2000원</option>
+							<option value="3000">3000원</option>
+							<option value="4000">4000원</option>
+							<option value="5000">5000원</option>
+						</select> <input type="button" class="removeOptionBtn" value="옵션삭제" name="removeOptionBtn" disabled>
+						<input type="button" id="addOptionBtn" value="옵션추가">
+						<!-- <input type="text" width="50px" height="40px" name="mainMtrl">
+						<input type="text" width="50px" height="40px" name="mainMtrl">
+						<input type="button" id="addOptionBtn" value="옵션추가"> -->
+					</td>
+			</tr>
 				<tr>
 					<td class="tableName">상품가격</td>
 					<td colspan="3"><input type="text" id="updaetProductPrice"
@@ -150,6 +175,7 @@
 						<div class="imgArea" id="updateThumbnailArea">
 							<img id="updateThumImg" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>">
+								<input type="hidden" name="thumbnailImg1" value="<%= fileList.get(0).getImgChangeName()%>">
 						</div>
 					</td>
 				</tr>
@@ -159,18 +185,21 @@
 						<div class="imgArea" id="updateImgArea1">
 							<img id="updateImgs1" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>">
+								<input type="hidden" name="thumbnailImg2" value="<%= fileList.get(1).getImgChangeName()%>">
 						</div>
 					</td>
 					<td style="border: 1px solid black;">
 						<div class="imgArea" id="updateImgArea2">
 							<img id="updateImgs2" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>">
+								<input type="hidden" name="thumbnailImg3" value="<%= fileList.get(2).getImgChangeName()%>">
 						</div>
 					</td>
 					<td style="border: 1px solid black;">
 						<div class="imgArea" id="updateImgArea3">
 							<img id="updateImgs3" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>">
+								<input type="hidden" name="thumbnailImg4" value="<%= fileList.get(3).getImgChangeName()%>">
 						</div>
 					</td>
 				</tr>
@@ -209,6 +238,103 @@
 
 
 	<script>
+	//카테고리 선택시 2차 카테고리 분류
+	$(document).ready(function(){
+		$('.mainCategory').on('click', function(){
+			var option = $('.mainCategory option:selected').val();
+			var cate1 = 
+				
+				'<option>소분류</option>'+
+				'<option value="101">비건</option>'+
+				'<option value="102">락토</option>'+
+				'<option value="103">오보</option>'+
+				'<option value="104">락토오보</option>'+
+				'<option value="105">폴로</option>'+
+				'<option value="106">페스코</option>'+
+				'<option value="107">플렉시테리안</option>	';
+				
+				var cate2 = 
+					'<option>소분류</option>'+
+					'<option value="201">콩고기</option>'+		
+					'<option value="202">유제품</option>'+		
+					'<option value="203">생선</option>'+		
+					'<option value="204">야채</option>'+		
+					'<option value="205">육류</option>';
+		
+			console.log(option);
+			if(option == 100){
+				$('.detailCategory').text(cate1);
+				console.log($('.detailCategory').html(cate1).val());
+				
+			}else if(option == 200){
+				$('.detailCategory').text(cate2);
+				console.log($('.detailCategory').html(cate2).val());
+			}
+			
+		});
+		//소분류 변경할때마다 value값 바꾸기
+		$('.detailCategory').change(function(){
+			console.log($('.detailCategory option:selected').val());
+			
+		});
+	});
+	
+	//옵션추가버튼클릭시 입력창 추가하기
+	$('#addOptionBtn').on('click', function(){
+		
+			var addSelect = 
+			'<tr name="add">'+
+				'<td class="tableName">재료옵션</td>'+			
+				'<td class="addOptionTd"  colspan="3">'+
+					'<select name="addOption" class="addOption">'+
+						'<option value="콩고기">콩고기 </option>'+
+						'<option value="야채">야채</option>'+
+						'<option value="콩">콩</option>'+
+						'<option value="치즈">치즈</option>'+
+						'<option value="연어">연어</option>'+
+					'</select>'+
+					'<select name="addPrice" class="addPrice">'+				
+						'<option value="1000">1000원</option>'+
+						'<option value="2000">2000원</option>'+
+						'<option value="3000">3000원</option>'+
+						'<option value="4000">4000원</option>'+
+						'<option value="5000">5000원</option>'+
+					'</select>'+
+					'<input type="button" class="removeOptionBtn" value="옵션삭제" name="removeOptionBtn">'+'<br>'+
+				'</td>'+
+			'</tr>';
+			var selectOpHtml = $('tr[name=add]:last');
+			selectOpHtml.after(addSelect);
+			
+	//삭제버튼
+	$(document).on("click","input[name=removeOptionBtn]",function(){
+		     var trHtml = $(this).parent().parent();
+		     trHtml.remove(); //tr 테그 삭제		        
+		 }); 
+	
+	$('.addOption').change(function(){
+		console.log($(this).find("option:selected").val());
+		
+	});
+	$('.addPrice').change(function(){
+		console.log($(this).find("option:selected").val());
+		
+	});
+	
+	});
+	$('.addOption').change(function(){
+		console.log($('.addOption option:selected').val());
+		
+	});
+	$('.addPrice').change(function(){
+		console.log($('.addPrice option:selected').val());
+		
+	});
+	
+	
+	
+	
+	
 	$(function(){
 		$("#updateFileArea").hide();//버튼을 숨김
 		

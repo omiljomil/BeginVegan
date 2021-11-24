@@ -132,9 +132,10 @@
 					</select>
 				</td>
 				<td class="tableName">상세카테고리</td>
-				<td>
+				<td class="detail">
 					<select id="detailCategory1" name="detailCategory" class="detailCategory">
 						 <option>소분류</option>
+						 <!-- 
 						<option value="101">비건</option>
 						<option value="102">락토</option>
 						<option value="103">오보</option>
@@ -148,6 +149,7 @@
 						<option value="204">야채</option>		
 						<option value="205">육류</option>
 					</select>
+					 -->
 				</td>
 			</tr>
 			<tr>
@@ -251,42 +253,36 @@
 	$(document).ready(function(){
 		$('.mainCategory').on('click', function(){
 			var option = $('.mainCategory option:selected').val();
+			var cate1 = 
+				
+				'<option>소분류</option>'+
+				'<option value="101">비건</option>'+
+				'<option value="102">락토</option>'+
+				'<option value="103">오보</option>'+
+				'<option value="104">락토오보</option>'+
+				'<option value="105">폴로</option>'+
+				'<option value="106">페스코</option>'+
+				'<option value="107">플렉시테리안</option>	';
+				
+				var cate2 = 
+					'<option>소분류</option>'+
+					'<option value="201">콩고기</option>'+		
+					'<option value="202">유제품</option>'+		
+					'<option value="203">생선</option>'+		
+					'<option value="204">야채</option>'+		
+					'<option value="205">육류</option>';
 		
 			console.log(option);
 			if(option == 100){
-				$('#detailCategory1').show('#detailCategory1 select');
-				console.log($(this).val());
+				$('.detailCategory').text(cate1);
+				console.log($('.detailCategory').html(cate1).val());
 				
 			}else if(option == 200){
-				$('#detailCategory2').show('#detailCategory2 select');
-				console.log($(this).val());
+				$('.detailCategory').text(cate2);
+				console.log($('.detailCategory').html(cate2).val());
 			}
 			
 		});
-	/* $(document).ready(function(){
-		var detail1 = ['비건','락토','오보','락토오보','폴로','페스코','플렉시테리안'];
-		var detail2 = ['콩고기','유제품','생선','야채','육류'];
-		$('.mainCategory').change(function(){
-			var sel = $(this).val();
-			if(sel == 100 ){
-				$('.op').remove();
-				$.each(detail1, function(i, item){
-					
-					$('.detailCategory').append('<option class="op" value="'+item+'">'+item+'</option>');
-					console.log("sel:"+sel);
-					switch(item){
-					case "비건": 
-					}
-				});
-			}else if(sel == 200 ){
-				$('.op').remove();
-				$.each(detail2, function(i, item){
-					
-					$('.detailCategory').append('<option class="op">'+item+'</option>');
-					
-				});
-			}
-		}); */
 		//소분류 변경할때마다 value값 바꾸기
 		$('.detailCategory').change(function(){
 			console.log($('.detailCategory option:selected').val());

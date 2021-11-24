@@ -40,9 +40,10 @@ public class UpdateUserServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userPwd = request.getParameter("userPwd");
 		String email = request.getParameter("email1") + "@" + request.getParameter("email2");
-		String phone = request.getParameter("phone1") + "-" +
-					   request.getParameter("phone2") + "-" +
-					   request.getParameter("phone3");
+//		String phone = request.getParameter("phone") + "-" +
+//					   request.getParameter("phone2") + "-" +
+//					   request.getParameter("phone3");
+		String phone = request.getParameter("phone");
 		
 		System.out.println(loginUser);
 		System.out.println(userId);
@@ -59,7 +60,7 @@ public class UpdateUserServlet extends HttpServlet {
 			request.getSession().setAttribute("user", user);
 			response.sendRedirect(request.getContextPath());
 		} else {
-			request.setAttribute("msg", "정보 수정에 실패했습니다.");
+			request.setAttribute("msg", "정보 수정에 실패하였습니다.");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
 	}

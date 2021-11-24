@@ -159,9 +159,6 @@ padding-left:0px;
   background-color: darkgray;
   border: 1px solid darkgray;
 }
-
-
-
 #notice-list li {
   margin-bottom: 15px;
   list-style: none;
@@ -200,7 +197,21 @@ padding-left:0px;
 #review-titlebar {
   position: absolute;
   left: 740px;
+  width:500px;
 }
+#review-write{
+ position:relative;
+ left:350px;
+ bottom:30px;
+ font-weight: 700;
+  font-size: 15px;
+  border: 1px solid darkgray;
+  width: 100px;
+  height: 30px;
+  background-color: darkgray;
+}
+
+
 #review-title {
   width: 340px;
   background-color: gray;
@@ -254,10 +265,11 @@ padding-left:0px;
   width: 290px;
   height:198px;
 }
-.review-list-text {
+.review-list-text  {
   justify-content: center;
-  line-height: 30px;
+  line-height: 40px;
   text-align: center;
+  font-size:18px;
 }
 #review-more-button {
   font-weight: 700;
@@ -274,6 +286,8 @@ padding-left:0px;
 button:hover{
 cursor: pointer;
 }
+
+#review-write:hover,
 #review-button:hover,
 #notice-more-button:hover,
 #notice-write-button:hover,
@@ -374,17 +388,30 @@ cursor: pointer;
     
  <section id="review">
       <div id="review-titlebar">
-        <!-- <button type="button" id="review-button">후기 작성하기</button> -->
         <div id="review-title" >상품 후기</div>
+           <button id="review-write" type="button" onclick="reviewWrite();">후기 작성하기</button> 
       </div>
-
+      
+     <script>
+     function reviewWrite(){
+    	 if('<%=loginUser%>'== "null"){
+    		 var bool=confirm("회원만 이용하실수 있는 서비스입니다. 로그인 하시겠습니까?");
+		    		 if(bool){
+		    			 location.href='<%=request.getContextPath()%>/loginForm.me';
+		    		 }
+    	 }else{
+			 location.href='<%=request.getContextPath()%>/writeReviewForm.bo';
+    	}
+     }
+     
+     
+     </script> 
+          
     <div id="review-list">
-
-     <!--  <div class="review-list-box">
-          <div class="review-list-innerbox"><a href="#" style="background-image: url(img/logo.png);"></a></div>
-             <div class="review-list-text"><a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹 샐러드(상품정보)<br>2021-10-20</a></div>
-          </div> -->
-        
+	     <!--  <div class="review-list-box">
+	          <div class="review-list-innerbox"><a href="#" style="background-image: url(img/logo.png);"></a></div>
+	             <div class="review-list-text"><a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹 샐러드(상품정보)<br>2021-10-20</a></div>
+	          </div> --> 
      </div> 
       <button type="button" id="review-more-button" onclick="location.href='<%=request.getContextPath()%>/reviewList.bo'">후기 더보기</button>
   </section>
