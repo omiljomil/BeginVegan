@@ -212,7 +212,27 @@ form input {
  border:none;
  background-color: white;
 }
+#next-or-back {
+  position: relative;
+  margin-left:280px;
+  top: 150px;
+   border-collapse: collapse ;
+}
 
+#next-or-back th{
+ border:2px solid darkgray;
+ text-align: center;
+}
+.table-a:hover{
+  color: rgb(4, 88, 4);
+  cursor:pointer;
+}
+.table-a{
+ display:inline-block;
+ margin-top:7px;
+ color:black;
+ 
+}
 
 #delete-button{
 width:65px;
@@ -280,7 +300,7 @@ font-weight:600;
             </table>
             <div id="review-date"><span>작성일: <%=r.getEnrollDate()%></span></div> 
              <input type="hidden" name="date" value="<%=r.getEnrollDate() %>">
-            <input type="hidden" name="reviewNo" value="<%=r.getReviewNo() %>">
+            <input type="hidden" id="reviewNo" name="reviewNo" value="<%=r.getReviewNo() %>">
             </div>
             
          <div id="review-content"> 
@@ -432,8 +452,111 @@ font-weight:600;
     	   }
     	 
       });
-      
       </script>
+       <div id="next-or-back">
+       
+          <!--   <table id="NBtable">
+               <tr>
+                <th width="200px" height="40px">이전 글</th>
+                <th width="500px;" ><a href="#"></a></th>
+            </tr>
+
+            <tr>
+                <th height="40px">다음 글</th>
+                <th><a href="#"></a></th>
+            </tr>
+           </table>  -->
+       </div>
+       
+        <script>
+       $(document).ready(function(){
+    	   var reviewNo=$('#reviewNo').val();
+    	   //이전글
+    	 $.ajax({
+	    		 url:"selectReviewBack.bo",
+		         data:{reviewNo:reviewNo},
+		         success:function(data){
+			       	 console.log(data);
+				       	  if(data!=null){
+					       	  console.log(data.revieweNo);
+					       	  $nextOrBack=$('#next-or-back');
+					       	  $table=$('#NBtable');
+					       	  $tr=$('<tr>');
+					       	  
+					       	  $th=$('<th>').css({
+					       		  'width':'200px',
+					       		  'height':'40px'
+					       	  }).text("이전 글");
+					       	  
+					       	  $backTh=$('<th>').css('width','500px');
+					       	  $a=$('<a>').attr('onclick','clickReview('+data.reviewNo+')').text(data.reviewTitle).attr('class','table-a').css({
+					       		'text-decoration':'none'
+					       
+					       	  });
+					       	  
+					       	  $backTh.append($a);
+					       	  
+					       	  
+					       	  $tr.append($th);
+					       	  $tr.append($backTh);
+					       	  
+					       	  $nextOrBack.append($tr);
+		       		  }
+		       	  
+		         },
+		         error:function(data){
+		       	  console.log(data);
+		         }
+    	 }); 
+    	 //다음 글
+    	 $.ajax({
+    		 url:"selectReviewNext.bo",
+	         data:{reviewNo:reviewNo},
+	         success:function(data){
+	       	  console.log(data);
+		       	  if(data!=null){
+		       	 	 console.log(data.reviewNo);
+		       	  
+			       	  $nextOrBack=$('#next-or-back');
+			       	  $table=$('#NBtable');
+			       	  $tr=$('<tr>');
+			       	  
+			       	  $th=$('<th>').css({
+			       		  'width':'200px',
+			       		  'height':'40px'
+			       	  }).text("다음 글");
+			       	  
+			       	  $backTh=$('<th>').css('width','500px');
+			       	  $a=$('<a>').attr('onclick','clickReview('+data.reviewNo+')').text(data.reviewTitle).attr('class','table-a').css({
+				       		'text-decoration':'none'
+				       		
+				       	  });;
+			       	  
+			       	  $backTh.append($a);
+			       	  
+			       	  
+			       	  $tr.append($th);
+			       	  $tr.append($backTh);
+			       	  
+			       	  $nextOrBack.append($tr);
+		       	  	}
+		         },
+	         error:function(data){
+	       	  console.log(data);
+	         }
+	 }); 
+    	 
+    	 
+       });
+       
+       function clickReview(no){
+    	   var reviewNo=no;
+    	   location.href='<%=request.getContextPath()%>/reviewDetail.bo?bId='+reviewNo;
+       }
+       </script>
+      
+      
+      
        <button type="button" id="go-button"><a href="<%=request.getContextPath()%>/reviewList.bo" >목록</a></button>
        
   </section>
