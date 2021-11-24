@@ -83,7 +83,7 @@ public class PaiementDAO {
 			}
 		}
 		
-		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE CART_NO IN (" + paras + ")";
+		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE CART_NO IN (" + paras + ") ORDER BY CART_NO DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

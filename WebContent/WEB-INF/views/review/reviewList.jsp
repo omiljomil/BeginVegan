@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,User.model.vo.*,review.model.vo.*, page.PageInfo"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,User.model.vo.*,review.model.vo.*,page.PageInfo" %>
   <%
   
    PageInfo pi=(PageInfo)request.getAttribute("pi"); 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList,User.model.vo.User, page.PageInfo"%>
+	import="java.util.ArrayList, User.model.vo.User, page.PageInfo" %>
 <%
 	ArrayList<User> list = (ArrayList)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
