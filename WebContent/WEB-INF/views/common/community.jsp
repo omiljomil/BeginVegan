@@ -1,5 +1,10 @@
+<%@page import="question.model.vo.Question"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+  	  ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("q");
+    %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -322,16 +327,30 @@ cursor: pointer;
        <button type="button" id="want-more-button" onclick="location.href='<%=request.getContextPath() %>/questionList.bo'" >더보기</button>
       <div id=want-list-title>문의 사항</div> 
       <ul>
-     <li class="want-list-QA">배송 비용은 얼마인가요?</li>
-     <div class="want-list-answer" ><p>Begin Vegan에서는 전지역 무료 배송 입니다.</p></div>
-     <li class="want-list-QA">비회원도 주문 가능한가요?</li>
-     <div class="want-list-answer"><p>Begin Vegan에서는 비회원은 주문이 불가합니다.</p></div>
-     <li class="want-list-QA">전화 주문도 가능한가요?</li>
-     <div class="want-list-answer"><p>Begin Vegan에서는 비회원은 전화 주문이 불가합니다.</p></div>
-     <li class="want-list-QA">배송 일자를 지정할 수 있나요?</li>
-     <div class="want-list-answer"><p>Begin Vegan 식품의 특성상 지정일 배송이 불가합니다.</p></div>
-     <li class="want-list-QA">제주도나 산간 지역도 배송이 가능하나요?</li>
-     <div class="want-list-answer"><p>Begin Vegan에서는 제품의 신선도를 위해 특정지역 배송이 불가합니다.</p></div>
+     <%if(list.isEmpty()){%>
+					<li class="want-list-QA">문의 사항이 없습니다.</li>
+				<%}else{ %>
+					<%for(Question q : list){ %>
+						<%if(loginUser == null){ %>
+							<li class="want-list-QA">(비밀글)<%= q.getQst_title() %></li>
+							<div class="want-list-answer">
+								<p>비밀글입니다.</p>
+							</div>
+						<%}else if(loginUser.getUserId().equals(q.getUser_id())||loginUser.getManager().equals("Y")){ %>
+						<li class="want-list-QA"><%= q.getQst_title() %></li>
+						<div class="want-list-answer">
+							
+							<p><%= q.getQst_cont() %></p>
+						</div>
+						<%}else{ %>
+						<li class="want-list-QA">(비밀글)<%= q.getQst_title() %></li>
+						<div class="want-list-answer">
+							<p>비밀글입니다.</p>
+							
+						</div>
+						<%} %>
+					<%} %>
+				<%} %>
       </ul>
     </section>
     <script>

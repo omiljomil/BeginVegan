@@ -8,8 +8,8 @@
 <style>
 #visual {
 	position: relative;
-	width: 960px;
-	height: 380px;
+	width: 955px;
+	height: 430px;
 	margin: 0 auto;
 	overflow: hidden;
 	box-shadow: 1px 5px 10px 2px #666;
