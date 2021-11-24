@@ -178,17 +178,17 @@
 	<% } else { %>
 		<!-- 맨 처음으로 -->
 		<input type="button" id="firstBtn"
-			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=1'"
+			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1'"
 			value="처음">
 		<script>
-			if(<%= pi.getCurrentPage() %> == 1) {
+			if(<%= pi.getCurrentPage() %> <= 1) {
 				$('#firstBtn').prop('disabled', true);
 				$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
 		</script>
 		<!-- 이전 페이지로 -->
 		<input type="button" id="beforeBtn"
-			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
 			value="이전">
 		<script>
 			if(<%= pi.getCurrentPage() %> <= 1) {
@@ -202,13 +202,13 @@
 		<input type="button" id="choosen" disabled value="<%= p %>">
 		<% } else { %>
 		<input type="button" id="numBtn"
-			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= p %>'"
+			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= p %>'"
 			value="<%= p %>">
 		<% } %>
 		<%  } %>
 		<!-- 다음 페이지로 -->
 		<input type="button" id="afterBtn"
-			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
 			value="다음">
 		<script>
 			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
@@ -218,10 +218,10 @@
 		</script>
 		<!-- 맨 끝으로 -->
 		<input type="button" id="lastBtn"
-			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getMaxPage() %>'"
+			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"
 			value="끝">
 		<script>
-			if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
 				$('#lastBtn').prop('disabled', true);
 				$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
 			}

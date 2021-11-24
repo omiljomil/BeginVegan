@@ -3,7 +3,6 @@ package manager.model.vo;
 import java.sql.Date;
 
 public class OrderManager {
-	private int rnum;
 	private int orderNo;
 	private String prodName;
 	private int amount;
@@ -11,16 +10,15 @@ public class OrderManager {
 	private Date orderDate;
 	private String userId;
 	private String receiver;
-//	private String address;
+	private String address;
 	private String phone;
-	private String status;
+	private int orderType;
 	
 	public OrderManager() {}
 
-	public OrderManager(int rnum, int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
-			String receiver, String phone, String status) {
+	public OrderManager(int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
+			String receiver, String address, String phone, int orderType) {
 		super();
-		this.rnum = rnum;
 		this.orderNo = orderNo;
 		this.prodName = prodName;
 		this.amount = amount;
@@ -28,39 +26,15 @@ public class OrderManager {
 		this.orderDate = orderDate;
 		this.userId = userId;
 		this.receiver = receiver;
+		this.address = address;
 		this.phone = phone;
-		this.status = status;
-	}
-	
-//	public OrderManager(int rnum, int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
-//			String receiver, String address, String phone, String status) {
-//		super();
-//		this.rnum = rnum;
-//		this.orderNo = orderNo;
-//		this.prodName = prodName;
-//		this.amount = amount;
-//		this.orderPrice = orderPrice;
-//		this.orderDate = orderDate;
-//		this.userId = userId;
-//		this.receiver = receiver;
-//		this.address = address;
-//		this.phone = phone;
-//		this.status = status;
-//	}
-
-	
-	public int getRnum() {
-		return rnum;
+		this.orderType = orderType;
 	}
 
-	public void setRnum(int rnum) {
-		this.rnum = rnum;
-	}
-	
 	public int getOrderNo() {
 		return orderNo;
 	}
-	
+
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
@@ -113,13 +87,13 @@ public class OrderManager {
 		this.receiver = receiver;
 	}
 
-//	public String getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(String address) {
-//		this.address = address;
-//	}
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public String getPhone() {
 		return phone;
@@ -129,18 +103,19 @@ public class OrderManager {
 		this.phone = phone;
 	}
 
-	public String getStatus() {
-		return status;
+	public int getOrderType() {
+		return orderType;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setOrderType(int orderType) {
+		this.orderType = orderType;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [rnum=" + rnum + "orderNo=" + orderNo + ", prodName=" + prodName + ", amount=" + amount + ", orderPrice="
+		return "OrderManager [orderNo=" + orderNo + ", prodName=" + prodName + ", amount=" + amount + ", orderPrice="
 				+ orderPrice + ", orderDate=" + orderDate + ", userId=" + userId + ", receiver=" + receiver
-				/* + ", address=" + address */ + ", phone=" + phone + ", status=" + status + "]";
+				+ ", address=" + address + ", phone=" + phone + ", orderType=" + orderType + "]";
 	}
+
 }
