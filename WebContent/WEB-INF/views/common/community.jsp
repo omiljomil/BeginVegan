@@ -165,9 +165,9 @@ padding-left:0px;
   width:370px;
 }
 #notice-list li a:hover {
-  color:black;
+  color: rgb(4, 88, 4);
   cursor: pointer;
-  text-decoration: underline;
+ 
 }
 
 #notice-list-title {
@@ -204,13 +204,23 @@ padding-left:0px;
  left:350px;
  bottom:30px;
  font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
   border: 1px solid darkgray;
-  width: 100px;
+  width: 105px;
   height: 30px;
   background-color: darkgray;
 }
-
+#review-more-button {
+  font-weight: 700;
+  position: relative;
+  font-size: 17px;
+  left:365px;
+  bottom:28px;
+  width: 100px;
+  height: 30px;
+  background-color: darkgray;
+  border: 1px solid darkgray;
+}
 
 #review-title {
   width: 340px;
@@ -236,7 +246,7 @@ padding-left:0px;
 #review-list {
   position: absolute;
   width:900px;
-  margin-left: 110px;
+  margin-left: 80px;
   top: 150px;
   display:flex;
 }
@@ -253,7 +263,7 @@ padding-left:0px;
   height: 336px;
 }
 .review-list-innerbox {
-  border-bottom: 2px solid gray;
+ 
   width: 300px;
   height: 200px;
 }
@@ -262,29 +272,25 @@ padding-left:0px;
   background-repeat: no-repeat;
   background-size: contain;
   display: block;
-  width: 290px;
-  height:198px;
+  width: 296px;
+  height:200px;
+ 
 }
+
+
 .review-list-text  {
+ border-top: 2px solid gray;
   justify-content: center;
   line-height: 40px;
   text-align: center;
   font-size:18px;
+  font-weight: bolder;
 }
-#review-more-button {
-  font-weight: 700;
-  position: absolute;
-  font-size: 18px;
-  top: 530px;
-  left: 1700px;
-  width: 150px;
-  height: 40px;
-  background-color: darkgray;
-  border: 1px solid darkgray;
-}
+
 .review-list-box:hover,
 button:hover{
 cursor: pointer;
+ color: rgb(4, 88, 4);
 }
 
 #review-write:hover,
@@ -390,6 +396,7 @@ cursor: pointer;
       <div id="review-titlebar">
         <div id="review-title" >상품 후기</div>
            <button id="review-write" type="button" onclick="reviewWrite();">후기 작성하기</button> 
+           <button type="button" id="review-more-button" onclick="location.href='<%=request.getContextPath()%>/reviewList.bo'">후기 더보기</button>
       </div>
       
      <script>
@@ -413,7 +420,7 @@ cursor: pointer;
 	             <div class="review-list-text"><a href="#">제목 : 대박 이것만 먹어요<br>***eqw2(아이디)<br>새싹 샐러드(상품정보)<br>2021-10-20</a></div>
 	          </div> --> 
      </div> 
-      <button type="button" id="review-more-button" onclick="location.href='<%=request.getContextPath()%>/reviewList.bo'">후기 더보기</button>
+  
   </section>
   </form>
   

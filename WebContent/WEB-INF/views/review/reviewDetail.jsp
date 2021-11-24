@@ -99,7 +99,9 @@ text-decoration: none;
   font-size: 15px;
   font-weight: 700;
 }
-
+#review-list{
+width:800px;
+}
 #review-table {
   position: relative;
   left: 150px;
@@ -237,7 +239,7 @@ form input {
 #delete-button{
 width:65px;
 position:absolute;
-top:1600px;
+top:1550px;
 left:1280px;
 font-weight:600;
 }
@@ -245,7 +247,7 @@ font-weight:600;
 #modify-button{
 width:65px;
 position:absolute;
-top:1600px;
+top:1550px;
 left:1170px;
 font-weight:600;
 }
@@ -264,11 +266,11 @@ font-weight:600;
         <div id="review">
                 <span id="review-title">상품후기</span>
                 <div id="route">
-                    <span><a href="#">홈</a></span>
+                    <span><a href='<%=request.getContextPath() %>/'>홈</a></span>
                     <span>-></span>
-                    <span><a href="#">커뮤니티</a></span>
+                    <span><a href='<%=request.getContextPath() %>/community.me'>커뮤니티</a></span>
                     <span>-></span>
-                    <span><a href="#">상품후기</a></span>
+                    <span><a href='<%=request.getContextPath() %>/reviewList.bo'>상품후기</a></span>
                 </div>
         </div>
      <form action="<%= request.getContextPath() %>/reviewUpdateForm.bo" method="post" id="inform"> 
@@ -286,12 +288,8 @@ font-weight:600;
             
             <table id="review-table" >
                 <tr>
-                 <th width="130px" height="50px">말머리</th>
-                 <th width="350px">제품</th>
-                </tr>
-                <tr>
                     <th  width="130px" height="50px">제목</th>
-                    <th><input type="hidden" name="title" value="<%=r.getReviewTitle() %>"><%=r.getReviewTitle() %></th>    
+                    <th width="380px" height="50px"><input type="hidden" name="title" value="<%=r.getReviewTitle() %>"><%=r.getReviewTitle() %></th>    
                 </tr>
                 <tr>
                     <th width="130px" height="50px"> 작성자</th>
@@ -306,7 +304,7 @@ font-weight:600;
          <div id="review-content"> 
                 <textarea id="notcie-content-text" cols="150" rows="20" readonly="readonly"name="content"><%=r.getReviewCon()%></textarea> 
         </div>
-         <%if (loginUser!=null&&loginUser.getUserName().equals(userName)){ %>
+         <%if (loginUser!=null&&loginUser.getUserName().equals(userName)||loginUser.getUserName().equals("운영자")){ %>
          <button type="submit" id="modify-button" class="system">수정</button>
          <button type="button" id="delete-button" class="system" onclick="deleteReview();" >삭제</button>
          <%} %>
@@ -340,12 +338,15 @@ font-weight:600;
              <%}else {%>
 		  	       <% for(int i=0; i<cList.size(); i++){ %>
          			<tr>
-		  	         		<td width="200px"><%=cList.get(i).getUserName() %><input id="commentNo"  type="hidden" value="<%=cList.get(i).getCommentNo()%>"></td>
+		  	         		<td width="200px"><%=cList.get(i).getUserName() %><input id="commentNo" type="hidden" value="<%=cList.get(i).getCommentNo()%>"></td>
 		  	         		<td width="300px"><%=cList.get(i).getCommentCont() %><input id="content" type="hidden" value="<%=cList.get(i).getCommentCont() %>"></td>
 		  	         		<td width="200px"><%=cList.get(i).getModifyDate() %></td>
-		  	         		<%if(loginUser.getUserName().equals(cList.get(i).getUserName())){ %>
-		  	         		<td width="70px"><input type="button" value="수정" onclick="updateComment(<%=cList.get(i).getCommentNo()%>);">
-		  	         		<td width="70px"><input type="button" value="삭제" onclick="deleteComment(<%=cList.get(i).getCommentNo()%>);">
+		  	         		<td><input type="hidden" id="comtUserId"value="<%=cList.get(i).getUserId() %>" ></td>
+		  	         		<td><input type="hidden" id="comtUserName"value="<%=cList.get(i).getUserName() %>" ></td>
+		  	         		<%if(loginUser.getUserName().equals("운영자")|| loginUser.getUserName().equals(cList.get(i).getUserName())){ %>
+		  	         		<td width="70px"><input type="button" value="수정" onclick="updateComment(<%=cList.get(i).getCommentNo()%>);"></td>
+		  	         		<td width="70px"><input type="button" value="삭제" onclick="deleteComment(<%=cList.get(i).getCommentNo()%>);"></td>
+		  	         		
 		  	         	<%} %>	
 		  	         </tr>
 		  	         <%} %>
@@ -410,8 +411,8 @@ font-weight:600;
     		   alert("댓글 내용을 입력해주세요.");
     	   }else{
     		   var writer='<%=loginUser.getUserId()%>';
-    	    	
     	    	 var bId=<%=r.getReviewNo()%>;
+    	    	 
     		   $.ajax({
     	    		url:'insertComment.bo',
     	    		data:{writer:writer,content:content,bId:bId},
@@ -420,29 +421,40 @@ font-weight:600;
     	    			$CommentTable=$('#CommentTable');
     	    			$CommentTable.html('');
     	    			
+    	    			
     	    			for(var i in data){
     	    				var $tr=$('<tr>');
     	    				var $writerTd=$('<td>').text(data[i].userName).css('width','200px');
+    	    				
+    	    				
     	    				var $contentTd=$('<td>').text(data[i].commentCont).css('width','300px');
     	    				var $dateTd=$('<td>').text(data[i].modifyDate).css('width','200px');
-    	    				var $updateBtn=$('<td>').html($('<input>').attr({
-    	    					type:'button',
-    	    					value:'수정'
-    	    				})).css('width','70px');
+    	    				var comtUserName=$('#comtUserName').val();
     	    				
-    	    				var $deleteBtn=$('<td>').html($('<input>').attr({
-    	    					type:'button',
-    	    					value:'삭제',
-    	    			        onclick:'deleteComment('+data[i].commentNo+');'
-    	    				})).css('width','70px');
-    	    			   $tr.append($writerTd);
-    	    			   $tr.append($contentTd);
-    	    			   $tr.append($dateTd);
-    	    			   $tr.append($updateBtn);
-    	    			   $tr.append($deleteBtn);
-    	    			   $CommentTable.append($tr);
+    	    				
+	    	    				/* var $updateBtn=$('<td>').html($('<input>').attr({
+	    	    					type:'button',
+	    	    					value:'수정',
+	    	    					onclick:'updateComment('+data[i].commentNo+');'
+	    	    				})).css('width','70px');
+	    	    				
+	    	    				var $deleteBtn=$('<td>').html($('<input>').attr({
+	    	    					type:'button',
+	    	    					value:'삭제',
+	    	    			        onclick:'deleteComment('+data[i].commentNo+');'
+	    	    				})).css('width','70px'); */
+	    	    			   $tr.append($writerTd);
+	    	    			   $tr.append($contentTd);
+	    	    			   $tr.append($dateTd);
+	    	    			  /*  $tr.append($updateBtn); */
+	    	    			   /* $tr.append($deleteBtn); */
+	    	    			   $CommentTable.append($tr);
+	    	    			  
+    	    				
     	    			}
     	    			$('#answer-content').val('');
+    	    			alert('댓글이 입력되었습니다.');
+    	    			window.location.reload();
     	    			
     	    		},
     	    		error:function(data){

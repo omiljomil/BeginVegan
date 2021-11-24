@@ -48,8 +48,9 @@ section {
 	display: flex;
 	justify-content: right;
 	bottom: 100px;
-	right: 150px;
-	font-size: 28px;
+	right: 200px;
+	font-size: 30px;
+	color:gray;
 }
 
 #route a {
