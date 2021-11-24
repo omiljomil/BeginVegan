@@ -202,26 +202,15 @@ a:visited {
 		margin: 0px;
 	}
 
-	#layer2{
 
-		background-color: lightgray;
-		display:none;
-		margin: 0px;		
-	}
-	#layer3{
-
-		background-color: lightgray;
-		display:none;
-		margin: 0px;		
-	}
-		
-		
 	#optionCount{
 		text-align: right;
 		width: 100px;
 		height: 40px;
 	}
-	
+	.icon:hover{
+		cursor: pointer;
+	}
 	#delIcon{
 		text-align: right;
 		width: 20px;
@@ -252,12 +241,13 @@ a:visited {
 		
 	}
 	
-	#plus1, #plus2, #plus3, #minus1, #minus2, #minus3{
+	.plus1, .minus1{
 		width: 30px;
 		height: 30px;
+		background-color: white;
 	}
 
-	#numBox1, #numBox2, #numBox3{
+	.numBox1{
 		width: 30px;
 		height: 30px;
 	}
@@ -432,8 +422,9 @@ a:visited {
 	
 			<button type="button" id="plus" class="add_product">+</button>
 			 <input type="text" id="numBox" name="numBox" min="1" max=10 value="1" readonly="readonly"/>
-			 <button type="button" id="minus" class="add_product">-</button>
+			 <button type="button" id="minus" class="add_product" onclick="minusCal(this);">-</button>
 			 <span id="price_product"></span>
+			 <input type="hidden" name="mainPrice" id="mainPrice" value="<%= p.getPrice() %>">
 		 </div>
 
 		 <div class="total_cart">
@@ -478,64 +469,294 @@ a:visited {
 	</div>
 	
 		<script>
+	
+		$(document).on('change','#selectBox',function(){
+			var add = $('#selectBox option:selected').text();
+			var optionPrice = 0;
+			
+			console.log(add); 
+			var option = 
+				"<ul class='optionUl'>"+
+					"<li class='optionFlex'>"+
+						"<div class='optionName'>"+$('#selectBox option:selected').html().split("   ")[0]+"</div>"+
+						"<button type='button' class='plus1' onclick='plusBtn(this);'>+</button>"+
+						" <input type='text' class='numBox1' name='count' min='1' max='10' value='1' readonly='readonly'/>"+
+						" <button type='button' class='minus1'  onclick='minusBtn(this);'>-</button>"+
+						 "<span class='optionPrice1'></span>"+
+						" <span class='icon'><i class='bi bi-x' id='delIcon1'></i></span>"+
+					"</li>"+
+				"</ul>"
 		
-		var mCnt = 1;
-		var changeCnt = 0;
-		//옵션 선택시 레이아웃 출력(기본 스타일은 display: none으로 하고 옵션 클릭시 show가 활성되어 화면에 출력됨)
-		$(document).ready(function(){
-			$('#selectBox').on('click', function(){
-				var option = $('#selectBox option:selected').val();
-			
-				console.log(option);
+			$("#addOpt").append(option);
 				
-				var mtrl = 
-				'<div id="layer1" name="add">'+
-					'<ul class="optionUl">'+
-						'<li class="optionFlex">'+
-							'<div class="optionName"></div>'+
-							'<button type="button" id="plus1" class="add_product">+</button>'+
-							' <input type="text" id="numBox1" min="1" max=10 value="1" readonly="readonly"/>'+
-							 '<button type="button" id="minus1" class="add_product">-</button>'+
-							'<span id="optionPrice1"></span>'+
-							 '<i class="bi bi-x" id="delIcon1"></i>'+
-						'</li>'+
-					'</ul>'+
-				 '</div>';
-				 if(option == "콩고기"){
-					 var selectOpHtml = $('div[name=add]:last');
-					selectOpHtml.after(mtrl);
-					$("#selectBox option:eq(0)").prop("selected", true);
-				 }
+				//x표 아이콘 클릭시 삭제
+				$('.icon').click(function(){
+					$(this).parent().parent().remove();
+				});
+		});
+		
+		function plusBtn(a){
+		      var num = $(a).parent().children().eq(2).val();
+		      num = Number(num);
+		      num +=1;
+		      console.log(num);
+		      $(a).parent().children().eq(2).val(num);
+		    var price = $('#selectBox option:selected').text().split("   ")[1];
+		    console.log(price);
+		    var total = price * num;
+		    console.log(total);
+		    $(a).parent().children().eq(4).html(total);
+		    
+		   }
+		   
+		   
+		   function minusBtn(a){
+		      var num = $(a).parent().children().eq(2).val();
+		      num = Number(num);
+		      if(num>1){
+		         num -=1;
+		         $(a).parent().children().eq(2).val(num);
+		         var price = $('#selectBox option:selected').text().split("   ")[1];
+				    console.log(price);
+				    var total = price * num;
+				    console.log(total);
+				    $(a).parent().children().eq(4).html(total);
+		      }
+		   }
+		   
+		   var num = 0;
+		   $(document).on('click','#plus',function(){
 
-			});
-			
-			
-			$(".addProduct").on("change",function(){
+			   num = Number(num);
+			     num +=1;
+				console.log(num);
+			    $('#numBox').val(num);     
+			    var price = $('#mainPrice').val();
+				console.log(price);
+				var total = price * num;
+				console.log(total);
+				$('#price_product').html(total);   
+
+		   });
+		   $(document).on('click','#minus',function(){
+
+			   num = Number(num);
+			   if(num > 1){
+			     num -=1;
+				console.log(num);
+			    $('#numBox').val(num);     
+			    var price = $('#mainPrice').val();
+				console.log(price);
+				var total = price * num;
+				console.log(total);
+				$('#price_product').html(total);   
+			   }
+
+		   });
+
+
+			$('#total_price').html(4);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+				//버튼클릭시 현재자신이 있는 곳의 input에 숫자 증감소 해야함
+			/* 
+				function fnCalCount(type, ths){
+		
+				    var $input = $(ths).parent().children().find('.numBox1');
+				    var tCount = Number($input.val());//input값을 숫자로 변환
+				    console.log(tCount);
+				    var tEqCount = Number($(ths).parent().children().find("input[name='count']").html());
+				    
+				    if(type=='p'){
+				        if(tCount > 0){
+				        	$(this).siblings('.numBox1').html(tCount+1)
+				        	$input.val(Number(tCount)+1);
+				        	optionPrice = tCount * $('#selectBox option:selected').html().split("   ")[1];
+				        	$(this).siblings().find(".optionPrice").html(optionPrice);
+				        }
+				    }else if(type == 'm'){
+				        if(tCount >0) {
+				        	$input.val(Number(tCount)-1);  
+				        }
+				    }
+				}
 				
-				mCnt = 1;
-				var addOpt = "<div><span>" + $("option:selected",this).text().split("   ")[0] +"</span>" +
-				 "	<span> " +
-				 "					<button type='button' id='plus1' class='add_product' onclick='plusCal("+ $("option:selected",this).text().split("   ")[1]+ ", \""+changeCnt+"\" , 1);' >+</button>" +
-					 "					 <input type='text' id='numBox1_"+changeCnt+"' min='1' max=10 value='1' style='width:50px;' readonly='readonly'/>" +
-					 "					 <button type='button' id='minus1' class='add_product' onclick='minusCal("+ $("option:selected",this).text().split("   ")[1]+ ", "+mCnt+");'>-</button>" +
-					 "			</span>" +
-					 "			<span id='matprice_"+changeCnt+"'> " + $("option:selected",this).text().split("   ")[1] +"</span></div>";
-				$("#addOpt").append(addOpt);
-				
-				changeCnt =  changeCnt +1;
-			});
-			
+				$("#selectBox option:eq(0)").prop("selected", true);
+
+		
+		
+		
+		$('#plus').click(function(){
+			console.log(12);
+			var count = 1;
+			if(count >= 1){
+				count++;
+				console.log(count);
+				$('#numBox').html(count);
+				var price = $('#mainPrice').val();
+				console.log(price);
+				var totalPrice = price * count;
+				$('#price_product').html(totalPrice);
+			}
 			
 		});
 		
+		 */
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	/* 	
+		var mCnt = 1;
+		var changeCnt = 0;
+		var changeCnt2 = 0;
+		$(document).ready(function(){
 			
-				//옵션 선택 후 옵션값을 초기화함--첫번째 옵션으로 선택됨
-				$("#selectBox option:eq(0)").prop("selected", true);
+			
+		//옵션
+
+		 $(".addProduct").on("change",function(){
+				
+		mCnt = 1;
+		var addOpt = "<div><span>" + $("option:selected",this).text().split("   ")[0] +"</span>" +
+		 "	<span> " +
+		 "		<button type='button' id='plus1' class='add_product' onclick='plusCal("+ $("option:selected",this).text().split("   ")[1]+ ", \""+changeCnt+"\" , 1);' >+</button>" +
+			 "	<input type='text' id='numBox1_"+changeCnt+"' min='1' max=10 value='1' style='width:50px;' readonly='readonly'/>" +
+			 "	<button type='button' id='minus1' class='add_product' onclick='minusCal("+ $("option:selected",this).text().split("   ")[1]+ ", "+changeCnt+");'>-</button>" +
+			 "	</span>" +
+			 "	<span id='matprice_"+changeCnt+"'> " + $("option:selected",this).text().split("   ")[1] +"</span>"
+			 "<i class='bi bi-x' id='delIcon1'>"+"</i>"+"</div>";
+		$("#addOpt").append(addOpt);
+				
+		changeCnt =  changeCnt +1;
+		});
+			
+			
+		}); 
+		
+		// 재료 수량 추가, 감소 함수 작성
+
+		function plusCal(vPrice,vId,vCnt) {
+			mCnt = mCnt + 1 ;
+			console.log("vPrice:" + vPrice  + "       vId: numBox1_"+vId + "       mCnt"+mCnt);
+			
+			
+			$("#numBox1_"+vId).val(mCnt);
+			$("#matprice_"+vId).text(parseInt(vPrice)*parseInt(mCnt));
+		} 
+		
+		function minusCal(vPrice,vId,vCnt) {
+			if(mCnt > 1){
+			mCnt = mCnt - 1 ;
+			console.log("vPrice:" + vPrice  + "       vId: numBox1_"+vId + "       mCnt"+mCnt);
+			}else{
+				mCnt = 1;
+			}
+			
+			$("#numBox1_"+vId).val(mCnt);
+			$("#matprice_"+vId).text(parseInt(vPrice)*parseInt(mCnt));
+		} 
+		
+		//메인상품 수량 추가, 삭제 금액
+		var count = 0;
+		var add_total_price = 0;
+	 	$(document).on('click', '#plus', function(){
+	 		if(count >=1){
+	 			count += 1;
+		 	
+	 		}else{
+	 			count = 1;
+	 		}
+	 		$('#numBox').val(count);
+	 		
+	 		add_total_price = count * 15000;
+		 	$('#price_product').text(add_total_price);	
+
+		 	sum = add_option_price1 + add_option_price2 + add_option_price3 + add_total_price;	
+		 	$('#total_price').text(sum);
+
+	 	});	
+
+	 	$(document).on('click', '#minus', function(){
+	 		if(count >= 2){
+	 			count -= 1;
+				 		
+	 		}else{
+	 			count = 1;
+	 		}		 		
+	 		$('#numBox').val(count);		 	
+	 	add_total_price = count * 15000;
+	 	$('#price_product').text(add_total_price);
+	 
+	 	
+	 	sum = add_option_price1 + add_option_price2 + add_option_price3 + add_total_price;	
+	 	$('#total_price').text(sum);
+	 	
+	 	
+	});	
+		
+		 */
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+			//옵션 선택 후 옵션값을 초기화함--첫번째 옵션으로 선택됨
+				
 		//	});
 		//});
 		
 		//옵션의 x버튼 클릭시 삭제(토글을 이용하여 숨기고 보여줌)
-		$('#delIcon1').hover(function(){
+	/* 	$('#delIcon1').hover(function(){
 			$(this).css('cursor','pointer');
 			$(document).ready(function(){
 				$('#delIcon1').on('click', function(){
@@ -546,7 +767,10 @@ a:visited {
 			});
 		
 		});
-		$('#delIcon2').hover(function(){
+		
+	 */	
+		
+		/* $('#delIcon2').hover(function(){
 			$(this).css('cursor','pointer');
 			$(document).ready(function(){
 				$('#delIcon2').on('click', function(){
@@ -565,22 +789,22 @@ a:visited {
 				});
 			});
 		
-		});
+		}); */
 
 		// 재료 수량 추가, 감소 함수 작성
 		
 		
-		function plusCal(vPrice,vId,vCnt) {
+		/* function plusCal(vPrice,vId,vCnt) {
 			mCnt = mCnt + 1 ;
 			console.log("vPrice:" + vPrice  + "       vId: numBox1_"+vId + "       mCnt"+mCnt);
 			
 			
 			$("#numBox1_"+vId).val(mCnt);
 			$("#matprice_"+vId).text(parseInt(vPrice)*parseInt(mCnt));
-		}
+		} */
 		
 		
-		$(document).ready(function(){
+		/* $(document).ready(function(){
 		//1. 옵션1
 		var sum = 0;
 		var count = 0;
@@ -744,11 +968,8 @@ a:visited {
 	 	
 	
 	 	
-	});
-		
+	}); */
 
-		 </script>
-		 <script type='text/javascript'>
 		  //<![CDATA[
 		    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
 		  //  Kakao.init('aa1819ed95de3c68d5c3cb1a5b174bcb');
@@ -780,7 +1001,8 @@ a:visited {
 		      //]
 		  //  });
 		  //]]>
-		</script>
+	
+	</script>
 		 
 
 </body>
