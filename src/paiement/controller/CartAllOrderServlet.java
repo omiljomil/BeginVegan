@@ -1,4 +1,4 @@
-package cart.controller;
+package paiement.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import cart.model.service.CartService;
-import cart.model.vo.Cart;
+import paiement.model.service.PaiementService;
+import paiement.model.vo.Paiement;
 
 /**
- * Servlet implementation class CartCheckOrderServlet
+ * Servlet implementation class CartAllOrderServlet
  */
-@WebServlet("/cartSelectOrder.me")
-public class CartSelectOrderServlet extends HttpServlet {
+@WebServlet("/cartAllOrder.me")
+public class CartAllOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartSelectOrderServlet() {
+    public CartAllOrderServlet() {
         super();
     }
 
@@ -37,11 +37,12 @@ public class CartSelectOrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		String[] carts = request.getParameterValues("one");
-		
-		ArrayList<Cart> list = new CartService().cartSelectOrder(userId, carts);
+		ArrayList<Paiement> list = new PaiementService().cartAllOrder(userId);
 		
 		String page = "";
+		
+		System.out.println(userId);
+		System.out.println(list);
 		
 		if(list != null) {
 			request.setAttribute("list", list);
@@ -60,4 +61,5 @@ public class CartSelectOrderServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
