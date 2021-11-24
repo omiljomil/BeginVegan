@@ -1,4 +1,4 @@
-package cart.controller;
+package paiement.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,20 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import cart.model.service.CartService;
 import cart.model.vo.Cart;
+import paiement.model.service.PaiementService;
+import paiement.model.vo.Paiement;
 
 /**
- * Servlet implementation class CartCheckDeleteServlet
+ * Servlet implementation class OrderServlet
  */
-@WebServlet("/cartCheckDelete.me")
-public class CartCheckDeleteServlet extends HttpServlet {
+@WebServlet("/cartOneOrder.me")
+public class CartOneOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartCheckDeleteServlet() {
+    public CartOneOrderServlet() {
         super();
     }
 
@@ -37,16 +38,27 @@ public class CartCheckDeleteServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		String[] carts = request.getParameterValues("one");
+		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
-		int result = new CartService().cartCheckDelete(userId, carts);
+		Cart c = new Cart();
+		c.setCartNo(cartNo);
+		c.setUserId(userId);
+		c.setProdNo(prodNo);
 		
-		if(result > 0) {
-			response.sendRedirect("cartList.me");
+		ArrayList<Paiement> list = new PaiementService().cartOneOrder(c);
+		
+		String page = "";
+		
+		if(list != null) {
+			request.setAttribute("list", list);
+			page = "WEB-INF/views/paiement/paiementPage.jsp";
 		} else {
-			request.setAttribute("msg", "선택 상품 삭제 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg", "주문페이지 로딩 실패");
+			page = "WEB-INF/views/common/errorPage.jsp";
 		}
+		
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**
