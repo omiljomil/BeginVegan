@@ -71,23 +71,25 @@ public class QuestionDAO {
 
 
 
-	public Question selectQList(Connection conn, String userId) {
+	public ArrayList<Question> selectQList(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Question q = null;
+		ArrayList<Question> list = null;
 		String query = prop.getProperty("selectQListUserId");
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				q = new Question(rset.getInt(2),
-								rset.getString(3),
-								rset.getString(4),
-								rset.getString(5),
-								rset.getDate(6),
-								rset.getDate(7),
-								rset.getString(8));
+			list = new ArrayList<Question>();
+			while(rset.next()) {
+				list.add(new Question(rset.getInt(1),
+						rset.getString(2),
+						rset.getString(3),
+						rset.getString(4),
+						rset.getDate(5),
+						rset.getDate(6),
+						rset.getString(7)
+				));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -96,7 +98,7 @@ public class QuestionDAO {
 			close(rset);
 			close(pstmt);
 		}
-		return q;
+		return list;
 	}
 
 
@@ -286,6 +288,51 @@ public class QuestionDAO {
 			
 		}
 		return result;
+	}
+
+
+
+	public int deleteQuestionComment(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteQuestionComment");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+
+
+
+	public int selectCommentListCount(Connection conn, int qst_no) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectCommentListCount");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qst_no);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return count;
 	}
 
 

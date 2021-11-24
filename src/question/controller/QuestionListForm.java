@@ -61,6 +61,13 @@ public class QuestionListForm extends HttpServlet {
 		
 		ArrayList<Question> qList=qService.selectQList(pi);
 
+		for(Question w : qList) {
+			int count = new QuestionService().selectCommentListCount(w.getQst_no());
+			String cont = w.getQst_title() + " (" + count + ") ";
+			w.setQst_title(cont);
+		}
+		
+		
 		String page=null;
 		
 		if(qList!=null) {

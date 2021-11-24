@@ -23,12 +23,12 @@ public class QuestionService {
 		return list;
 	}
 
-	public Question selectQList(String userId) {
+	public ArrayList<Question> selectQList(String userId) {
 		Connection conn = getConnection();
-		Question q = qDAO.selectQList(conn,userId);
+		ArrayList<Question> list = qDAO.selectQList(conn,userId);
 		close(conn);
 		
-		return q;
+		return list;
 	}
 
 	public int insertQuestion(Question q) {
@@ -101,6 +101,25 @@ public class QuestionService {
 		close(conn);
 		
 		return list;
+	}
+
+	public int deleteQuestionComment(int no) {
+		Connection conn = getConnection();
+		int result = qDAO.deleteQuestionComment(conn,no);
+		 if(result>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		 close(conn);
+		return result;
+	}
+
+	public int selectCommentListCount(int qst_no) {
+		Connection conn = getConnection();
+		int count = qDAO.selectCommentListCount(conn,qst_no);
+		close(conn);
+		return count;
 	}
 	
 }
