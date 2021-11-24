@@ -53,16 +53,16 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("rnum"),
-									rset.getInt("order_no"),
-									rset.getString("prod_name"),
-									rset.getInt("amount"),
-									rset.getInt("order_price"),
-									rset.getDate("order_date"),
-									rset.getString("user_id"),
-									rset.getString("receiver"),
-									rset.getString("phone"),
-									rset.getString("status"));
+				OrderManager o = new OrderManager(rset.getInt("order_no"),
+												  rset.getString("prod_name"),
+												  rset.getInt("amount"),
+												  rset.getInt("price"),
+												  rset.getDate("enroll_date"),
+												  rset.getString("user_id"),
+												  rset.getString("receiver"),
+												  rset.getString("address") + " " + rset.getString("de_address"),
+												  rset.getString("phone"),
+												  rset.getInt("order_type"));
 				
 				list.add(o);
 				
@@ -95,11 +95,36 @@ public class OrderManagerDAO {
 			}
 		}
 		
-		String query = "UPDATE ORDER_DETAIL SET STATUS = ? WHERE ORDER_NO IN (" + paras + ")";
+		int orderType = 0; 
+		switch(status) {
+		case "주문완료":
+			orderType = 1;
+			break;
+		case "배송준비":
+			orderType = 2;
+			break;
+		case "배송중":
+			orderType = 3;
+			break;
+		case "배송완료":
+			orderType = 4;
+			break;
+		case "교환처리":
+			orderType = 5;
+			break;
+		case "환불처리":
+			orderType = 6;
+			break;
+		case "주문취소":
+			orderType = 7;
+			break;
+		}
+		
+		String query = "UPDATE SHIPINFO SET ORDER_TYPE = ? WHERE ORDER_NO IN (" + paras + ")";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, status);
+			pstmt.setInt(1, orderType);
 			
 			for(int i = 0; i < orderNo.length; i++) {			
 				pstmt.setString(1 + (i + 1), orderNo[i]);
@@ -176,16 +201,16 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("ROWNUM"),
-									rset.getInt("order_no"),
-									rset.getString("prod_name"),
-									rset.getInt("amount"),
-									rset.getInt("order_price"),
-									rset.getDate("order_date"),
-									rset.getString("user_id"),
-									rset.getString("receiver"),
-									rset.getString("phone"),
-									rset.getString("status"));
+				OrderManager o = new OrderManager(rset.getInt("order_no"),
+												  rset.getString("prod_name"),
+												  rset.getInt("amount"),
+												  rset.getInt("price"),
+												  rset.getDate("enroll_date"),
+												  rset.getString("user_id"),
+												  rset.getString("receiver"),
+												  rset.getString("address") + " " + rset.getString("de_address"),
+												  rset.getString("phone"),
+												  rset.getInt("order_type"));
 				
 				list.add(o);
 			}
