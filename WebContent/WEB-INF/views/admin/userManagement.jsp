@@ -342,7 +342,7 @@ input[type="checkbox"] {
 		<script>
 			if(<%= pi.getCurrentPage() %> <= 1) {
 				$('#firstBtn').prop('disabled', true);
-				$('#firstBtn').css('cursor', 'text');
+				$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
 		</script>
 		<!-- 이전 페이지로 -->
@@ -352,7 +352,7 @@ input[type="checkbox"] {
 		<script>
 			if(<%= pi.getCurrentPage() %> <= 1) {
 				$('#beforeBtn').prop('disabled', true);
-				$('#beforeBtn').css('cursor', 'text');
+				$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
 		</script>
 		<!-- 숫자 버튼 -->
@@ -372,7 +372,7 @@ input[type="checkbox"] {
 		<script>
 			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
 				$('#afterBtn').prop('disabled', true);
-				$('#afterBtn').css('cursor', 'text');
+				$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
 		</script>
 		<!-- 맨 끝으로 -->
@@ -382,7 +382,7 @@ input[type="checkbox"] {
 		<script>
 			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
 				$('#lastBtn').prop('disabled', true);
-				$('#lastBtn').css('cursor', 'text');
+				$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
 		</script>
 	</div>
