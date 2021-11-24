@@ -429,5 +429,63 @@ private Properties prop=null;
 		}
 		return fList;
 	}
+	public Review selectBackReview(Connection conn, int reviewNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Review r=null;
+		
+		String query=prop.getProperty("selectBackReview");
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, reviewNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				  r=new Review(rset.getInt("RE_NO"),
+						            rset.getString("RE_TITLE"),
+						            rset.getString("RE_CONT"),
+						            rset.getString("USER_ID"),
+						            rset.getString("USER_NAME"),
+						            rset.getDate("ENROLL_DATE"),
+						            rset.getDate("MODIFY_DATE"),
+						            rset.getString("STATUS"));
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return r;
+	}
+
+	public Review selectNextReview(Connection conn, int reviewNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Review r=null;
+		
+		String query=prop.getProperty("selectNextReview");
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, reviewNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				  r=new Review(rset.getInt("RE_NO"),
+						            rset.getString("RE_TITLE"),
+						            rset.getString("RE_CONT"),
+						            rset.getString("USER_ID"),
+						            rset.getString("USER_NAME"),
+						            rset.getDate("ENROLL_DATE"),
+						            rset.getDate("MODIFY_DATE"),
+						            rset.getString("STATUS"));
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return r;
+	}
+
 	
 }	

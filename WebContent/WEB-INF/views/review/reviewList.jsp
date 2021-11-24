@@ -145,9 +145,10 @@ body {
   border-top:2px solid gray;
   text-align: center;
   line-height: 30px;
+ 
 }
 .review-list-text a {
-  font-weight:400;
+  font-weight:600;
   text-decoration:none;
   color: black;
   font-size: 16px;
@@ -243,7 +244,7 @@ body {
                        	<%} %>
 					<%} %>
 				</div>	
-                       <div class="review-list-text"><a href="#">제목 :<%=r.getReviewTitle() %><br><%=r.getUserName() %><br>새싹 샐러드(상품정보)<br><%=r.getEnrollDate() %></a></div>
+                       <div class="review-list-text"><a href="#">제목 :<%=r.getReviewTitle() %><br>작성자 : <%=r.getUserName() %><br>새싹 샐러드(상품정보)<br>작성일 :<%=r.getEnrollDate() %></a></div>
                     </div>
                    <%} %>
                <%} %>

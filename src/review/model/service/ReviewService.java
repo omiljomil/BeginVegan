@@ -153,6 +153,20 @@ public class ReviewService {
 	    close(conn);
 		return fList;	
 	}
+	public Review selectBackReview(int reviewNo) {
+		Connection conn=getConnection();
+		Review r=rDAO.selectBackReview(conn,reviewNo);
+		close(conn);
+		return r;
+	}
+	public Review selectNextReview(int reviewNo) {
+		Connection conn=getConnection();
+		Review r=rDAO.selectNextReview(conn,reviewNo);
+		close(conn);
+		return r;
+	}
+
+
 
 	
 	
