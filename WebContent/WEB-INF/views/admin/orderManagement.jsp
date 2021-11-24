@@ -181,7 +181,7 @@
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=1'"
 			value="처음">
 		<script>
-			if(<%= pi.getCurrentPage() %> <= 1) {
+			if(<%= pi.getCurrentPage() %> == 1) {
 				$('#firstBtn').prop('disabled', true);
 				$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
@@ -221,7 +221,7 @@
 			onclick="location.href='<%= request.getContextPath() %>/userManagement.no?currentPage=<%= pi.getMaxPage() %>'"
 			value="끝">
 		<script>
-			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+			if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
 				$('#lastBtn').prop('disabled', true);
 				$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
 			}
