@@ -105,33 +105,37 @@ section {
 	justify-content: center;
 	align-items: center;
 }
+/* -공지작성부분> */
+
 
 #next-or-back {
 	position: relative;
 	padding-left: 150px;
 	top: 150px;
+	border-collapse: collapse ;
 }
 
-#next-or-back a {
-	text-decoration: none;
-	color: black;
-}
 
 #next-or-back th {
 	border: 2px solid darkgray;
 	text-align: center;
 }
 
-#next-or-back a:hover {
-	color: rgb(4, 88, 4);
-	text-decoration: none;
+.table-a:hover{
+  color: rgb(4, 88, 4);
+  cursor:pointer;
+}
+.table-a{
+ display:inline-block;
+ margin-top:7px;
+ color:black;
 }
 
 #go-button {
 	position: relative;
 	width: 80px;
 	left: 750px;
-	top: 150px;
+	top: 250px;
 }
 
 #delete-button, #modify-button, #go-button {
@@ -200,7 +204,7 @@ section {
 				</table>
 				<div id="notice-date">
 					작성일 : <input type="hidden" name="date" value="<%=date%>"><%=date %></div>
-				<input type="hidden" name="no" value="<%=no %>" id="num"> <input
+				<input type="hidden" name="no" id="noticeNo" value="<%=no %>" id="num"> <input
 					type="hidden" size="50" name="writer" value="<%=userName %>">
 			</div>
 
@@ -230,9 +234,8 @@ section {
 		</form>
 
 
-	<!-- 	<div id="next-or-back">
-
-			<table>
+	<	<div id="next-or-back">
+<!-- <table>
 				<tr>
 					<th width="200px" height="40px"><a href="#">이전 글</a></th>
 					<th width="500px;"><a href="#"></a></th>
@@ -242,8 +245,97 @@ section {
 					<th height="40px"><a href="#">다음 글</a></th>
 					<th><a href="#"></a></th>
 				</tr>
-			</table>
-		</div> -->
+	</table> -->
+		</div> 
+	 <script>
+       $(document).ready(function(){
+    	   var noticeNo=$('#noticeNo').val();
+    	   //이전글
+	    	 $.ajax({
+		    		 url:"selectNoticeBack.me",
+			         data:{noticeNo:noticeNo},
+			         success:function(data){
+				       	 console.log(data);
+					       	  if(data!=null){
+						       	  console.log(data.noticeNo);
+						       	  $nextOrBack=$('#next-or-back');
+						       	  $table=$('#NBtable');
+						       	  $tr=$('<tr>');
+						       	  
+						       	  $th=$('<th>').css({
+						       		  'width':'200px',
+						       		  'height':'40px'
+						       	  }).text("이전 글");
+						       	  
+						       	  $backTh=$('<th>').css('width','500px');
+						       	  $a=$('<a>').attr('onclick','clickNotice('+data.noticeNo+')').text(data.noticeTitle).attr('class','table-a').css({
+						       		'text-decoration':'none'
+						       
+						       	  });
+						       	  
+						       	  $backTh.append($a);
+						       	  
+						       	  
+						       	  $tr.append($th);
+						       	  $tr.append($backTh);
+						       	  
+						       	  $nextOrBack.append($tr);
+			       		  }
+			       	  
+			         },
+			         error:function(data){
+			       	  console.log(data);
+			         }
+	    	 }); 
+    	 //다음 글
+	    	 $.ajax({
+	    		 url:"selectNoticeNext.me",
+		         data:{noticeNo:noticeNo},
+		         success:function(data){
+		       	  console.log(data);
+			       	  if(data!=null){
+			       	 	 console.log(data.noticeNo);
+			       	  
+				       	  $nextOrBack=$('#next-or-back');
+				       	  $table=$('#NBtable');
+				       	  $tr=$('<tr>');
+				       	  
+				       	  $th=$('<th>').css({
+				       		  'width':'200px',
+				       		  'height':'40px'
+				       	  }).text("다음 글");
+				       	  
+				       	  $backTh=$('<th>').css('width','500px');
+				       	  $a=$('<a>').attr('onclick','clickNotice('+data.noticeNo+')').text(data.noticeTitle).attr('class','table-a').css({
+					       		'text-decoration':'none'
+					       		
+					       	  });;
+				       	  
+				       	  $backTh.append($a);
+				       	  
+				       	  
+				       	  $tr.append($th);
+				       	  $tr.append($backTh);
+				       	  
+				       	  $nextOrBack.append($tr);
+			       	  	}
+			         },
+		         error:function(data){
+		       	  console.log(data);
+		         }
+				 }); 
+       });
+       
+       function clickNotice(no){
+    	   var noticeNo=no;
+    	   location.href='<%=request.getContextPath()%>/noticeDetail.me?me='+noticeNo;
+       }
+       
+       
+       
+       </script>
+       	
+		
 
 		<button type="button" id="go-button"
 			onclick="location.href='<%=request.getContextPath()%>/noticeList.me'">목록</button>
