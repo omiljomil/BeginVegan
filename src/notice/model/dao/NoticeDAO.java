@@ -204,4 +204,62 @@ public class NoticeDAO {
 		}
 		return list;
 	}
+	public Notice selectNoticeBack(Connection conn, int noticeNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Notice n=null;
+		
+		String query=prop.getProperty("selectNoticeBack");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				n=new Notice(rset.getInt("NOTICE_NO"),
+					     rset.getString("NOTICE_TITLE"),
+					     rset.getString("NOTICE_CONTENT"),
+					     rset.getString("USER_NAME"),
+					     rset.getDate("ENROLL_DATE"),
+					     rset.getDate("MODIFY_DATE"),
+					     rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return n;
+	}
+
+	public Notice selectNoticeNext(Connection conn, int noticeNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Notice n=null;
+		
+		String query=prop.getProperty("selectNoticeNext");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				n=new Notice(rset.getInt("NOTICE_NO"),
+					     rset.getString("NOTICE_TITLE"),
+					     rset.getString("NOTICE_CONTENT"),
+					     rset.getString("USER_NAME"),
+					     rset.getDate("ENROLL_DATE"),
+					     rset.getDate("MODIFY_DATE"),
+					     rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return n;
+	}
+	
 }

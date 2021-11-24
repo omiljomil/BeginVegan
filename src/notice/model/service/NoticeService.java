@@ -83,4 +83,18 @@ public class NoticeService {
         close(conn);
 		return list;
 	}
+	public Notice selectNoticeBack(int noticeNo) {
+		Connection conn=getConnection();
+		Notice n=nDAO.selectNoticeBack(conn,noticeNo);
+		close(conn);
+		return n;
+	}
+
+	public Notice selectNoticeNext(int noticeNo) {
+		Connection conn=getConnection();
+		Notice n=nDAO.selectNoticeNext(conn,noticeNo);
+		close(conn);
+		return n;
+	}
+	
 }	
