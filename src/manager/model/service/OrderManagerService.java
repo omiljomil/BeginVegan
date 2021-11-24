@@ -1,23 +1,20 @@
 package manager.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.commit;
-import static common.JDBCTemplate.getConnection;
-import static common.JDBCTemplate.rollback;
-
+import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import manager.model.dao.OrderManagerDAO;
 import manager.model.vo.OrderManager;
+import page.PageInfo;
 
 public class OrderManagerService {
 	private OrderManagerDAO omDAO = new OrderManagerDAO();
 	
-	public ArrayList<OrderManager> orderList() {
+	public ArrayList<OrderManager> orderList(PageInfo pi) {
 		Connection conn = getConnection();
 		
-		ArrayList<OrderManager> list = omDAO.orderList(conn);
+		ArrayList<OrderManager> list = omDAO.orderList(conn, pi);
 		
 		close(conn);
 		
@@ -38,14 +35,34 @@ public class OrderManagerService {
 		return result;
 	}
 	
-	public ArrayList<OrderManager> orderSearch(String cond, String search) {
+	public ArrayList<OrderManager> orderSearch(String cond, String search, PageInfo pi) {
 		Connection conn = getConnection();
 		
-		ArrayList<OrderManager> list = omDAO.orderSearch(conn, cond, search);
+		ArrayList<OrderManager> list = omDAO.orderSearch(conn, cond, search, pi);
 		
 		close(conn);
 		
 		return list;
+	}
+	
+	public int getListCount() {
+		Connection conn=getConnection();
+		
+		int listCount = omDAO.getListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	public int getSearchCount(String cond, String search) {
+		Connection conn=getConnection();
+		
+		int listCount = omDAO.getSearchCount(conn, cond, search);
+		
+		close(conn);
+		
+		return listCount;
 	}
 
 }
