@@ -182,7 +182,7 @@ section {
 
 			<div id="notcie-content">
 				<textarea id="content" name="content" cols="150" rows="21"
-					placeholder="이미지%내용입력"></textarea>
+					placeholder="이미지%내용입력" maxlength="12"></textarea>
 			</div>
 
 			<script type="text/javascript">

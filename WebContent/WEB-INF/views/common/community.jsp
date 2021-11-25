@@ -469,26 +469,22 @@ cursor: pointer;
 	    						
 	  		    				$innerBox=$('<div>').attr('class','review-list-innerbox');
 	  		    				$innerA=$('<a>').attr({
-	  		    				
 	  		    					style:"background-image: url(thumbnail_uploadFiles/"+data.fList[j].imgChangeName+")",
 	  		    					'class':'review-image'
-	  		    					
+	  
 	  		    				});
 	  		    				$textBox=$('<div>').attr('class','review-list-text');
 	  		    				$textA=$('<a>').html('제목 :'+data.rList[i].reviewTitle+'<br>'+'작성자: '+data.rList[i].userName+'<br>'+'작성일 :'+data.rList[i].modifyDate);
 	  		    				
-	  		    				
 	  		    				$textBox.append($textA);
 	  		    				
 	  		    			    $innerBox.append($innerA);
-	  		    				
 	  		    				
 	  		    				$listBox.append($innerBox);
 	  		    				$listBox.append($textBox);
 	  		    				
 	  		    				$reviewList.append($listBox);
 	    					  }
-		    				
 	    				}
 	    			}		
     			}
