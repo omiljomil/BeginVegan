@@ -1,7 +1,5 @@
 package cart.model.vo;
 
-import java.sql.Date;
-
 public class Cart {
 	private int cartNo;
 	private int prodNo;
@@ -10,12 +8,15 @@ public class Cart {
 	private int price;
 	private int total;
 	private String userId;
+	private String optionName;
+	private String optionCount;
 	
 	
 	public Cart() {}
 
 
-	public Cart(int cartNo, int prodNo, String prodName, int amount, int price, int total, String userId) {
+	public Cart(int cartNo, int prodNo, String prodName, int amount, int price, int total, String userId,
+			String optionName, String optionCount) {
 		super();
 		this.cartNo = cartNo;
 		this.prodNo = prodNo;
@@ -24,6 +25,21 @@ public class Cart {
 		this.price = price;
 		this.total = total;
 		this.userId = userId;
+		this.optionName = optionName;
+		this.optionCount = optionCount;
+	}
+	
+	public Cart(int prodNo, String prodName, int amount, int price, int total, String userId,
+			String optionName, String optionCount) {
+		super();
+		this.prodNo = prodNo;
+		this.prodName = prodName;
+		this.amount = amount;
+		this.price = price;
+		this.total = total;
+		this.userId = userId;
+		this.optionName = optionName;
+		this.optionCount = optionCount;
 	}
 
 
@@ -97,11 +113,31 @@ public class Cart {
 	}
 
 
+	public String getOptionName() {
+		return optionName;
+	}
+
+
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
+
+
+	public String getOptionCount() {
+		return optionCount;
+	}
+
+
+	public void setOptionCount(String optionCount) {
+		this.optionCount = optionCount;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Cart [cartNo=" + cartNo + ", prodNo=" + prodNo + ", prodName=" + prodName + ", amount=" + amount
-				+ ", price=" + price + ", total=" + total + ", userId=" + userId + "]";
+				+ ", price=" + price + ", total=" + total + ", userId=" + userId + ", optionName=" + optionName
+				+ ", optionCount=" + optionCount + "]";
 	}
-
 
 }

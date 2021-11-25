@@ -1,23 +1,26 @@
 package cart.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import cart.model.dao.CartDAO;
 import cart.model.vo.Cart;
+import cart.model.vo.Order;
 
 public class CartService {
 	private CartDAO cDAO = new CartDAO();
 	
-	public int insertCart(Cart cart, String[] option, int count1, int count2, int count3) {
+	public int insertCart(Cart cart, String[] name, String[] mcount) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.insertCart(conn, cart);
-//		int result2 = cDAO.insertOption(conn, cart, option, count1, count2, count3);
+		int result = cDAO.insertCart(conn, cart, name, mcount);
 		
-		if(result > 0/* && result2 > 0 */) {
+		if(result > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -28,6 +31,22 @@ public class CartService {
 		return result;
 	}
 
+	public int updateCart(Cart cart, String[] name, String[] mcount) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.updateCart(conn, cart, name, mcount);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+	
 	public ArrayList<Cart> cartList(String userId) {
 		Connection conn = getConnection();
 		
@@ -64,10 +83,10 @@ public class CartService {
 		return result;
 	}
 	
-	public int amountUpdate(String userId, int cartNo, int amount) {
+	public int amountUpdate(String userId, int cartNo, int amount, int total) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.amountUpdate(conn, userId, cartNo, amount);
+		int result = cDAO.amountUpdate(conn, userId, cartNo, amount, total);
 		
 		if(result > 0) {
 			commit(conn);
@@ -128,22 +147,6 @@ public class CartService {
 		return result;
 	}
 	
-	public int updateCart(Cart cart) {
-		Connection conn = getConnection();
-		
-		int result = cDAO.updateCart(conn, cart);
-		
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result;
-	}
-	
 	public int countCart(String userId, int pNo) {
 		Connection conn = getConnection();
 		
@@ -164,6 +167,16 @@ public class CartService {
 		return list;
 	}
 	
+	public ArrayList<Cart> cartSelectOrder(String userId, String[] carts) {
+		Connection conn = getConnection();
+		
+		ArrayList<Cart> list = cDAO.cartSelectOrder(conn, userId, carts);
+		
+		close(conn);
+		
+		return list;
+	}
+	
 	public ArrayList<Cart> cartAllOrder(String userId) {
 		Connection conn = getConnection();
 		
@@ -174,13 +187,19 @@ public class CartService {
 		return list;
 	}
 	
-	public ArrayList<Cart> cartSelectOrder(String userId, String[] carts) {
+	public int insertOrder(Order o) {
 		Connection conn = getConnection();
 		
-		ArrayList<Cart> list = cDAO.cartSelectOrder(conn, userId, carts);
+		int result = cDAO.insertOrder(conn, o);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		
-		return list;
+		return result;
 	}
 }
