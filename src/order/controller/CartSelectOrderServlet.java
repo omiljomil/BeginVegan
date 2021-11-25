@@ -1,4 +1,4 @@
-package paiement.controller;
+package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import paiement.model.service.PaiementService;
-import paiement.model.vo.Paiement;
+import order.model.service.OrderService;
+import order.model.vo.Order;
 
 /**
  * Servlet implementation class CartCheckOrderServlet
@@ -39,7 +39,7 @@ public class CartSelectOrderServlet extends HttpServlet {
 		
 		String[] carts = request.getParameterValues("one");
 		
-		ArrayList<Paiement> list = new PaiementService().cartSelectOrder(userId, carts);
+		ArrayList<Order> list = new OrderService().cartSelectOrder(userId, carts);
 		
 		String page = "";
 		
