@@ -151,16 +151,16 @@ public class ProductUpdateServlet extends HttpServlet {
 					
 					switch(j) {
 					case 0:
-						ph.setImgNo(imgNo1);
+						ph.setImgNo(imgNo4);
 						break;
 					case 1:
-						ph.setImgNo(imgNo2);
-						break;
-					case 2:
 						ph.setImgNo(imgNo3);
 						break;
+					case 2:
+						ph.setImgNo(imgNo2);
+						break;
 					case 3:
-						ph.setImgNo(imgNo4);
+						ph.setImgNo(imgNo1);
 						break;
 					}
 					
@@ -179,6 +179,7 @@ public class ProductUpdateServlet extends HttpServlet {
 						}
 						
 						fileList.add(ph);
+						System.out.println("fileList(i):"+fileList);
 					}	
 				//System.out.println("fileList:" + fileList);
 				//int result1 = new ProductService().deletePhoto(thumb, p);

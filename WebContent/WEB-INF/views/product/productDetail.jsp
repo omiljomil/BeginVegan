@@ -360,7 +360,7 @@ a:visited {
    <div id="productBuyArea">
 	<div class="product_detail">
 		<div id="product_mainPicture">
-			<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>" width="500px" height="620px">
+			<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>" width="500px" height="620px">
 		</div>
 	
 
@@ -444,15 +444,15 @@ a:visited {
 	
 	<div id="information">
 	<div id="detailInfo">
-	<img id="detailPicture" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>">
+	<img id="detailPicture" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>">
 	<%= p.getProdExple() %>
 	</div>
 	<div id="shipInfo">
-	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>" width="500px" height="400px">
+	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>" width="500px" height="400px">
 		
 	</div>
 	<div id="exchange_returnInfo">
-	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>" width="500px" height="400px">
+	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>" width="500px" height="400px">
 		
 	</div>
 	</div>
