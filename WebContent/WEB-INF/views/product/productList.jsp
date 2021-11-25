@@ -166,7 +166,7 @@ div {
 
 	<br class="clear">
 
-	<div class="jumbotron">
+	<%-- <div class="jumbotron" style="margin: 0;">--%>
 		<div class="container"></div>
 	</div>
 
