@@ -392,16 +392,18 @@ public class ProductDAO {
 		String query = prop.getProperty("updatePhoto");
 		
 		try {
-			for(int i = 0; i < fileList.size(); i++) {
-			pstmt = conn.prepareStatement(query);
 			
+			for(int i = 0; i < fileList.size(); i++) {
+				System.out.println("DAO i:"+i);
+			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, fileList.get(i).getImgName());
 			pstmt.setString(2, fileList.get(i).getImgChangeName());
 			pstmt.setString(3, fileList.get(i).getPath());
 			pstmt.setInt(4, fileList.get(i).getFileLevel());
-			pstmt.setInt(5, fileList.get(i).getType());
-			pstmt.setInt(6, fileList.get(i).getProdNo());
-
+			pstmt.setInt(5, fileList.get(i).getImgNo());
+			
+			System.out.println("img:"+ fileList.get(i).getImgName());
+			System.out.println("changeimg:"+ fileList.get(i).getImgChangeName());
 			result += pstmt.executeUpdate();
 			}
 
@@ -438,7 +440,6 @@ public class ProductDAO {
 		}finally {
 			close(pstmt);
 		}
-		System.out.println("상품카테고리:" + p.getCtgryName());
 		System.out.println("상품:" + result);
 		return result;
 	}
@@ -464,5 +465,47 @@ public class ProductDAO {
 		return result;
 	}
 
+	public int updateMaterial(Connection conn, Material m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMaterial");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getMtrlName());
+			pstmt.setString(2, m.getMtrlPrice());			
+			pstmt.setInt(3, m.getProdNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int deletePhoto(Connection conn, ArrayList<String> thumb, Product p) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deletePhoto");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, p.getProdNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	
 	
 }
