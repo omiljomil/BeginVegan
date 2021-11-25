@@ -1,5 +1,10 @@
+<%@page import="zzim.model.vo.zzim"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+		ArrayList<zzim> list = (ArrayList<zzim>)request.getAttribute("list");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,8 +115,11 @@
 			<li>찜 리스트</li>
 		</ul>
 		<div class="div_zzim">
+			
 			<div class="div_zzim_up">
+			
 				<table class="zzim_up_table">
+				
 					<tr>
 						<td style="width: 50px;"></td>
 						<td style="width: 150px;">이미지</td>
@@ -125,13 +133,21 @@
 			</div>
 			<div class="div_zzim_down">
 				<table class="zzim_down_table">
+				<%if(list.isEmpty()){ %>
+					<tr style="font-size: 30px;"><td style=" text-align: center;" width="771px;">찜 리스트가 없습니다.</td></tr>
+				<%}else{ %>
+					<%for(zzim z : list){ %>
+				
+				
 					<tr>
 						<td rowspan="3" style="width: 40px;"></td>
 						<td rowspan="3" style="width: 150px;">사진</td>
-						<td rowspan="3" style="width: 200px;">상품명</td>
-						<td rowspan="3" style="width: 90px;">판매가</td>
-						<td rowspan="3" style="width: 90px;">배송비</td>
-						<td rowspan="3" style="width: 90px;">합계</td>
+						<td rowspan="3" style="width: 200px;"><%= z.getProd_name() %></td>
+						<td rowspan="3" style="width: 90px;"><%=z.getPrice() %></td>
+						<td rowspan="3" style="width: 90px;">2500</td>
+						<td rowspan="3" style="width: 90px;"><%=z.getPostal() %>
+							<input type="hidden" id="userId" value="<%= z.getUserId()%>"/>
+						</td>
 						<td><input type="button" value="주문하기" class="zzimBtn"></td>
 					</tr>
 					<tr>
@@ -140,8 +156,11 @@
 					<tr>
 						<td><input type="button" value="삭제하기" class="zzimBtn"></td>
 					</tr>
+						<%} %>
+					<%} %>
 				</table>
 			</div>
+			
 		</div>
 
 		<div class="zzim_check_btn">
