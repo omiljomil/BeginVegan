@@ -410,7 +410,7 @@ a:visited {
 			 <div id="total_price"><%= p.getPrice() %></div>
 		 </div>
 		  <div class="buy_button">
-		 <input type="submit" id="add_button" value="장바구니">
+		 <input type="button" id="add_button" value="장바구니">
 		 <input type="button" id="buy_button" value="바로구매">
 		  </div>
 		  </div> 
@@ -594,6 +594,7 @@ a:visited {
 		  //]]>
 	
 	</script>
+	
 		 
 
 </body>
