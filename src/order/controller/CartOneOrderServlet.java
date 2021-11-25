@@ -1,4 +1,4 @@
-package paiement.controller;
+package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,20 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import paiement.model.service.PaiementService;
-import paiement.model.vo.Paiement;
+import cart.model.vo.Cart;
+import order.model.service.OrderService;
+import order.model.vo.Order;
 
 /**
- * Servlet implementation class CartAllOrderServlet
+ * Servlet implementation class OrderServlet
  */
-@WebServlet("/cartAllOrder.me")
-public class CartAllOrderServlet extends HttpServlet {
+@WebServlet("/cartOneOrder.me")
+public class CartOneOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartAllOrderServlet() {
+    public CartOneOrderServlet() {
         super();
     }
 
@@ -37,12 +38,17 @@ public class CartAllOrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		ArrayList<Paiement> list = new PaiementService().cartAllOrder(userId);
+		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+		
+		Cart c = new Cart();
+		c.setCartNo(cartNo);
+		c.setUserId(userId);
+		c.setProdNo(prodNo);
+		
+		ArrayList<Order> list = new OrderService().cartOneOrder(c);
 		
 		String page = "";
-		
-		System.out.println(userId);
-		System.out.println(list);
 		
 		if(list != null) {
 			request.setAttribute("list", list);

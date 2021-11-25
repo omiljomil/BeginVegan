@@ -1,4 +1,4 @@
-package paiement.model.dao;
+package order.model.dao;
 
 import static common.JDBCTemplate.close;
 
@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import cart.model.vo.Cart;
-import paiement.model.vo.Paiement;
+import order.model.vo.Order;
 
-public class PaiementDAO {
+public class OrderDAO {
 	private Properties prop = null;
 	
-	public PaiementDAO() {
+	public OrderDAO() {
 		prop = new Properties();
-		String fileName = PaiementDAO.class.getResource("/sql/paiement/paiement-query.properties").getPath();
+		String fileName = OrderDAO.class.getResource("/sql/order/order-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -31,10 +31,10 @@ public class PaiementDAO {
 		}
 	}
 	
-	public ArrayList<Paiement> cartOneOrder(Connection conn, Cart cart) {
+	public ArrayList<Order> cartOneOrder(Connection conn, Cart cart) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Paiement> list = null;
+		ArrayList<Order> list = null;
 		
 		String query = prop.getProperty("cartOneOrder");
 		
@@ -45,7 +45,7 @@ public class PaiementDAO {
 			pstmt.setInt(3, cart.getProdNo());
 			rset = pstmt.executeQuery();
 			
-			list = new ArrayList<Paiement>();
+			list = new ArrayList<Order>();
 			
 			if(rset.next()) {
 				int prodNo = rset.getInt("prod_no");
@@ -54,7 +54,7 @@ public class PaiementDAO {
 				int price = rset.getInt("price");
 				String userId = rset.getString("user_id");
 				
-				Paiement c = new Paiement(prodNo, prodName, amount, price, amount * price, userId);
+				Order c = new Order(prodNo, prodName, amount, price, amount * price, userId);
 				
 				list.add(c);
 			}
@@ -68,10 +68,10 @@ public class PaiementDAO {
 		return list;
 	}
 	
-	public ArrayList<Paiement> cartSelectOrder(Connection conn, String userId, String[] carts) {
+	public ArrayList<Order> cartSelectOrder(Connection conn, String userId, String[] carts) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Paiement> list = null;
+		ArrayList<Order> list = null;
 		
 		String paras = "";
 		
@@ -83,7 +83,7 @@ public class PaiementDAO {
 			}
 		}
 		
-		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE CART_NO IN (" + paras + ") ORDER BY CART_NO DESC";
+		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE CART_NO IN (" + paras + ")";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -94,7 +94,7 @@ public class PaiementDAO {
 		
 			rset = pstmt.executeQuery();
 			
-			list = new ArrayList<Paiement>();
+			list = new ArrayList<Order>();
 			
 			while(rset.next()) {
 				int prodNo = rset.getInt("prod_no");
@@ -103,7 +103,7 @@ public class PaiementDAO {
 				int price = rset.getInt("price");
 				userId = rset.getString("user_id");
 				
-				Paiement c = new Paiement(prodNo, prodName, amount, price, amount * price, userId);
+				Order c = new Order(prodNo, prodName, amount, price, amount * price, userId);
 				
 				list.add(c);
 			}
@@ -117,10 +117,10 @@ public class PaiementDAO {
 		return list;
 	}
 	
-	public ArrayList<Paiement> cartAllOrder(Connection conn, String userId) {
+	public ArrayList<Order> cartAllOrder(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Paiement> list = null;
+		ArrayList<Order> list = null;
 		
 		String query = prop.getProperty("cartAllOrder");
 		
@@ -129,7 +129,7 @@ public class PaiementDAO {
 			pstmt.setString(1, userId);
 			rset = pstmt.executeQuery();
 			
-			list = new ArrayList<Paiement>();
+			list = new ArrayList<Order>();
 			
 			while(rset.next()) {
 				int prodNo = rset.getInt("prod_no");
@@ -138,7 +138,7 @@ public class PaiementDAO {
 				int price = rset.getInt("price");
 				userId = rset.getString("user_id");
 				
-				Paiement c = new Paiement(prodNo, prodName, amount, price, amount * price, userId);
+				Order c = new Order(prodNo, prodName, amount, price, amount * price, userId);
 				
 				list.add(c);
 			}

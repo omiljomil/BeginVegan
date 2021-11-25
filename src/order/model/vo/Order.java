@@ -1,6 +1,6 @@
-package paiement.model.vo;
+package order.model.vo;
 
-public class Paiement {
+public class Order {
 	private int prodNo;
 	private String prodName;
 	private int amount;
@@ -8,9 +8,9 @@ public class Paiement {
 	private int total;
 	private String userId;
 	
-	public Paiement() {}
+	public Order() {}
 	
-	public Paiement(int prodNo, String prodName, int amount, int price, int total, String userId) {
+	public Order(int prodNo, String prodName, int amount, int price, int total, String userId) {
 		super();
 		this.prodNo = prodNo;
 		this.prodName = prodName;
