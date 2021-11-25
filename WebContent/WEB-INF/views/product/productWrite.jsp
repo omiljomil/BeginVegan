@@ -148,8 +148,9 @@
 						<option value="203">생선</option>		
 						<option value="204">야채</option>		
 						<option value="205">육류</option>
+						 -->
 					</select>
-					 -->
+					
 				</td>
 			</tr>
 			<tr>

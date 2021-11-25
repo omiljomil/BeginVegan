@@ -67,11 +67,23 @@ a:link {
 a:visited {
  color: black; text-decoration: none;
  }
+ .jumbotron {
+    background-color:white !important; 
+}
 
-.jumbotron{
-	background-color: white !important;
+/* .jumbotron {
+	padding : 0; !important
+	margin-bottom : 0; !important
+	background-color : none; !important
+	border-radius : none; !important
 
 }
+
+@media (min-width: 576px) {
+	.jumbotron {
+		padding : 0; !important
+	}
+} */
 
 .cateNav { 
 
@@ -344,12 +356,11 @@ a:visited {
 	  </ul>
   </div>
 
-	
    <!-- 상품 메인 사진 -->
    <div id="productBuyArea">
 	<div class="product_detail">
 		<div id="product_mainPicture">
-			<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>" width="500px" height="620px">
+			<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>" width="500px" height="620px">
 		</div>
 	
 
@@ -376,25 +387,25 @@ a:visited {
 			<div><%= p.getPrice() %></div>
 			<input type="hidden" name="price" value="<%= p.getPrice() %>">
 		</div>
-		<dl class="product_option">
+		<div class="product_option">
 		<!-- 옵션을 클릭하면 하단에 선택한 옵션이 출력되게 하기 -->
 		<!-- select동적제어로 검색해보기 (테이블)-->
 		<form action="<%= request.getContextPath() %>/insertCart.me" method="post">
 			<span>옵션</span>
 				<select id="selectBox"class="addProduct" name="addOption">
 				<% if(m != null){ %>
-				<option value="choice">선택</option>
+					<option value="choice">선택</option>
 					<% for(int i = 0; i < splitMaterial.length; i++){ %>					
 					<option value="<%= splitMaterial[i]  %>"><%= splitMaterial[i]  %>   <%= splitPrice[i] %></option>			
 					<% } %>
 				<% }else{ %>
 					<option>선택할 옵션이 없습니다.</option>
 				<% } %>	
-				</select>
+			</select>
 				
-				<div id="addOpt">
-				</div>
-		</dlv>
+			<div id="addOpt">
+			</div>
+		</div>
 		
 		<div id="cart">
 			<div id="product_name_select"><%= p.getProdName() %></div>	
@@ -410,7 +421,7 @@ a:visited {
 			 <div id="total_price"><%= p.getPrice() %></div>
 		 </div>
 		  <div class="buy_button">
-		 <input type="button" id="add_button" value="장바구니">
+		 <input type="submit" id="add_button" value="장바구니">
 		 <input type="button" id="buy_button" value="바로구매">
 		  </div>
 		  </div> 
@@ -433,15 +444,15 @@ a:visited {
 	
 	<div id="information">
 	<div id="detailInfo">
-	<img id="detailPicture" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>">
+	<img id="detailPicture" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>">
 	<%= p.getProdExple() %>
 	</div>
 	<div id="shipInfo">
-	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>" width="500px" height="400px">
+	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>" width="500px" height="400px">
 		
 	</div>
 	<div id="exchange_returnInfo">
-	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>" width="500px" height="400px">
+	<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>" width="500px" height="400px">
 		
 	</div>
 	</div>
@@ -467,33 +478,28 @@ a:visited {
 		
 			$("#addOpt").append(option);
 				
-		});
-		
-
+		});		
 		//x표 아이콘 클릭시 삭제
 		function icon(a){
 			
-				$(a).parent().parent().remove();
+			$(a).parent().parent().remove();
 				
-				if($(a).parent().children().eq(2).val() != 0){
-					//$(this).parent().children().eq(3).val(0);
-					 console.log("mainPrice:"+mainPrice);
+			if($(a).parent().children().eq(2).val() != 0){
+				//$(this).parent().children().eq(3).val(0);
+				 console.log("mainPrice:"+mainPrice);
 					 
-					 var total = $(a).parent().children().eq(5).html();
-					 console.log("total:"+total);
+				 var total = $(a).parent().children().eq(5).html();
+				 console.log("total:"+total);
 					
 					
-					mainPrice -= Number(total);
+				mainPrice -= Number(total);
 					
-					$('#total_price').html(mainPrice);
-					<%--mainPrice = <%= p.getPrice()%>--%>
-					//mainPrice = result;
-					total = 0;
+				$('#total_price').html(mainPrice);
+				<%--mainPrice = <%= p.getPrice()%>--%>
+				//mainPrice = result;
+				total = 0;
 			}
-			
-			
-		}
-		
+		}		
 		function plusBtn(a){
 		      var num = $(a).parent().children().eq(2).val();
 		      num = Number(num);
@@ -507,10 +513,8 @@ a:visited {
 		    console.log(total);
 		    $(a).parent().children().eq(5).html(total);
 			mainPrice += price;
-			 $('#total_price').html(mainPrice);
-		   
-		   }
-		   
+			 $('#total_price').html(mainPrice);		   
+		   }		   
 		   function minusBtn(a){
 		      var num = $(a).parent().children().eq(2).val();
 		      num = Number(num);
@@ -594,7 +598,6 @@ a:visited {
 		  //]]>
 	
 	</script>
-	
 		 
 
 </body>
