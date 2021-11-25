@@ -282,7 +282,7 @@ font-weight:600;
 	                   </a>
 	                  <input type="hidden" name="file"value="<%=f.get(0).getImgChangeName() %>">
 	          </div>   
-              <div id="product-title">상품:새싹새러드 8500원</div>
+              <div id="product-title"></div>
               <button><a href="#">상품 상세 정보</a></button>
             </div>
             
@@ -556,10 +556,8 @@ font-weight:600;
 	         error:function(data){
 	       	  console.log(data);
 	         }
-	 }); 
-    	 
-    	 
-       });
+	 	}); 
+    });
        
        function clickReview(no){
     	   var reviewNo=no;
