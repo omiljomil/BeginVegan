@@ -42,7 +42,7 @@
  			
 			<div id="option1">
 				<div class="optionDetail">
-					<div class="optionName">콩고기 추가</div>
+					<div class="optionName">콩고기</div>
 					<div class="optionChange">
 						<input type="button" id="minus1" class="minus_product" value="-" onclick="count('amount1', 'minus');"><!-- 
 						 --><input type="text" id="amount1" name="amount1" min="1" max=10 value="" readonly><!-- 
@@ -57,7 +57,7 @@
  			
 			<div id="option2">
 				<div class="optionDetail">
-					<div class="optionName">야채 추가</div>
+					<div class="optionName">야채</div>
 					<div class="optionChange">
 						<input type="button" id="minus2" class="minus_product" value="-" onclick="count('amount2', 'minus');"><!--
 						 --><input type="text" id="amount2" name="amount2" min="1" max=10 value="" readonly><!--
@@ -72,7 +72,7 @@
  			
 			 <div id="option3">
  				<div class="optionDetail">
-					<div class="optionName">소스 추가</div>
+					<div class="optionName">콩</div>
 					<div class="optionChange">
 						<input type="button" id="minus3" class="minus_product" value="-" onclick="count('amount3', 'minus');"><!--
 						 --><input type="text" id="amount3" name="amount3" min="1" max=10 value="" readonly><!--
@@ -80,6 +80,36 @@
 					</div>
 				</div>
 				<div id="priceDetail">가격 : <div id="price3"></div></div>
+<!-- 				<i class="bi bi-x" id="delIcon3"></i> -->
+			</div>
+			
+ 			<div id="line"></div>
+ 			
+			 <div id="option3">
+ 				<div class="optionDetail">
+					<div class="optionName">치즈</div>
+					<div class="optionChange">
+						<input type="button" id="minus4" class="minus_product" value="-" onclick="count('amount4', 'minus');"><!--
+						 --><input type="text" id="amount4" name="amount4" min="1" max=10 value="" readonly><!--
+						 --><input type="button" id="plus4" class="add_product" value="+" onclick="count('amount4', 'plus');">
+					</div>
+				</div>
+				<div id="priceDetail">가격 : <div id="price4"></div></div>
+<!-- 				<i class="bi bi-x" id="delIcon3"></i> -->
+			</div>
+			 
+ 			<div id="line"></div>
+ 			
+			 <div id="option3">
+ 				<div class="optionDetail">
+					<div class="optionName">연어</div>
+					<div class="optionChange">
+						<input type="button" id="minus5" class="minus_product" value="-" onclick="count('amount5', 'minus');"><!--
+						 --><input type="text" id="amount5" name="amount5" min="1" max=10 value="" readonly><!--
+						 --><input type="button" id="plus5" class="add_product" value="+" onclick="count('amount5', 'plus');">
+					</div>
+				</div>
+				<div id="priceDetail">가격 : <div id="price5"></div></div>
 <!-- 				<i class="bi bi-x" id="delIcon3"></i> -->
 			</div>
 			
@@ -108,8 +138,10 @@
 			
 		function sum(){
 			var optionSum1 = parseInt($('#amount1').val() * 5000);
-			var optionSum2 = parseInt($('#amount2').val() * 3000);
-			var optionSum3 = parseInt($('#amount3').val() * 1000);
+			var optionSum2 = parseInt($('#amount2').val() * 2000);
+			var optionSum3 = parseInt($('#amount3').val() * 2000);
+			var optionSum4 = parseInt($('#amount4').val() * 3000);
+			var optionSum5 = parseInt($('#amount5').val() * 4000);
 			var totalAmt = 0;
 			
 			
@@ -117,10 +149,14 @@
 			$('#price1').text(priceToString(optionSum1) + "원");
 			$('#price2').text(priceToString(optionSum2) + "원");
 			$('#price3').text(priceToString(optionSum3) + "원");
+			$('#price4').text(priceToString(optionSum4) + "원");
+			$('#price5').text(priceToString(optionSum5) + "원");
 			
 			totalAmt += parseInt($('#price1').text().replace(",", ""))
 							+ parseInt($('#price2').text().replace(",", ""))
-							+ parseInt($('#price3').text().replace(",", ""));
+							+ parseInt($('#price3').text().replace(",", ""))
+							+ parseInt($('#price4').text().replace(",", ""))
+							+ parseInt($('#price5').text().replace(",", ""));
 			
 			$('#total').text(priceToString(<%= c.getPrice() %> + totalAmt) + "원");
 		}

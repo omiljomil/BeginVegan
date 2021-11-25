@@ -10,7 +10,6 @@
 	
 	String[] splitMaterial=mtrlName.split(", ");
 	String[] splitPrice=mtrlPrice.split(", ");
-
 	String mPrice="";
 	for(int i = 0; i < splitMaterial.length; i++){
 		switch(splitMaterial[i]){
@@ -47,12 +46,7 @@
 
 
 <style>
-
-
-
 /* 헤더 부분 */
-
-
 	
 	.beginVegan{
 		text-align: center;
@@ -70,23 +64,18 @@ a:visited {
  .jumbotron {
     background-color:white !important; 
 }
-
 /* .jumbotron {
 	padding : 0; !important
 	margin-bottom : 0; !important
 	background-color : none; !important
 	border-radius : none; !important
-
 }
-
 @media (min-width: 576px) {
 	.jumbotron {
 		padding : 0; !important
 	}
 } */
-
 .cateNav { 
-
 	float: left;
 	width: 1200px; 
 	height: 50px; 
@@ -108,7 +97,6 @@ a:visited {
 	text-align: center; 
 	display:inline-block; 
 }
-
 .cateNav li a{
 	text-decoration: none;
 	color: black;
@@ -120,7 +108,6 @@ a:visited {
 .cateNav::after{
 	 clear:both;
 }
-
 	
 	#productBuyArea{
 		width: 1200px;
@@ -132,7 +119,6 @@ a:visited {
 		height: 700px;
 	}
 	.product_detail *{
-
 		width: 500px;
 		margin: 8px 0;
 		
@@ -140,7 +126,6 @@ a:visited {
 	#product_mainPicture{
 		float:left;
 		width: 50%;
-
 	}
 	
 	.infoArea{
@@ -148,7 +133,6 @@ a:visited {
 		width: 50%;
 		
 	}
-
 	#Detail_product_name{
 		display: inline-block;
 		width: 390px;
@@ -162,7 +146,6 @@ a:visited {
 		float: right;
 	}
 	
-
 	#Detail_product_summary{
 		font-size: 15px;
 	}
@@ -186,7 +169,6 @@ a:visited {
 	}
 	.optionUl *{
 		margin:0px;
-
 	}
 		
 	.optionFlex{
@@ -207,14 +189,11 @@ a:visited {
 	.optionFlex input{
 		text-align: center;
 	}
-
 	#layer1{
 		background-color: lightgray;
 		display:none;
 		margin: 0px;
 	}
-
-
 	#optionCount{
 		text-align: right;
 		width: 100px;
@@ -258,12 +237,10 @@ a:visited {
 		height: 30px;
 		background-color: white;
 	}
-
 	.numBox1{
 		width: 30px;
 		height: 30px;
 	}
-
 	#numBox{
 		width: 30px;
 		height: 30px;
@@ -316,7 +293,6 @@ a:visited {
 		background-color: rgb(65, 116, 77);
 		color: white;
 	}
-
 	.nav-link{
 		color: black;
 	}
@@ -329,7 +305,6 @@ a:visited {
 		display:block;
 		width: 900px;
 	}
-
 </style>
 </head>
 <body>
@@ -387,10 +362,10 @@ a:visited {
 			<div><%= p.getPrice() %></div>
 			<input type="hidden" name="price" value="<%= p.getPrice() %>">
 		</div>
-		<div class="product_option">
 		<!-- 옵션을 클릭하면 하단에 선택한 옵션이 출력되게 하기 -->
 		<!-- select동적제어로 검색해보기 (테이블)-->
 		<form action="<%= request.getContextPath() %>/insertCart.me" method="post">
+		<div class="product_option">
 			<span>옵션</span>
 				<select id="selectBox"class="addProduct" name="addOption">
 				<% if(m != null){ %>
@@ -424,9 +399,9 @@ a:visited {
 		 <input type="submit" id="add_button" value="장바구니">
 		 <input type="button" id="buy_button" value="바로구매">
 		  </div>
+	</form>
 		  </div> 
 	</div>	
-	</form>
 	
 	<!-- 상품 상세 설명 -->
 	
@@ -459,7 +434,6 @@ a:visited {
 	
 		<script>
 		var mainPrice = <%= p.getPrice()%>
-
 		$(document).on('change','#selectBox',function(){
 			var add = $('#selectBox option:selected').text();
  
@@ -564,8 +538,45 @@ a:visited {
 			      }
 		   });
 	
-
 		  
+		   $('#add_button').on('click', function() {
+			   var sub = new Array();
+			   var count = new Array();
+			   for(var i = 0; i < $('#addOpt').children().length; i++) {
+			     sub[i] = $('.optionFlex').eq(i).children().eq(0).text();
+			     count[i] = $('.optionFlex').eq(i).children().eq(2).text();
+			   }
+			   
+			   if(<%= loginUser %> != null) {
+				   $.ajax({
+					   url: 'insertCart.me',
+					   data: {userId:<%= loginUser.getUserId() %>, prodNo:<%= p.getProdNo() %>, amount: $('#numBox').val(), name:sub, count:count,
+						   total: $('#total_price').text()},
+					   type: 'post',
+					   success: function(data) {
+						   console.log(data);
+						   
+						   if(data > 0) {
+							   var bool = confirm('장바구니를 확인하시겠습니까?');
+							   
+							   if(bool){
+								   location.href='<%= request.getContextPath() %>/cartList.me';
+							   }
+						   } else {
+							   alert('장바구니 담기 실패');
+						   }
+					   },
+					   error: function(data) {
+						   console.log(data);
+					   }
+				   });
+			   } else {
+				   alert('회원만 이용 가능합니다.');
+				   location.href='<%= request.getContextPath() %>/loginForm.me';
+			   }
+			 });
+		   
+		   
 		    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
 		  //  Kakao.init('aa1819ed95de3c68d5c3cb1a5b174bcb');
 		    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.

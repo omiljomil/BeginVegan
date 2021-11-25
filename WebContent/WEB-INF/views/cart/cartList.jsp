@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="cart.model.vo.Cart, java.util.ArrayList, product.model.vo.*" %>
+    pageEncoding="UTF-8" import="cart.model.vo.Cart, java.util.ArrayList, product.model.vo.*, material.model.vo.*" %>
 <%
 	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
-	ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 %>
 <!DOCTYPE html>
 <html>
@@ -67,9 +66,9 @@
 	#table-line {width: 1100px; height: 5px; background: #7F7F7F;}
 	#list {margin-left: auto; margin-right: auto; height: 40px; width: 1100px; text-align: center;}
 	#list tr {border-bottom: 2px solid #CFCFCF;}
-	#list td:not(#nothing) {height: 130px;}
+	#list td:not(#nothing) {height: 100px;}
 	#list th {height: 50px;}
-	.optionList {color: gray; font-size: 14px; margin-bottom: 7px;}
+	.optionList {color: gray; font-size: 13px; margin-bottom: 7px;}
 	
 	#list a:link {text-decoration: none; color: black;}
 	#list a:visited {text-decoration: none; color: black;}
@@ -77,11 +76,11 @@
 	#list a:hover {text-decoration: none; color: black;}
 	#list div {display: inline-block;}
 	
-	.product {display: flex; vertical-align: middle;}
+	.product {display: flex; vertical-align: middle; justify-content: center; align-items: center;}
 	#productPhoto {height: 90px; width: 90px; vertical-align: middle;}
-	#product_detail {height: 90px; width: 270px; vertical-align: middle;}
-	.prodName {font-weight: bold;; margin-top: 2px; margin-bottom: 5px;}
- 	.prodName, .optionList, .optionChange  {vertical-align: middle; display: table-cell; width: 270px;}
+	#product_detail {display: flex; height: 100px; width: 400px; vertical-align: middle;}
+	.prodName {font-weight: bold; margin-bottom: 5px; margin-top: 20px;}
+ 	.prodName, .optionList, .optionChange  {vertical-align: middle; display: table-cell; width: 400px;}
 		
 	/* 하단 버튼 */
 	#space2 {height: 105px; text-align: center;}
@@ -146,41 +145,67 @@
 							</td>
 							<td>
 								<div id="product" class="product" name="product">
-									<div id="productPhoto" class="productPhoto">
-										<% for(int j = 0; j < fList.size(); j++) { %>
-											<% Photo ph = fList.get(j); %>
-											<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	
-												<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getCartNo() %>">
-													<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="90px" height="90px">
-												</a>
-											<% } %>
-										<% } %>
-									</div>
+<!-- 									<div id="productPhoto" class="productPhoto"> -->
+<%-- 										<% for(int j = 0; j < fList.size(); j++) { %> --%>
+<%-- 											<% Photo ph = fList.get(j); %> --%>
+<%-- 											<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	 --%>
+<%-- 												<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getCartNo() %>"> --%>
+<%-- 													<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="90px" height="90px"> --%>
+<!-- 												</a> -->
+<%-- 											<% } %> --%>
+<%-- 										<% } %> --%>
+<!-- 									</div> -->
 									<div id="product_detail" class="product_detail">
 				    					<div class="prodName" name="prodName" id="prodName<%= (list.size() - 1) - i %>">
 				    						<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getCartNo() %>"><%= list.get(i).getProdName() %></a>
 				    						<input type="hidden" name="prodName" id="prodName<%= (list.size() - 1) - i %>" value="<%= list.get(i).getProdName() %>">
 				    					</div>
 				    					<div class="optionList" name="optionList" id="optionList<%= (list.size() - 1) - i %>">
-				    						-
+				    						<%
+				    							
+					    						String[] opn = list.get(i).getOptionName().split(", ");
+					    						String[] opc = list.get(i).getOptionCount().split(", ");
+					    						int[] opcArr = new int[opc.length];
+					    						
+					    						for(int j = 0; j < opc.length; j++) {
+					    							opcArr[j] = Integer.parseInt(opc[j]);
+					    						}
+					    						String opArr = "";
+					    						
+					    						for(int j = 0; j < opn.length; j++) {
+					    							if(j == 0) {
+					    								opArr += "옵션 : " + opn[j] +  " - " + opcArr[j];
+					    							} else {
+					    								opArr += " / " + opn[j] +  " - " + opcArr[j];
+					    							}
+					    						}
+				    						%>
+				    							<%= opArr %>
 				    					</div>
-				    					<div class="optionChange" name="optionChange" id="optionChange<%= (list.size() - 1) - i %>">
-					    					<input type="button" name="option" id="option<%= (list.size() - 1) - i %>" value="옵션변경" onclick="optionPop('<%= list.get(i).getCartNo() %>');">
-				    					</div>
+<%-- 				    					<div class="optionChange" name="optionChange" id="optionChange<%= (list.size() - 1) - i %>"> --%>
+<%-- 					    					<input type="button" name="option" id="option<%= (list.size() - 1) - i %>" value="옵션변경" onclick="optionPop('<%= list.get(i).getCartNo() %>');"> --%>
+<!-- 				    					</div> -->
 									</div>
 								</div>
 							</td>
 							<td>
 								<div id="prod_price">
-									<div class="price" name="price" id="price<%= (list.size() - 1) - i %>"><%= list.get(i).getPrice() %>원</div>
+									<div class="price" name="price" id="price<%= (list.size() - 1) - i %>">
+										<%
+// 											for(int i = 0; i < opn.length; i++) {
+// 												if()
+// 											}
+										%>
+										<%= list.get(i).getPrice() %>
+									</div>
 									<input type="hidden" name="price" id="price<%= (list.size() - 1) - i %>" value="<%= list.get(i).getPrice() %>">
 								</div>
 							</td>
 							<td>
-				        		<input type="button" name="pbtn" id="minus<%= (list.size() - 1) - i %>" onclick="count('amount<%= (list.size() - 1) - i %>','minus');" value="─"><!--
+				        		<input type="button" name="pbtn" id="minus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','minus');" value="─"><!--
 				        		 --><input hidden="hidden"><input type="text" id="amount<%= (list.size() - 1) - i %>" name="amount" value="<%= list.get(i).getAmount() %>" oninput="return handleOnInput(this);" onchange="sum()"><!--
-								 --><input type="button" name="mbtn" id="plus<%= (list.size() - 1) - i %>" onclick="count('amount<%= (list.size() - 1) - i %>','plus');" value="┼">
-								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>');">
+								 --><input type="button" name="mbtn" id="plus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','plus');" value="┼">
+								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>');">
 							</td>
 							<td><div id="prod_sp">기본배송</div></td>
 							<td>
@@ -218,7 +243,7 @@
 				<% } else { %>
 					<div class="total" id="total_product_price"><div id="tpp_name" class="tpp">총 상품 금액</div><div id="tpp_conts" class="tpp"></div></div><!-- 
 					--><div class="total" id="total_price_bar"></div><!--
-					--><div class="total" id="total_shipping_price"><div id="tsp_name" class="tsp">총 배송비</div><div id="tsp_conts" class="tsp">0원</div></div><!--
+					--><div class="total" id="total_shipping_price"><div id="tsp_name" class="tsp">총 배송비</div><div id="tsp_conts" class="tsp">2500</div></div><!--
 					--><div class="total" id="total_price_bar"></div><!--
 					--><div class="total" id="total_payment_price"><div id="tpmp_name" class="tpmp">총 결제 금액</div><div id="tpmp_conts" class="tpmp"></div></div>
 				<% } %>
@@ -287,7 +312,7 @@
 // 				}
 			});
 			
-			function sum(){
+			function sum() {
 				
 				var totalAmt = 0;
 				
@@ -298,19 +323,19 @@
 					
 					// 체크되었을때만 금액을 합산
 					if($('#one' + i).prop("checked")) {						
-						totalAmt += parseInt($(price).text().replace(",", "")) * parseInt($(amount).val().replace(",", ""));
+						totalAmt += parseInt($(total).text());
 					}
 					
 					console.log("값 :" + totalAmt);
 					
-					
 					//.val(값) -> 엘리먼트의 벨류값 설정
-					$(price).text(priceToString($(price).text()));
-					$(total).text((priceToString(parseInt($(price).text().replace(",", "")) * parseInt($(amount).val().replace(",", "")))) + "원");
+					$(price).text($(price).text());
+// 					$(total).text((priceToString(parseInt($(price).text().replace(",", "")) * parseInt($(amount).val().replace(",", "")))) + "원");
+					console.log("토탈?? : " + $(total).text());
 				}
 			
-				$('#tpp_conts').text(priceToString(totalAmt) + "원");
- 				$('#tpmp_conts').text(priceToString(totalAmt) + "원");
+				$('#tpp_conts').text(totalAmt);
+ 				$('#tpmp_conts').text(totalAmt + 2500);
 			}
 			
 			function sum2() { // 이렇게도 사용할 수 있다 (대박..)
@@ -325,6 +350,8 @@
 			function priceToString(p) {
 			    return p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 			}
+			
+
 		</script>
 		
 		<script>
@@ -347,14 +374,15 @@
 				}
 			}
 			
-			function amountChange(amount, cartNo) {
-				var amountRes = document.getElementById(amount);
-				var amountValue = amountRes.value;
+			function amountChange(amount, total, cartNo) {
+				var amountValue = $('#' + amount).val();
+// 				var amountValue = amountRes.value;
+				var totalValue = $('#' + total).text();
 				
 				if(amountValue == '' || amountValue.length == 0) {
 					alert('수량을 입력하세요.');
 				} else {
-					location.href="<%= request.getContextPath() %>/amountUpdate.me?cartNo=" + cartNo + "&amount=" + amountValue;
+					location.href='<%= request.getContextPath() %>/amountUpdate.me?cartNo=' + cartNo + '&amount=' + amountValue + '&total=' + totalValue;
 				}
 			}
 			
@@ -455,20 +483,34 @@
 			}
 			
 			// 버튼으로 수량 추가/감소
-			function count(element, type)  {
+			function count(price, amount, total, type)  {
 				// 결과를 표시할 element
-				var resultElement = document.getElementById(element);
-				var count = resultElement.value;
+				var amountResult = document.getElementById(amount);
+				var count = amountResult.value;
+				
+				var priceResult = document.getElementById(price);
+				var price = Number(priceResult.innerText);
+				
+				var totalResult = document.getElementById(total);
+				var total = Number(totalResult.innerText);
+				
+				console.log(total);
+				console.log(price);
 				
 				if(type == 'minus' && count == 1){
 					// 변경 불가
 					alert("수량은 1 이상이어야 합니다.");
 				} else if(type == 'minus') {
-					resultElement.value = Number(resultElement.value) - 1;
+					amountResult.value = Number(amountResult.value) - 1;
+					total -= price;
+					totalResult.innerText = total;
 				} else if(type == 'plus') { 
-					resultElement.value = Number(resultElement.value) + 1;
+					amountResult.value = Number(amountResult.value) + 1;
+					total += price;
+					totalResult.innerText = total;
 				}
 				
+				   
 				sum();
 			}
 		</script>

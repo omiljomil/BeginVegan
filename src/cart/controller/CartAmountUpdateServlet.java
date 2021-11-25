@@ -36,8 +36,11 @@ public class CartAmountUpdateServlet extends HttpServlet {
 		
 		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
+		int total = Integer.parseInt(request.getParameter("total"));
 		
-		int result = new CartService().amountUpdate(userId, cartNo, amount);
+		System.out.println(total);
+		
+		int result = new CartService().amountUpdate(userId, cartNo, amount, total);
 		
 		if(result > 0) {
 			response.sendRedirect("cartList.me");

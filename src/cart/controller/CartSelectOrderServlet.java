@@ -1,4 +1,4 @@
-package order.controller;
+package cart.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
+import cart.model.service.CartService;
 import cart.model.vo.Cart;
-import order.model.service.OrderService;
-import order.model.vo.Order;
 
 /**
- * Servlet implementation class OrderServlet
+ * Servlet implementation class CartCheckCartServlet
  */
-@WebServlet("/cartOneOrder.me")
-public class CartOneOrderServlet extends HttpServlet {
+@WebServlet("/cartSelectOrder.me")
+public class CartSelectOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOneOrderServlet() {
+    public CartSelectOrderServlet() {
         super();
     }
 
@@ -38,21 +37,15 @@ public class CartOneOrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
-		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+		String[] carts = request.getParameterValues("one");
 		
-		Cart c = new Cart();
-		c.setCartNo(cartNo);
-		c.setUserId(userId);
-		c.setProdNo(prodNo);
-		
-		ArrayList<Order> list = new OrderService().cartOneOrder(c);
+		ArrayList<Cart> list = new CartService().cartSelectOrder(userId, carts);
 		
 		String page = "";
 		
 		if(list != null) {
 			request.setAttribute("list", list);
-			page = "WEB-INF/views/paiement/paiementPage.jsp";
+			page = "WEB-INF/views/cart/cartOrderPage.jsp";
 		} else {
 			request.setAttribute("msg", "주문페이지 로딩 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";

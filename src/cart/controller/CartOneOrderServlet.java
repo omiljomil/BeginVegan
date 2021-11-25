@@ -1,28 +1,30 @@
 package cart.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
 
 /**
- * Servlet implementation class CartOptionChangeServlet
+ * Servlet implementation class OrderServlet
  */
-@WebServlet("/cartOptionChange.me")
-public class CartOptionChangeServlet extends HttpServlet {
+@WebServlet("/cartOneOrder.me")
+public class CartOneOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOptionChangeServlet() {
+    public CartOneOrderServlet() {
         super();
     }
 
@@ -32,36 +34,30 @@ public class CartOptionChangeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-//		HttpSession session = request.getSession();
-//		String userId = ((User)session.getAttribute("loginUser")).getUserId();
+		HttpSession session = request.getSession();
+		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		String userId = request.getParameter("userId");
 		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
 		Cart c = new Cart();
-		c.setUserId(userId);
 		c.setCartNo(cartNo);
+		c.setUserId(userId);
+		c.setProdNo(prodNo);
 		
-		int result = new CartService().cartOptionUpdate(c);
+		ArrayList<Cart> list = new CartService().cartOneOrder(c);
 		
-		if(result > 0) {
-			response.setContentType("text/html; charset=euc-kr");
-			PrintWriter out = response.getWriter();
-			
-			String str = "";
-			str = "<script language='javascript'>";
-			str += "opener.window.location.reload();";
-			str += "self.close();";
-			str += "</script>";
-			
-			out.print(str);
-			out.flush();
-			out.close();
+		String page = "";
+		
+		if(list != null) {
+			request.setAttribute("list", list);
+			page = "WEB-INF/views/cart/cartOrderPage.jsp";
 		} else {
-			request.setAttribute("msg", "카트 옵션 변경 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg", "주문페이지 로딩 실패");
+			page = "WEB-INF/views/common/errorPage.jsp";
 		}
-	
+		
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**
