@@ -250,15 +250,15 @@ padding-left:0px;
 
 #review-list {
   position: absolute;
-  width:900px;
+  width:1100px;
   margin-left: 80px;
   top: 150px;
   display:flex;
 }
 #review-list h2{
- width:500px;
- margin-left: 560px;
- margin-right: 0px, auto;
+ width:600px;
+ margin-left: 640px;
+
 }
 
 .review-list-box {
@@ -459,13 +459,13 @@ cursor: pointer;
     			}
     			
     			if(data.rList.length==0){
-    			   $h2=$('<h2>').text('등록된 상품후기가 없습니다');
+    			   $h2=$('<h2>').text('등록된 상품후기가 없습니다').css('width','600px');
     			   $reviewList.append($h2);
     			}else{
 	    				for(var i in data.rList){
 	    					for(var j in data.fList){
 	    					  if(data.rList[i].reviewNo==data.fList[j].reviewNo){
-	    						  $listBox=$('<div>').attr('class','review-list-box').attr('onclick','clickReview('+data.rList[i].reviewNo+');')/* .hover($('.review-list-box').css('cursor','pointer'));  */
+	    						  $listBox=$('<div>').attr('class','review-list-box').attr('onclick','clickReview('+data.rList[i].reviewNo+');'); 
 	    						
 	  		    				$innerBox=$('<div>').attr('class','review-list-innerbox');
 	  		    				$innerA=$('<a>').attr({
@@ -474,7 +474,6 @@ cursor: pointer;
 	  		    					'class':'review-image'
 	  		    					
 	  		    				});
-	  		    				
 	  		    				$textBox=$('<div>').attr('class','review-list-text');
 	  		    				$textA=$('<a>').html('제목 :'+data.rList[i].reviewTitle+'<br>'+'작성자: '+data.rList[i].userName+'<br>'+'작성일 :'+data.rList[i].modifyDate);
 	  		    				
