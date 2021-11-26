@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart" %>
+	pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart, product.model.vo.*" %>
 <%
 	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
+ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 %>
 <%
 	int result = 0;
@@ -20,6 +21,11 @@
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
 <style>
       /*결제 페이지*/
+      table a:link {text-decoration: none; color: #909090;}
+		table a:visited {text-decoration: none; color: #909090;}
+		table a:active {text-decoration: none; color: #909090;}
+		table a:hover {text-decoration: none; color: #909090;}
+		
       .payment{
       position: realative;
       width: 1200px;
@@ -225,9 +231,18 @@
 
 					<% for(int i = 0; i < list.size(); i++) { %>
 						<tr>
-							<td style="height: 130px; border-bottom: 1px solid #E2E2E2">이미지</td>
+							<td style="height: 130px; border-bottom: 1px solid #E2E2E2">
+								<% for(int j = 0; j < fList.size(); j++) { %>
+									<% Photo ph = fList.get(j); %>
+									<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	
+										<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
+											<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
+										</a>
+									<% } %>
+								<% } %>
+							</td>
 							<td style="height: 130px; border: 1px solid #E2E2E2">
-								<b><%= list.get(i).getProdName() %></b>
+								<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>"><b><%= list.get(i).getProdName() %></b></a>
 								<br>
 								<%
 		    						String[] opn = list.get(i).getOptionName().split(", ");
@@ -556,8 +571,19 @@
 	                    data:{
 	                       userId: $('#userId').val(),
 	                       orderNo: new Date().getTime(),
-	                       prodName: '콩고기샐러드', 
-	                       price: 8000,
+	                       prodName:
+	                       	<%
+	                       		String prodNameStr = "";
+	                       		for(int i = 0; i < list.size(); i++) {
+	                       			if(i == 0) {
+	                       				prodNameStr += list.get(i).getProdName();
+	                       			} else {
+	                       				prodNameStr += ", " + list.get(i).getProdName();
+	                       			}
+	                       		}
+	                       	%>
+	                       	<%= prodNameStr %>, 
+	                       price: <%= result + 2500 %>,
 	                       receiver: $('#shipName').val(),
 	                       postal: $('#postal2').val(),
 	                       address: $('#address2').val(),
@@ -565,8 +591,14 @@
 	                       normalPhone:$('#normalPhone11').val()+$('#normalPhone22').val()+$('#normalPhone33').val(),
 	                       phone:$('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
 	                       message: $('#message').val(),
-	                       amount: 1
-	                       
+	                       amount: 
+		                       	<%
+		                       		int amountResult = 0;
+		                       		for(int i = 0; i < list.size(); i++) {
+		                       			amountResult += list.get(i).getAmount();
+		                       		}
+	                       		%>
+	                       		<%= amountResult %>
 	                    },
 	                 
 	                    success : function(data){

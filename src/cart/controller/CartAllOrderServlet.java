@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
+import product.model.service.ProductService;
+import product.model.vo.Photo;
 
 /**
  * Servlet implementation class CartAllOrderServlet
@@ -38,6 +40,7 @@ public class CartAllOrderServlet extends HttpServlet {
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
 		ArrayList<Cart> list = new CartService().cartAllOrder(userId);
+		ArrayList<Photo> fList = new ProductService().selectFList();
 		
 		String page = "";
 		
@@ -46,6 +49,7 @@ public class CartAllOrderServlet extends HttpServlet {
 		
 		if(list != null) {
 			request.setAttribute("list", list);
+			request.setAttribute("fList", fList);
 			page = "WEB-INF/views/cart/cartOrderPage.jsp";
 		} else {
 			request.setAttribute("msg", "주문페이지 로딩 실패");
