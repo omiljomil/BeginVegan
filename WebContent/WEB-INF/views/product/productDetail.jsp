@@ -539,20 +539,25 @@ a:visited {
 		   });
 	
 		  
-		   $('#add_button').on('click', function() {
+		   $('#add_button').click(function() {
 			   var sub = new Array();
 			   var count = new Array();
 			   for(var i = 0; i < $('#addOpt').children().length; i++) {
 			     sub[i] = $('.optionFlex').eq(i).children().eq(0).text();
-			     count[i] = $('.optionFlex').eq(i).children().eq(2).text();
+			     count[i] = $('.optionFlex').eq(i).children().eq(2).val();
+			     console.log('count[i] : ' + count[i]);
+			     console.log('sub[i] : ' + sub[i]);
 			   }
+			     console.log('count : ' + count);
+			     console.log('sub : ' + sub);
 			   
-			   if(<%= loginUser %> != null) {
+			   <% if(loginUser != null) { %>
 				   $.ajax({
 					   url: 'insertCart.me',
-					   data: {userId:<%= loginUser.getUserId() %>, prodNo:<%= p.getProdNo() %>, amount: $('#numBox').val(), name:sub, count:count,
+					   data: {prodNo:<%= p.getProdNo() %>, amount: $('#numBox').val(), sub:sub, count:count,
 						   total: $('#total_price').text()},
 					   type: 'post',
+					   traditional : true,
 					   success: function(data) {
 						   console.log(data);
 						   
@@ -570,10 +575,11 @@ a:visited {
 						   console.log(data);
 					   }
 				   });
-			   } else {
+			   <% } else { %>
 				   alert('회원만 이용 가능합니다.');
 				   location.href='<%= request.getContextPath() %>/loginForm.me';
-			   }
+			   <% } %>
+			  
 			 });
 		   
 		   
