@@ -373,7 +373,7 @@ cursor: pointer;
     <section id="notice-list">
 
       <button type="button" id="notice-more-button" onclick="location.href='noticeList.me'">더보기</button>
-      <%if(loginUser!=null&&loginUser.getUserName().equals("운영자")){%>
+      <%if(loginUser!=null&&loginUser.getManager().equals("Y")){%>
       <button type="button" id="notice-write-button" onclick="location.href='noticeWrite.me'">글작성하기</button>
       <% }%>
       <div id="notice-list-title">공지 사항</div>

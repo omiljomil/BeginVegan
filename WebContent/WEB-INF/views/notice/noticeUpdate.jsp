@@ -178,7 +178,7 @@ section {
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<th><%=loginUser.getUserName() %><input type="hidden"
+						<th>관리자<input type="hidden"
 							id="notice-text-title" name="writer"
 							value="<%=request.getAttribute("writer")%>"></th>
 					</tr>
