@@ -10,6 +10,7 @@
 	
 	String[] splitMaterial=mtrlName.split(", ");
 	String[] splitPrice=mtrlPrice.split(", ");
+
 	String mPrice="";
 	for(int i = 0; i < splitMaterial.length; i++){
 		switch(splitMaterial[i]){
@@ -46,7 +47,12 @@
 
 
 <style>
+
+
+
 /* 헤더 부분 */
+
+
 	
 	.beginVegan{
 		text-align: center;
@@ -61,21 +67,14 @@ a:link {
 a:visited {
  color: black; text-decoration: none;
  }
- .jumbotron {
-    background-color:white !important; 
+
+.jumbotron{
+	background-color: white !important;
+
 }
-/* .jumbotron {
-	padding : 0; !important
-	margin-bottom : 0; !important
-	background-color : none; !important
-	border-radius : none; !important
-}
-@media (min-width: 576px) {
-	.jumbotron {
-		padding : 0; !important
-	}
-} */
+
 .cateNav { 
+
 	float: left;
 	width: 1200px; 
 	height: 50px; 
@@ -97,6 +96,7 @@ a:visited {
 	text-align: center; 
 	display:inline-block; 
 }
+
 .cateNav li a{
 	text-decoration: none;
 	color: black;
@@ -108,6 +108,7 @@ a:visited {
 .cateNav::after{
 	 clear:both;
 }
+
 	
 	#productBuyArea{
 		width: 1200px;
@@ -119,6 +120,7 @@ a:visited {
 		height: 700px;
 	}
 	.product_detail *{
+
 		width: 500px;
 		margin: 8px 0;
 		
@@ -126,6 +128,7 @@ a:visited {
 	#product_mainPicture{
 		float:left;
 		width: 50%;
+
 	}
 	
 	.infoArea{
@@ -133,6 +136,7 @@ a:visited {
 		width: 50%;
 		
 	}
+
 	#Detail_product_name{
 		display: inline-block;
 		width: 390px;
@@ -146,6 +150,7 @@ a:visited {
 		float: right;
 	}
 	
+
 	#Detail_product_summary{
 		font-size: 15px;
 	}
@@ -169,6 +174,7 @@ a:visited {
 	}
 	.optionUl *{
 		margin:0px;
+
 	}
 		
 	.optionFlex{
@@ -189,11 +195,14 @@ a:visited {
 	.optionFlex input{
 		text-align: center;
 	}
+
 	#layer1{
 		background-color: lightgray;
 		display:none;
 		margin: 0px;
 	}
+
+
 	#optionCount{
 		text-align: right;
 		width: 100px;
@@ -237,10 +246,12 @@ a:visited {
 		height: 30px;
 		background-color: white;
 	}
+
 	.numBox1{
 		width: 30px;
 		height: 30px;
 	}
+
 	#numBox{
 		width: 30px;
 		height: 30px;
@@ -293,6 +304,7 @@ a:visited {
 		background-color: rgb(65, 116, 77);
 		color: white;
 	}
+
 	.nav-link{
 		color: black;
 	}
@@ -305,6 +317,7 @@ a:visited {
 		display:block;
 		width: 900px;
 	}
+
 </style>
 </head>
 <body>
@@ -331,6 +344,7 @@ a:visited {
 	  </ul>
   </div>
 
+	
    <!-- 상품 메인 사진 -->
    <div id="productBuyArea">
 	<div class="product_detail">
@@ -362,25 +376,25 @@ a:visited {
 			<div><%= p.getPrice() %></div>
 			<input type="hidden" name="price" value="<%= p.getPrice() %>">
 		</div>
+		<dl class="product_option">
 		<!-- 옵션을 클릭하면 하단에 선택한 옵션이 출력되게 하기 -->
 		<!-- select동적제어로 검색해보기 (테이블)-->
 		<form action="<%= request.getContextPath() %>/insertCart.me" method="post">
-		<div class="product_option">
 			<span>옵션</span>
 				<select id="selectBox"class="addProduct" name="addOption">
 				<% if(m != null){ %>
-					<option value="choice">선택</option>
+				<option value="choice">선택</option>
 					<% for(int i = 0; i < splitMaterial.length; i++){ %>					
 					<option value="<%= splitMaterial[i]  %>"><%= splitMaterial[i]  %>   <%= splitPrice[i] %></option>			
 					<% } %>
 				<% }else{ %>
 					<option>선택할 옵션이 없습니다.</option>
 				<% } %>	
-			</select>
+				</select>
 				
-			<div id="addOpt">
-			</div>
-		</div>
+				<div id="addOpt">
+				</div>
+		</dlv>
 		
 		<div id="cart">
 			<div id="product_name_select"><%= p.getProdName() %></div>	
@@ -396,12 +410,12 @@ a:visited {
 			 <div id="total_price"><%= p.getPrice() %></div>
 		 </div>
 		  <div class="buy_button">
-		 <input type="submit" id="add_button" value="장바구니">
+		 <input type="button" id="add_button" value="장바구니">
 		 <input type="button" id="buy_button" value="바로구매">
 		  </div>
-	</form>
 		  </div> 
 	</div>	
+	</form>
 	
 	<!-- 상품 상세 설명 -->
 	
@@ -434,6 +448,7 @@ a:visited {
 	
 		<script>
 		var mainPrice = <%= p.getPrice()%>
+
 		$(document).on('change','#selectBox',function(){
 			var add = $('#selectBox option:selected').text();
  
@@ -452,28 +467,33 @@ a:visited {
 		
 			$("#addOpt").append(option);
 				
-		});		
+		});
+		
+
 		//x표 아이콘 클릭시 삭제
 		function icon(a){
 			
-			$(a).parent().parent().remove();
+				$(a).parent().parent().remove();
 				
-			if($(a).parent().children().eq(2).val() != 0){
-				//$(this).parent().children().eq(3).val(0);
-				 console.log("mainPrice:"+mainPrice);
+				if($(a).parent().children().eq(2).val() != 0){
+					//$(this).parent().children().eq(3).val(0);
+					 console.log("mainPrice:"+mainPrice);
 					 
-				 var total = $(a).parent().children().eq(5).html();
-				 console.log("total:"+total);
+					 var total = $(a).parent().children().eq(5).html();
+					 console.log("total:"+total);
 					
 					
-				mainPrice -= Number(total);
+					mainPrice -= Number(total);
 					
-				$('#total_price').html(mainPrice);
-				<%--mainPrice = <%= p.getPrice()%>--%>
-				//mainPrice = result;
-				total = 0;
+					$('#total_price').html(mainPrice);
+					<%--mainPrice = <%= p.getPrice()%>--%>
+					//mainPrice = result;
+					total = 0;
 			}
-		}		
+			
+			
+		}
+		
 		function plusBtn(a){
 		      var num = $(a).parent().children().eq(2).val();
 		      num = Number(num);
@@ -487,8 +507,10 @@ a:visited {
 		    console.log(total);
 		    $(a).parent().children().eq(5).html(total);
 			mainPrice += price;
-			 $('#total_price').html(mainPrice);		   
-		   }		   
+			 $('#total_price').html(mainPrice);
+		   
+		   }
+		   
 		   function minusBtn(a){
 		      var num = $(a).parent().children().eq(2).val();
 		      num = Number(num);
@@ -538,7 +560,6 @@ a:visited {
 			      }
 		   });
 	
-		  
 		   $('#add_button').click(function() {
 			   var sub = new Array();
 			   var count = new Array();
@@ -548,8 +569,8 @@ a:visited {
 			     console.log('count[i] : ' + count[i]);
 			     console.log('sub[i] : ' + sub[i]);
 			   }
-			     console.log('count : ' + count);
-			     console.log('sub : ' + sub);
+			   console.log('count : ' + count);
+			   console.log('sub : ' + sub);
 			   
 			   <% if(loginUser != null) { %>
 				   $.ajax({
@@ -581,8 +602,7 @@ a:visited {
 			   <% } %>
 			  
 			 });
-		   
-		   
+		  
 		    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
 		  //  Kakao.init('aa1819ed95de3c68d5c3cb1a5b174bcb');
 		    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
@@ -615,6 +635,7 @@ a:visited {
 		  //]]>
 	
 	</script>
+	
 		 
 
 </body>
