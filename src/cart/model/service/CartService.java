@@ -15,10 +15,10 @@ import cart.model.vo.Order;
 public class CartService {
 	private CartDAO cDAO = new CartDAO();
 	
-	public int insertCart(Cart cart, String[] name, String[] mcount) {
+	public int insertCart(Cart cart, String[] name, String[] count) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.insertCart(conn, cart, name, mcount);
+		int result = cDAO.insertCart(conn, cart, name, count);
 		
 		if(result > 0) {
 			commit(conn);
