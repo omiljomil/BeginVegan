@@ -32,12 +32,6 @@ public class OrderChangeServlet extends HttpServlet {
 		String[] orderNo = request.getParameterValues("order");
 		String status = request.getParameter("orderStatus");
 		
-		System.out.println(status);
-		
-		for(int i = 0; i < orderNo.length; i++) {
-			System.out.println(orderNo[i]);
-		}
-		
 		int result = new OrderManagerService().changeOrder(orderNo, status);
 		
 		if(result > 0) {
