@@ -109,11 +109,9 @@
 				<div class="orderStatusChange">
 					<select id="orderStatus" name="orderStatus">
 						<option value="주문완료">주문완료</option>
-						<option value="배송준비">배송준비</option>
+						<option value="상품준비중">상품준비중</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료">배송완료</option>
-						<option value="교환처리">교환처리</option>
-						<option value="환불처리">환불처리</option>
 						<option value="주문취소">주문취소</option>
 					</select> 
 				</div><!-- 
@@ -164,32 +162,28 @@
 							<td>
 								<%
 									String status = "";
-									if(list.get(i).getOrderType() == 1) {
+									if(list.get(i).getOrderType() == 0) {
 										status = "주문완료";
 								%>
 										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 2) {
-										status = "배송준비";	
+								<%	} else if(list.get(i).getOrderType() == 1) {
+										status = "상품준비중";	
 								%>
 										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 3) {
+								<%	} else if(list.get(i).getOrderType() == 2) {
 										status = "배송중";	
 								%>
 										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 4) {
+								<%	} else if(list.get(i).getOrderType() == 3) {
 										status = "배송완료";	
 								%>
 										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 5) {
-										status = "교환처리";	
-								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 6) {
-										status = "환불처리";	
-								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 7) {
+								<%	} else if(list.get(i).getOrderType() == 4) {
 										status = "주문취소";	
+								%>
+										<%= status %>
+								<%	} else {
+										status = "관리자 문의";	
 								%>
 										<%= status %>
 								<% } %>
@@ -218,6 +212,7 @@
 					$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
 				}
 			</script>
+			
 			<!-- 이전 페이지로 -->
 			<input type="button" id="beforeBtn"
 				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
@@ -228,6 +223,7 @@
 					$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
 				}
 			</script>
+			
 			<!-- 숫자 버튼 -->
 			<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
 				<% if(p == pi.getCurrentPage()) { %>
@@ -238,6 +234,7 @@
 						value="<%= p %>">
 				<% } %>
 			<% } %>
+			
 			<!-- 다음 페이지로 -->
 			<input type="button" id="afterBtn"
 				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
@@ -248,6 +245,7 @@
 					$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
 				}
 			</script>
+			
 			<!-- 맨 끝으로 -->
 			<input type="button" id="lastBtn"
 				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"

@@ -61,7 +61,7 @@ public class OrderManagerDAO {
 												  rset.getDate("enroll_date"),
 												  rset.getString("user_id"),
 												  rset.getString("receiver"),
-												  rset.getString("address") + " " + rset.getString("de_address"),
+												  rset.getString("address"),
 												  rset.getString("phone"),
 												  rset.getInt("order_type"));
 				
@@ -99,25 +99,19 @@ public class OrderManagerDAO {
 		int orderType = 0; 
 		switch(status) {
 		case "주문완료":
+			orderType = 0;
+			break;
+		case "상품준비중":
 			orderType = 1;
 			break;
-		case "배송준비":
+		case "배송중":
 			orderType = 2;
 			break;
-		case "배송중":
+		case "배송완료":
 			orderType = 3;
 			break;
-		case "배송완료":
-			orderType = 4;
-			break;
-		case "교환처리":
-			orderType = 5;
-			break;
-		case "환불처리":
-			orderType = 6;
-			break;
 		case "주문취소":
-			orderType = 7;
+			orderType = 4;
 			break;
 		}
 		
@@ -209,7 +203,7 @@ public class OrderManagerDAO {
 												  rset.getDate("enroll_date"),
 												  rset.getString("user_id"),
 												  rset.getString("receiver"),
-												  rset.getString("address") + " " + rset.getString("de_address"),
+												  rset.getString("address"),
 												  rset.getString("phone"),
 												  rset.getInt("order_type"));
 				
