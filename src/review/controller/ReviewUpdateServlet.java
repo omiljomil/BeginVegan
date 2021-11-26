@@ -96,8 +96,10 @@ public class ReviewUpdateServlet extends HttpServlet {
 			  System.out.println(p);
 			 int result=new ReviewService().updateReview(r,p);
 			 	if(result>=2) {
+			 		System.out.println(imgName);
 					File delete=new File(savePath+imgName);
 					delete.delete();
+					
 					response.sendRedirect("reviewDetail.bo?bId="+reviewNo);
 					}else {
 							request.setAttribute("msg", "사진 게시판 수정 실패");
