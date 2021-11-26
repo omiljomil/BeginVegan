@@ -1,4 +1,4 @@
-package paiement.controller;
+package myPage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,53 +8,52 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import User.model.vo.User;
-import cart.model.vo.Cart;
-import paiement.model.service.PaiementService;
+import myPage.model.service.OrderListService;
 import paiement.model.vo.Paiement;
 
 /**
- * Servlet implementation class OrderServlet
+ * Servlet implementation class ChangeOrderListServlet
  */
-@WebServlet("/cartOneOrder.me")
-public class CartOneOrderServlet extends HttpServlet {
+@WebServlet("/deleteOrderList.pe")
+public class ChangeOrderListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOneOrderServlet() {
+    public ChangeOrderListServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+				// 페이징 처리에 필요한 변수
+				int listCount;
+				int currentPage;
+				int pageLimit;
+				int boardLimit;
+				int maxPage;
+				int startPage;
+				int endPage;
+				
+				OrderListService oService = new OrderListService();
+				// 페이징 처리 1단계
+				listCount = oService.getChangeListCount();
 		
-		HttpSession session = request.getSession();
-		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
-		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+		ArrayList<Paiement> list = new OrderListService().deleteListSelect();
+
 		
-		Cart c = new Cart();
-		c.setCartNo(cartNo);
-		c.setUserId(userId);
-		c.setProdNo(prodNo);
-		
-		ArrayList<Paiement> list = new PaiementService().cartOneOrder(c);
-		
-		String page = "";
-		
+		String page = null;
 		if(list != null) {
 			request.setAttribute("list", list);
-			page = "WEB-INF/views/paiement/paiementPage.jsp";
+			page = "WEB-INF/views/myPage/changeOrderList.jsp";
 		} else {
-			request.setAttribute("msg", "주문페이지 로딩 실패");
+			request.setAttribute("msg", "주문 내역 조회 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
 		}
 		
@@ -65,6 +64,7 @@ public class CartOneOrderServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

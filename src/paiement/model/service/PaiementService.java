@@ -1,45 +1,31 @@
 package paiement.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
-import cart.model.vo.Cart;
 import paiement.model.dao.PaiementDAO;
 import paiement.model.vo.Paiement;
 
 public class PaiementService {
-	private PaiementDAO paiePAO = new PaiementDAO();
 	
-	public ArrayList<Paiement> cartOneOrder(Cart cart) {
+	private PaiementDAO pDAO = new PaiementDAO();
+
+	public int insertPaiement(Paiement p) {
 		Connection conn = getConnection();
 		
-		ArrayList<Paiement> list = paiePAO.cartOneOrder(conn, cart);
+		int result = pDAO.insertPaiement(conn, p);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		
-		return list;
+		return result;
 	}
 	
-	public ArrayList<Paiement> cartSelectOrder(String userId, String[] carts) {
-		Connection conn = getConnection();
-		
-		ArrayList<Paiement> list = paiePAO.cartSelectOrder(conn, userId, carts);
-		
-		close(conn);
-		
-		return list;
-	}
-	
-	public ArrayList<Paiement> cartAllOrder(String userId) {
-		Connection conn = getConnection();
-		
-		ArrayList<Paiement> list = paiePAO.cartAllOrder(conn, userId);
-		
-		close(conn);
-		
-		return list;
-	}
+
 }

@@ -1,10 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, paiement.model.vo.Paiement"%>
+<% ArrayList<Paiement> list = (ArrayList)request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
 	.order_ship{
 		float: left; /*정렬*/
@@ -12,6 +21,7 @@
 	    height: 200px;
 	    margin-left: 30px;
 		margin-top: 30px;
+		margin-bottom: 30px;
 		font-size: 0;
 		padding: 0 0 25px 25px;
 		text-align: center;
@@ -104,16 +114,118 @@
 	.order_product_form{
 		margin-bottom: 50px;	
 	}
-	.order_product_report div{
-		border: 1px solid #E2E2E2; 
-		margion-bottom: 100px;
-		font-size: large;
-	}
 	.not_order_page{
 		font-size: 12px;
 		text-align: left;
 		margin-top: 10px;
 		margin-left: 25px;
+	}
+	.order_both{
+		margin-left: 40px;
+		width: 90%;
+        height: 230px;
+	}
+	.left{
+		 width: 77%;
+		 height: 230px;
+         float: left;
+         font-size: 15px;
+         border: 1px solid #E2E2E2;
+         border-radius: 10px;
+	}
+	
+	.right{
+		width: 23%;
+		height: 230px;
+        float: right;
+         font-size: 15px;
+         border: 1px solid #E2E2E2;
+         border-style: dashed;
+	}
+	
+
+	.order_left_table {
+ 		margin: 25px 20px 20px 20px;
+	}
+
+	.sub_order_left_table{
+		width: 90px;
+		height: 60px;
+		font-size: 14px;
+		text-align: left;
+	}
+	.sub_order_right_table{
+		width: 200px;
+		height: 60px;
+		font-size: 14px;
+		text-align: left;
+	}
+	
+	#shipBtn{
+	box-shadow: 3px 4px 0px 0px #3e7327;
+		background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+		background-color:#77b55a;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border:1px solid #4b8f29;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size: 13px;
+		padding:6px 10px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #5b8a3c;
+	}
+	#reorderBtn{
+		box-shadow: 3px 4px 0px 0px #3e7327;
+		background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+		background: rgb(60, 127, 68);
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border:1px solid #4b8f29;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size: 13px;
+		padding:6px 10px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #5b8a3c;
+	}
+	.rightBtn{
+		margin-left: 25px;
+		margin-top: 40px;
+	}
+	.sub_right_table{
+		text-align: left;
+		width: 100px;
+		height: 70px;
+	}
+		#orderName, #orderAmount, #orderPrice{
+		font-size: 13px;
+		font-family: 'Black Han Sans', sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
+		text-indent: 10px;
+	}
+	#orderDate{
+		font-size: 25px;
+		font-family: 'Black Han Sans', sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
+		font-weight: bold;
+		width: 140px;
+		height: 60px;
+		text-align: left;
+		text-indent: 10px;
+	}
+	#orderType {
+		font-size: 23px;
+		font-family: 'Black Han Sans', sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
+		font-weight: bold;
+		width: 140px;
+		height: 60px;
+		text-align: left;
 	}
 	
 </style>
@@ -122,7 +234,7 @@
 	<%@ include file = "../common/myPage.jsp" %>
 		<div class="order_ship">
 				<ul class="order_refer">
-					<li>주문 취소/반품/교환 내역</li>
+					<li>주문 취소 조회</li>
 				</ul>
 				<ul class="order_search">
 					<li><input type="text" id="product_search" size="53" maxlength="20" height="50px;" placeholder="주문한 상품을 검색해 보세요"></li>
@@ -133,11 +245,76 @@
        		<div class="order_product_title" style="width: 100%; position: relative; text-align: left;">
                 <p>주문 상품 정보</p>
 			</div>
+			<%if(list.isEmpty()) { %>
 				<ul>
-	           		<li class="not_order_page">- 취소/반품/교환 신청한 내역을 확일할 수 있습니다.</li>
+	           		<li class="not_order_page">- 취소 신청한 내역을 확일할 수 있습니다.</li>
 	           		<li class="not_order_page">- 해당 목록에 없는 상품은 문의하기를 통해 문의해 주세요.</li>
 				</ul>
+			<%} else {%>
+			<%		for(int i = 0; i <list.size(); i++) { %>
+					<div class="order_both">
+					<input type="hidden" id="orderNo" value="<%= list.get(i).getOrderNo() %>">
+		            <div class="left" style="margin-top: 30px;">
+		            	<table class="order_left_table">
+		            		<tr>
+								<td  colspan="2" class="sub_orderDate" id="orderDate"><%= list.get(i).getEnrollDate() %></td>
+								
+										<%
+					            			
+					            				String type="";
+					            				switch(list.get(i).getOrderType()) {
+					            				case 0:
+					            					type="주문 완료"; break;
+					            				case 1:
+					            					type="상품 준비중"; break;
+					            				case 2:
+					            					type="베송중"; break;
+					            				case 3: 
+					            					type="배송 완료"; break;
+					            				case 4:
+					            					type="주문 취소"; break;
+					            				default: 
+					            					type="관리자 문의";
+					            				}
+					            			
+					            			%>
+								
+								<td colspan="3" class="sub_order_right_table" id="orderType" style="text-indent: 15px;"><%= type %></td>
+		            		</tr>
+		            		<tr>
+		            			<td rowspan="5" style="height: 100px; width: 100px;"></td>
+		            			<td rowspan="5" style="height: 100px; width: 10px;"></td>
+		            			<td class="sub_order_left_table" id="orderName"><%= list.get(i).getProdName() %></td>
+		            			<td class="sub_order_right_table" id="orderAmount"><%= list.get(i).getAmount() %>개</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="sub_order_left_table"  id="orderPrice"><%= list.get(i).getPrice()%>원</td>
+		            			<td class="sub_order_right_table" id="orderAmount"><%= list.get(i).getAmount()%>개</td>
+		            		</tr>
+		            	</table>
+					</div>
+					<div class="right" style="margin-top: 30px;">
+						<div class="rightBtn">
+							<table class="right_table">
+								<tr>
+									<td class="sub_right_table"><input type="button" id="shipBtn" value="배송 조회" class="orderBtn"></td>
+								</tr>
+								<tr>
+									<td class="sub_right_table"><input type="button"  id="reorderBtn" value="상품 재주문" class="orderBtn"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<%		} %>
+			<% } %>
+			
+			
             </div>
+ <script>
+ 	console.log('#startDate1');
+ 	console.log('#endDate1');
+ </script>        
 	
 
 </body>

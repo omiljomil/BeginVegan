@@ -1,71 +1,182 @@
 package paiement.model.vo;
 
+import java.sql.Date;
+
 public class Paiement {
-	private int prodNo;
-	private String prodName;
-	private int amount;
-	private int price;
-	private int total;
+
 	private String userId;
-	
-	public Paiement() {}
-	
-	public Paiement(int prodNo, String prodName, int amount, int price, int total, String userId) {
+	private int orderType;
+	private String orderNo;
+	private String prodName;
+	private int price;
+	private String receiver;
+	private int postal;
+	private String address;
+	private String deAddress;
+	private String normalPhone;
+	private String phone;
+	private String message;
+	private Date enrollDate;
+	private int amount;
+
+	public Paiement() {
+	}
+
+	public Paiement(String userId, int orderType, String orderNo, String prodName, int price, String receiver,
+			int postal, String address, String deAddress, String normalPhone, String phone, String message,
+			Date enrollDate, int amount) {
 		super();
-		this.prodNo = prodNo;
-		this.prodName = prodName;
-		this.amount = amount;
-		this.price = price;
-		this.total = total;
 		this.userId = userId;
-	}
-	
-	public int getProdNo() {
-		return prodNo;
-	}
-	public void setProdNo(int prodNo) {
-		this.prodNo = prodNo;
-	}
-	
-	public String getProdName() {
-		return prodName;
-	}
-	public void setProdName(String prodName) {
+		this.orderType = orderType;
+		this.orderNo = orderNo;
 		this.prodName = prodName;
-	}
-	
-	public int getAmount() {
-		return amount;
-	}
-	
-	public void setAmount(int amount) {
+		this.price = price;
+		this.receiver = receiver;
+		this.postal = postal;
+		this.address = address;
+		this.deAddress = deAddress;
+		this.normalPhone = normalPhone;
+		this.phone = phone;
+		this.message = message;
+		this.enrollDate = enrollDate;
 		this.amount = amount;
 	}
 	
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
+	
+
+	public Paiement(int orderType, String orderNo, String prodName, int price, Date enrollDate, int amount) {
+		super();
+		this.orderType = orderType;
+		this.orderNo = orderNo;
+		this.prodName = prodName;
 		this.price = price;
+		this.enrollDate = enrollDate;
+		this.amount = amount;
 	}
-	
-	public int getTotal() {
-		return total;
+
+	public Paiement(int orderType) {
+		super();
+		this.orderType = orderType;
 	}
-	public void setTotal(int total) {
-		this.total = total;
-	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
+
+	public int getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(int orderType) {
+		this.orderType = orderType;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getProdName() {
+		return prodName;
+	}
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
+	public int getPostal() {
+		return postal;
+	}
+
+	public void setPostal(int postal) {
+		this.postal = postal;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDeAddress() {
+		return deAddress;
+	}
+
+	public void setDeAddress(String deAddress) {
+		this.deAddress = deAddress;
+	}
+
+	public String getNormalPhone() {
+		return normalPhone;
+	}
+
+	public void setNormalPhone(String normalPhone) {
+		this.normalPhone = normalPhone;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Date getEnrollDate() {
+		return enrollDate;
+	}
+
+	public void setEnrollDate(Date enrollDate) {
+		this.enrollDate = enrollDate;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public String toString() {
-		return "Paiement [prodNo=" + prodNo + ", prodName=" + prodName + ", amount=" + amount + ", price=" + price
-				+ ", total=" + total + ", userId=" + userId + "]";
+		return "Paiement [userId=" + userId + ", orderType=" + orderType + ", orderNo=" + orderNo + ", prodName="
+				+ prodName + ", price=" + price + ", receiver=" + receiver + ", postal=" + postal + ", address="
+				+ address + ", deAddress=" + deAddress + ", normalPhone=" + normalPhone + ", phone=" + phone
+				+ ", message=" + message + ", enrollDate=" + enrollDate + ", amount=" + amount + "]";
 	}
+
 }
