@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="product.model.vo.*"%>
-<% Product p = (Product)request.getAttribute("product"); %>
+<% 
+	ProductList pl = (ProductList)request.getAttribute("pl");
+	Photo pt = (Photo)request.getAttribute("pt");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -216,11 +219,11 @@
 					</tr>
 					<tr>
 						<td style="height: 130px; border-bottom: 1px solid #E2E2E2">이미지</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2"><%= p.getProdName() %></td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">판매가</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">수량</td>
+						<td style="height: 130px; border: 1px solid #E2E2E2">상품 정보</td>
+						<td style="height: 130px; border: 1px solid #E2E2E2">가격</td>
+						<td style="height: 130px; border: 1px solid #E2E2E2">1</td>
 						<td style="height: 130px; border: 1px solid #E2E2E2">2500</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">합계</td>
+						<td style="height: 130px; border: 1px solid #E2E2E2">총 가격</td>
 					</tr>
 					<tr>
 						<td colspan="5"></td>

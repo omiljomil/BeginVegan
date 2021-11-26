@@ -7,10 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import paiement.model.vo.Paiement;
+import product.model.vo.Photo;
+import product.model.vo.ProductList;
 
 public class PaiementDAO {
 	private Properties prop = null;
@@ -63,4 +67,59 @@ public class PaiementDAO {
 		return result;
 	}
 
+	public Photo selectPhotoPaiement(int pNo, Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		Photo pt = null;
+		
+		String query = prop.getProperty("selectPhotoPaiement");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				pt = new Photo(rset.getInt("IMG_NO"),
+							   rset.getInt("PROD_NO"),
+							   rset.getString("IMG_NAME"),
+							   rset.getString("IMG_CHANGE_NAME"),
+							   rset.getString("PATH"),
+							   rset.getInt("FILE_LEVEL"),
+							   rset.getInt("TYPE"),
+							   rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return pt;
+	}
+
+
+
+//	public int selectPListPaiement(Connection conn, ProductList pl) {
+	/*
+	 * PreparedStatement pstmt = null; ResultSet rset = null; ProductList pl = null;
+	 * int result = 0;
+	 * 
+	 * String query = prop.getProperty("selectPListPaiement"); // /// try { // pstmt
+	 * = conn.prepareStatement(query); // pstmt.setInt(1, pl.getProdNo());
+	 * 
+	 * rset = pstmt.executeQuery(); if(rset.next()) { // result = new ProductList(
+	 * // rset.getInt("PROD_NO"), // rset.getString("PROD_NAME"), //
+	 * rset.getInt("PRICE"));
+	 * 
+	 * }
+	 * 
+	 * 
+	 * } catch (SQLException e) { e.printStackTrace(); } finally { close(pstmt); }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * return result; }
+	 */
 }

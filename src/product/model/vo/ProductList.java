@@ -46,7 +46,14 @@ public class ProductList {
 
 		
 	}
-
+	
+	
+	public ProductList(int prodNo, String prodName, int price) {
+		super();
+		this.prodNo = prodNo;
+		this.prodName = prodName;
+		this.price = price;
+	}
 
 	public String getShortInfo() {
 		return shortInfo;

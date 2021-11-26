@@ -53,6 +53,16 @@ public class Paiement {
 		this.enrollDate = enrollDate;
 		this.amount = amount;
 	}
+	
+	
+
+	public Paiement(String userId, String prodName, int price, int amount) {
+		super();
+		this.userId = userId;
+		this.prodName = prodName;
+		this.price = price;
+		this.amount = amount;
+	}
 
 	public Paiement(int orderType) {
 		super();

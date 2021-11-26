@@ -357,6 +357,7 @@ a:visited {
 	<div class="infoArea">
 		<span id="Detail_product_name"><%= p.getProdName() %></span>
 		<input type="hidden" name="prodName" value="<%= p.getProdName() %>">
+		<input type="hidden" name="pNo" value="<%= p.getProdNo() %>">
 		
 	<!-- 공유하기 버튼을 클릭하면 하단에 공유가능한 사이트 아이콘 뜨게 하고 클릭하면 공유할 수 있게 하기 -->
 		
@@ -407,7 +408,7 @@ a:visited {
 
 		 <div class="total_cart">
 			 <div id="total_price_title" name="totalPrice">총 주문 금액</div>
-			 <div id="total_price"><%= p.getPrice() %></div>
+			 <div id="total_price" name="totalPrice"><%= p.getPrice() %></div>
 		 </div>
 		  <div class="buy_button">
 		 <input type="submit" id="add_button" value="장바구니">
@@ -487,7 +488,7 @@ a:visited {
 					
 					$('#total_price').html(mainPrice);
 					<%--mainPrice = <%= p.getPrice()%>--%>
-					//mainPrice = result;
+					/* mainPrice = result; */
 					total = 0;
 			}
 			
