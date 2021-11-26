@@ -101,7 +101,7 @@ public class OrderManagerDAO {
 		case "주문완료":
 			orderType = 0;
 			break;
-		case "상품 준비중":
+		case "상품준비중":
 			orderType = 1;
 			break;
 		case "배송중":
