@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="cart.model.vo.Cart, java.util.ArrayList, product.model.vo.*, material.model.vo.*" %>
 <%
 	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
+	ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 %>
 <!DOCTYPE html>
 <html>
@@ -76,11 +77,11 @@
 	#list a:hover {text-decoration: none; color: black;}
 	#list div {display: inline-block;}
 	
-	.product {display: flex; vertical-align: middle; justify-content: center; align-items: center;}
-	#productPhoto {height: 90px; width: 90px; vertical-align: middle;}
-	#product_detail {display: flex; height: 100px; width: 400px; vertical-align: middle;}
+	.product {display: flex; vertical-align: middle; justify-content: center; align-items: center; width: 350px;}
+	#productPhoto {height: 80px; width: 80px; margin-right: 10px; vertical-align: middle;}
+	#product_detail {display: flex; height: 100px; width: 200px; vertical-align: middle;}
 	.prodName {font-weight: bold; margin-bottom: 5px; margin-top: 20px;}
- 	.prodName, .optionList, .optionChange  {vertical-align: middle; display: table-cell; width: 400px;}
+ 	.prodName, .optionList, .optionChange  {vertical-align: middle; display: table-cell; width: 200px;}
 		
 	/* 하단 버튼 */
 	#space2 {height: 105px; text-align: center;}
@@ -145,16 +146,16 @@
 							</td>
 							<td>
 								<div id="product" class="product" name="product">
-<!-- 									<div id="productPhoto" class="productPhoto"> -->
-<%-- 										<% for(int j = 0; j < fList.size(); j++) { %> --%>
-<%-- 											<% Photo ph = fList.get(j); %> --%>
-<%-- 											<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	 --%>
-<%-- 												<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getCartNo() %>"> --%>
-<%-- 													<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="90px" height="90px"> --%>
-<!-- 												</a> -->
-<%-- 											<% } %> --%>
-<%-- 										<% } %> --%>
-<!-- 									</div> -->
+									<div id="productPhoto" class="productPhoto">
+										<% for(int j = 0; j < fList.size(); j++) { %>
+											<% Photo ph = fList.get(j); %>
+											<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	
+												<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
+													<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="80px" height="80px">
+												</a>
+											<% } %>
+										<% } %>
+									</div>
 									<div id="product_detail" class="product_detail">
 				    					<div class="prodName" name="prodName" id="prodName<%= (list.size() - 1) - i %>">
 				    						<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>"><%= list.get(i).getProdName() %></a>
@@ -203,7 +204,7 @@
 							</td>
 							<td>
 				        		<input type="button" name="pbtn" id="minus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','minus');" value="─"><!--
-				        		 --><input hidden="hidden"><input type="text" id="amount<%= (list.size() - 1) - i %>" name="amount" value="<%= list.get(i).getAmount() %>" oninput="return handleOnInput(this);" onchange="sum()"><!--
+				        		 --><input hidden="hidden"><input type="text" id="amount<%= (list.size() - 1) - i %>" name="amount" value="<%= list.get(i).getAmount() %>" oninput="return handleOnInput(this);" onchange="sum()" readonly><!--
 								 --><input type="button" name="mbtn" id="plus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','plus');" value="┼">
 								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>');">
 							</td>
@@ -326,12 +327,6 @@
 						totalAmt += parseInt($(total).text());
 					}
 					
-					console.log("값 :" + totalAmt);
-					
-					//.val(값) -> 엘리먼트의 벨류값 설정
-					$(price).text($(price).text());
-// 					$(total).text((priceToString(parseInt($(price).text().replace(",", "")) * parseInt($(amount).val().replace(",", "")))) + "원");
-					console.log("토탈?? : " + $(total).text());
 				}
 			
 				$('#tpp_conts').text(totalAmt);
