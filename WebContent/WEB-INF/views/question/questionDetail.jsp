@@ -271,15 +271,8 @@
 					var $contentTd = $('<td .contentTable>').text(data[i].qst_cont).css("width",'400px');
 					$tr.append($contentTd);
 					$replyTable.append($tr);
-					
-					
-					
-					
-					
 				}
 				$('#replyQuestion').val("");
-				
-			
 			},
 			error:function(data){
 				console.log(data);

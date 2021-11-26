@@ -222,7 +222,6 @@ ul {
 									<li><a href="#">플렉시테리안</a></li>
 								</ul></li>
 							<li><a href="#">신상품</a></li>
-							<li><a href="#">베스트상품</a></li>
 							<li><a href="<%= request.getContextPath() %>/community.me">커뮤니티</a></li>
 							<%--관리자로 로그인시 상품관리 탭 보이게 하기 --%>
 							<%if(loginUser != null){ %>

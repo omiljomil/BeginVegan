@@ -117,11 +117,5 @@
 				location.href='<%= request.getContextPath() %>/questionDetailForm.qs?qId=' + qId;
 			
 		});
-	
-
-			
-		
-	 
-	
 </script>
 </html>

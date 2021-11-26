@@ -94,18 +94,21 @@
 <script>
 function checkValue(){
 	 var form = document.Form;
-	 
+	 var isPwdCheck = true;
 	
 	 
 	 if(!form.userPwd1.value){
 		 alert("비밀번호를 입력하세요.");
            return false;
-	 }
-	 
-	 if(form.userPwd1.value != form.userPwd2.value ){
+	 }else if(isPwdCheck){
+		 alert("비밀번호를 확인해주세요")
+		 return false;
+	 }else if(form.userPwd1.value != form.userPwd2.value ){
          alert("비밀번호를 동일하게 입력하세요.");
          return false;
      } 
+	 
+	 
 	 
 }
 
@@ -118,18 +121,17 @@ $('#userPwd1').on('chage paste keyup',function(){
 	 if(pw.length < 8 || pw.length >20){
 		$('#pwdCheck1').text("8자리 ~ 20자리 이내로 입력해주세요.");
 		$('#pwdCheck1').css({'color':'red','float':'inline-block'});
-		isPwdCheck = false;
+		isPwdCheck = true;
 	 }else if(pw.search(/\s/) != -1){
 	 	 $('#pwdCheck1').text("비밀번호는 공백 없이 입력해주세요.");
 			$('#pwdCheck1').css({'color':'red','float':'inline-block'});
-			isPwdCheck = false;
+			isPwdCheck = true;
 	 }else if(num < 0 || eng < 0 || spe < 0 ){
 	 		 $('#pwdCheck1').text("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
 			$('#pwdCheck1').css({'color':'red','float':'inline-block'});
-			isPwdCheck = false;
-	 }else {
-		console.log("통과"); 
-		isPwdCheck = true;
+			isPwdCheck = true;
+	 }else { 
+		isPwdCheck = false;
 		$('#pwdCheck1').text("안전한 비밀번호 입니다.");
 		$('#pwdCheck1').css({'color':'green','float':'inline-block'});
 	 }
