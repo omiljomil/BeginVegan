@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import manager.model.vo.OrderManager;
@@ -53,7 +54,7 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("order_no"),
+				OrderManager o = new OrderManager(Integer.parseInt(rset.getString("order_no")),
 												  rset.getString("prod_name"),
 												  rset.getInt("amount"),
 												  rset.getInt("price"),
@@ -201,7 +202,7 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(rset.getInt("order_no"),
+				OrderManager o = new OrderManager(Integer.parseInt(rset.getString("order_no")),
 												  rset.getString("prod_name"),
 												  rset.getInt("amount"),
 												  rset.getInt("price"),

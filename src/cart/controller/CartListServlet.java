@@ -43,16 +43,11 @@ public class CartListServlet extends HttpServlet {
 		
 		ArrayList<Cart> list = new CartService().cartList(userId);
 		
-		ProductService pService = new ProductService();
-		ArrayList<Photo> fList = pService.selectFList();
-		
 		String page = null;
 		
 		if(list != null) {
 			page = "WEB-INF/views/cart/cartList.jsp";
 			request.setAttribute("list", list);
-			request.setAttribute("fList", fList);
-			session.getAttribute("userId");
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";
 			request.setAttribute("msg", "장바구니 조회 실패");

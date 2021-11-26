@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import cart.model.vo.Cart;
+import cart.model.vo.Order;
 
 public class CartDAO {
 	private Properties prop = null;
@@ -31,9 +33,22 @@ public class CartDAO {
 		}
 	}
 	
-	public int insertCart(Connection conn, Cart cart) {
+	public int insertCart(Connection conn, Cart cart, String[] name, String[] count) {
 		PreparedStatement pstmt = null;
 		int result = 0;
+		
+		String opn = "";
+		String opc = "";
+		
+		for(int i = 0; i < name.length; i++) {
+			if(i == 0) {
+				opn += name[i];
+				opc += count[i];
+			} else {
+				opn += ", " + name[i];
+				opc += ", " + count[i];
+			}
+		}
 		
 		String query = prop.getProperty("insertCart");
 		
@@ -42,8 +57,76 @@ public class CartDAO {
 			pstmt.setInt(1, cart.getAmount());
 			pstmt.setString(2, cart.getUserId());
 			pstmt.setInt(3, cart.getProdNo());
+			pstmt.setString(4, opn);
+			pstmt.setString(5, opc);
+			pstmt.setInt(6, cart.getTotal());
 			
 			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int updateCart(Connection conn, Cart cart, String[] name, String[] mcount) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String opn = "";
+		String opc = "";
+		
+		for(int i = 0; i < name.length; i++) {
+			if(i == 0) {
+				opn += name[i];
+				opc += mcount[i];
+			} else {
+				opn += ", " + name[i];
+				opc += ", " + mcount[i];
+			}
+		}
+		
+		String query = prop.getProperty("insertCart");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cart.getAmount());
+			pstmt.setString(2, opn);
+			pstmt.setString(3, opc);
+			pstmt.setString(4, cart.getUserId());
+			pstmt.setInt(5, cart.getProdNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int countCart(Connection conn, String userId, int pNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("countCart");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, pNo);
+			rset = pstmt.executeQuery();
+			
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,8 +158,11 @@ public class CartDAO {
 				int amount = rset.getInt("amount");
 				int price = rset.getInt("price");
 				userId = rset.getString("user_id");
+				String opn = rset.getString("option_name");
+				String opc = rset.getString("option_count");
+				int total = rset.getInt("total");
 				
-				Cart c = new Cart(cartNo, prodNo, prodName, amount, price, price * amount, userId);
+				Cart c = new Cart(cartNo, prodNo, prodName, amount, price, total, userId, opn, opc);
 				
 				list.add(c);
 			}
@@ -111,8 +197,12 @@ public class CartDAO {
 				int amount = rset.getInt("amount");
 				int price = rset.getInt("price");
 				String userId = rset.getString("user_id");
+				String opn = rset.getString("option_name");
+				String opc = rset.getString("option_count");
+				int total = rset.getInt("total");
 				
-				c = new Cart(cartNo, prodNo, prodName, amount, price, amount * price, userId);
+				c = new Cart(cartNo, prodNo, prodName, amount, price, total, userId, opn, opc);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,7 +236,7 @@ public class CartDAO {
 		return result;
 	}
 	
-	public int amountUpdate(Connection conn, String userId, int cartNo, int amount) {
+	public int amountUpdate(Connection conn, String userId, int cartNo, int amount, int total) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -155,8 +245,9 @@ public class CartDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, amount);
-			pstmt.setString(2, userId);
-			pstmt.setInt(3, cartNo);
+			pstmt.setInt(2, total);
+			pstmt.setString(3, userId);
+			pstmt.setInt(4, cartNo);
 			
 			result = pstmt.executeUpdate();
 			
@@ -208,7 +299,7 @@ public class CartDAO {
 			}
 		}
 		
-		String query = "UPDATE CART SET STATUS = 'N' WHERE CART_NO IN (" + paras + ") AND USER_ID = ?";
+		String query = "DELETE FROM CART WHERE CART_NO IN (" + paras + ") AND USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -250,78 +341,7 @@ public class CartDAO {
 		
 		return result;
 	}
-	
-	public int updateCart(Connection conn, Cart cart) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("cartAllDelete");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, cart.getAmount());
-			pstmt.setString(2, cart.getUserId());
-			pstmt.setInt(3, cart.getProdNo());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
-	public int countCart(Connection conn, String userId, int pNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		int result = 0;
-		
-		String query = prop.getProperty("countCart");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, pNo);
-			rset = pstmt.executeQuery();
-			
-			
-			if(rset.next()) {
-				result = rset.getInt(1);
-			}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
-	public int insertOption(Connection conn, Cart cart, String[] option, int count1, int count2, int count3) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String selectQuery = "";
-		
-		
-		for(int i = 0; i < option.length; i++) {
-			if(i == 0) {
-				selectQuery += "INSERT INTO \"OPTION\" VALUES (SEQ_OPTN.NEXTVAL, " + option  + ", " + count1 +  ", " + cart.getProdNo() + ")";
-				
-			}
-		}
-		
-		// ㅠㅠ...
-		
-		
-		return result;
-	}
-	
+
 	public ArrayList<Cart> cartOneOrder(Connection conn, Cart cart) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -344,8 +364,64 @@ public class CartDAO {
 				int amount = rset.getInt("amount");
 				int price = rset.getInt("price");
 				String userId = rset.getString("user_id");
+				String opn = rset.getString("option_name");
+				String opc = rset.getString("option_count");
+				int total = rset.getInt("total");
 				
-				Cart c = new Cart(0, prodNo, prodName, amount, price, amount * price, userId);
+				Cart c = new Cart(prodNo, prodName, amount, price, total, userId, opn, opc);
+				
+				list.add(c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<Cart> cartSelectOrder(Connection conn, String userId, String[] carts) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Cart> list = null;
+		
+		String paras = "";
+		
+		for(int i = 0; i < carts.length; i++) {
+			if(i == 0) {
+				paras += "?";
+			} else {
+				paras += ", ?";
+			}
+		}
+		
+		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID, OPTION_NAME, OPTION_COUNT, TOTAL FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE USER_ID = ? AND CART_NO IN (" + paras + ")";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			for(int i = 0; i < carts.length; i++) {			
+				pstmt.setString(1 + (i + 1), carts[i]);
+			}
+		
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Cart>();
+			
+			while(rset.next()) {
+				int prodNo = rset.getInt("prod_no");
+				String prodName = rset.getString("prod_name");
+				int amount = rset.getInt("amount");
+				int price = rset.getInt("price");
+				userId = rset.getString("user_id");
+				String opn = rset.getString("option_name");
+				String opc = rset.getString("option_count");
+				int total = rset.getInt("total");
+				
+				Cart c = new Cart(prodNo, prodName, amount, price, total, userId, opn, opc);
 				
 				list.add(c);
 			}
@@ -379,8 +455,11 @@ public class CartDAO {
 				int amount = rset.getInt("amount");
 				int price = rset.getInt("price");
 				userId = rset.getString("user_id");
+				String opn = rset.getString("option_name");
+				String opc = rset.getString("option_count");
+				int total = rset.getInt("total");
 				
-				Cart c = new Cart(0, prodNo, prodName, amount, price, amount * price, userId);
+				Cart c = new Cart(prodNo, prodName, amount, price, total, userId, opn, opc);
 				
 				list.add(c);
 			}
@@ -394,53 +473,35 @@ public class CartDAO {
 		return list;
 	}
 	
-	public ArrayList<Cart> cartSelectOrder(Connection conn, String userId, String[] carts) {
+	public int insertOrder(Connection conn, Order o) {
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Cart> list = null;
+		int result = 0;
 		
-		String paras = "";
-		
-		for(int i = 0; i < carts.length; i++) {
-			if(i == 0) {
-				paras += "?";
-			} else {
-				paras += ", ?";
-			}
-		}
-		
-		String query = "SELECT PROD_NO, PROD_NAME, AMOUNT, PRICE, USER_ID FROM CART C JOIN PRODUCT USING (PROD_NO) WHERE CART_NO IN (" + paras + ")";
+		String query = prop.getProperty("cartOneOrder");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, o.getOrderNo());
+			pstmt.setString(2, o.getUserId());
+			pstmt.setString(3, o.getProdName());
+			pstmt.setInt(4, o.getPrice());
+			pstmt.setString(5, o.getReceiver());
+			pstmt.setInt(6, o.getPostal());
+			pstmt.setString(7, o.getAddress());
+			pstmt.setString(8, o.getDeAddress());
+			pstmt.setString(9, o.getNormalPhone());
+			pstmt.setString(10, o.getPhone());
+			pstmt.setString(11, o.getMessage());
+			pstmt.setInt(12, o.getAmount());
 			
-			for(int i = 0; i < carts.length; i++) {			
-				pstmt.setString(i + 1, carts[i]);
-			}
-		
-			rset = pstmt.executeQuery();
+			result = pstmt.executeUpdate();
 			
-			list = new ArrayList<Cart>();
-			
-			while(rset.next()) {
-				int prodNo = rset.getInt("prod_no");
-				String prodName = rset.getString("prod_name");
-				int amount = rset.getInt("amount");
-				int price = rset.getInt("price");
-				userId = rset.getString("user_id");
-				
-				Cart c = new Cart(0, prodNo, prodName, amount, price, amount * price, userId);
-				
-				list.add(c);
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
 		
-		return list;
+		return result;
 	}
-
 }

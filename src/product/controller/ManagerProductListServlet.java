@@ -44,42 +44,31 @@ public class ManagerProductListServlet extends HttpServlet {
 		int startPage;
 		int endPage;
 		
-		ProductService pService = new ProductService();
-		
-		//1. 전체 게시글 개수 조회
-		
-		listCount = pService.getListCount();
-		
+		ProductService pService = new ProductService();		
+		//1. 전체 게시글 개수 조회		
+		listCount = pService.getListCount();		
 		//2. 현재페이지 설정
 		currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
+		}		
 		//3. boardLimit와 pageLimit설정
 		pageLimit = 10;
-		boardLimit = 5;
-		
+		boardLimit = 5;		
 		//4. 각 변수 계산식 작성
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		startPage = (currentPage - 1)/pageLimit * pageLimit + 1;
 		endPage = startPage + pageLimit - 1;
 		if(maxPage < endPage) {//maxPage가 endPage보다 작을 수 있다.
 			endPage = maxPage;
-		}
-		
+		}		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 	 
 		ArrayList<Product> plist = pService.selectPList(pi);	
 		ArrayList<Photo> fList = pService.selectFList();
 		
 		String page = "";
-	
-		//for(int i=0; i<list.size(); i++) {
-			
-			// 파일 리슽 가져오기
-			//ArrayList<Photo> fList = pService.selectFList();//2는 파일게시판의미
-			
+
 			if(plist != null && fList != null) {
 				request.setAttribute("fList", fList);
 				request.setAttribute("pList", plist);
@@ -90,8 +79,6 @@ public class ManagerProductListServlet extends HttpServlet {
 				page = "WEB-INF/views/common/errorPage.jsp";
 			}
 
-		//}
-	
 	    request.getRequestDispatcher(page).forward(request, response);
 	}
 

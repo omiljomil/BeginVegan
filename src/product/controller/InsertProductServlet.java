@@ -135,7 +135,7 @@ public class InsertProductServlet extends HttpServlet {
 
 			}else {
 				request.setAttribute("msg", "상품 등록 실패");
-				request.getRequestDispatcher("WEB-INF/Views/common/errorPage.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 				//실패하면 안에 있는 사진 삭제
 				//아 진짜 바보.. else문 밖에 있어서 계속 사진이 삭제되서 조회가 안되었음
 				for(int i = 0; i < saveFiles.size(); i++) {

@@ -1,6 +1,7 @@
 package cart.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import User.model.vo.User;
 import cart.model.service.CartService;
 import cart.model.vo.Cart;
-import User.model.vo.User;
 
 /**
  * Servlet implementation class InsertCartServlet
@@ -36,34 +37,36 @@ public class InsertCartServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int pNo = Integer.parseInt(request.getParameter("pNo"));
-		int count1 = (request.getParameter("numBox1") == null ? 0 : Integer.parseInt(request.getParameter("numBox1")));
-		int count2 = (request.getParameter("numBox2") == null ? 0 : Integer.parseInt(request.getParameter("numBox2")));
-		int count3 = (request.getParameter("numBox3") == null ? 0 : Integer.parseInt(request.getParameter("numBox3")));
-		int amount = Integer.parseInt(request.getParameter("numBox"));
-		int count = new CartService().countCart(userId, pNo);
-		String[] option = request.getParameterValues("optionName");
+		int pNo = Integer.parseInt(request.getParameter("prodNo")); // 상품번호
+		int amount = Integer.parseInt(request.getParameter("amount")); // 상품 자체 수량
+		String[] sub = request.getParameterValues("sub");
+		String[] count = request.getParameterValues("count");
+		int total = Integer.parseInt(request.getParameter("total"));
 		
-		int result = 0;
+		System.out.println(userId);
+		System.out.println(pNo);
+		System.out.println(amount);
+		System.out.println(sub);
+		System.out.println(count);
+		
+		for(int i = 0; i < sub.length; i++) {
+			System.out.println(sub[i]);
+			System.out.println(count[i]);
+		}
+		System.out.println(total);
 		
 		Cart cart = new Cart();
 		cart.setAmount(amount);
 		cart.setUserId(userId);
 		cart.setProdNo(pNo);
+		cart.setTotal(total);
 		
-		if(count == 0) {
-			result = new CartService().insertCart(cart, option, count1, count2, count3);
-			
-		} else {
-			result = new CartService().updateCart(cart);
-		}
+		int result = new CartService().insertCart(cart, sub, count);
 		
-		if(result > 0) {
-			response.sendRedirect("cartList.me");
-		} else {
-			request.setAttribute("msg", "장바구니 등록 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}
+		PrintWriter out = response.getWriter();
+        out.println(result);
+        out.flush();
+        out.close();
 	}
 
 	/**

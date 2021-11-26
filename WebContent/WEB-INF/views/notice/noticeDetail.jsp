@@ -198,7 +198,7 @@ section {
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<th colspan="3"><%=userName %><input type="hidden" size="50"
+						<th colspan="3">관리자<input type="hidden" size="50"
 							name="writer" value="<%=userName %>"></th>
 					</tr>
 				</table>
@@ -223,7 +223,7 @@ section {
 		  </script>
 
 
-			<%if (loginUser!=null&&loginUser.getUserName().equals("운영자")){ %>
+			<%if (loginUser!=null&&loginUser.getManager().equals("Y")){ %>
 			<button type="submit" id="modify-button" class="system">
 				<!-- onclick="location.href='update.me'" -->
 				수정
@@ -335,8 +335,6 @@ section {
        
        </script>
        	
-		
-
 		<button type="button" id="go-button"
 			onclick="location.href='<%=request.getContextPath()%>/noticeList.me'">목록</button>
 	</section>

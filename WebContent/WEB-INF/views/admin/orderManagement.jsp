@@ -109,12 +109,12 @@
 				<div class="orderStatusChange">
 					<select id="orderStatus" name="orderStatus">
 						<option value="주문완료">주문완료</option>
-						<option value="주문취소">주문취소</option>
 						<option value="배송준비">배송준비</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료">배송완료</option>
 						<option value="교환처리">교환처리</option>
 						<option value="환불처리">환불처리</option>
+						<option value="주문취소">주문취소</option>
 					</select> 
 				</div><!-- 
 				 --><div class="orderStatusChangeButton">
@@ -159,9 +159,41 @@
 							<td><%= list.get(i).getOrderDate() %></td>
 							<td><%= list.get(i).getUserId() %></td>
 							<td><%= list.get(i).getReceiver() %></td>
-							<td id="address"></td>
+							<td id="address"><%= list.get(i).getAddress() %></td>
 							<td><%= list.get(i).getPhone() %></td>
-							<td><%= list.get(i).getStatus() %></td>
+							<td>
+								<%
+									String status = "";
+									if(list.get(i).getOrderType() == 1) {
+										status = "주문완료";
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 2) {
+										status = "배송준비";	
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 3) {
+										status = "배송중";	
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 4) {
+										status = "배송완료";	
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 5) {
+										status = "교환처리";	
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 6) {
+										status = "환불처리";	
+								%>
+										<%= status %>
+								<%	} else if(list.get(i).getOrderType() == 7) {
+										status = "주문취소";	
+								%>
+										<%= status %>
+								<% } %>
+							</td>
 						</tr>
 					<% } %>
 				<% } %>
@@ -170,64 +202,64 @@
 		</form>
 		
 		
-	<div class="layout" id="space7"></div>
-
-	<div class="pagingArea" align="center">
-	<% if(list.isEmpty()) { %>
 		<div class="layout" id="space7"></div>
-	<% } else { %>
-		<!-- 맨 처음으로 -->
-		<input type="button" id="firstBtn"
-			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1'"
-			value="처음">
-		<script>
-			if(<%= pi.getCurrentPage() %> <= 1) {
-				$('#firstBtn').prop('disabled', true);
-				$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
-			}
-		</script>
-		<!-- 이전 페이지로 -->
-		<input type="button" id="beforeBtn"
-			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
-			value="이전">
-		<script>
-			if(<%= pi.getCurrentPage() %> <= 1) {
-				$('#beforeBtn').prop('disabled', true);
-				$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
-			}
-		</script>
-		<!-- 숫자 버튼 -->
-		<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
-		<% if(p == pi.getCurrentPage()) { %>
-		<input type="button" id="choosen" disabled value="<%= p %>">
+	
+		<div class="pagingArea" align="center">
+		<% if(list.isEmpty()) { %>
+			<div class="layout" id="space7"></div>
 		<% } else { %>
-		<input type="button" id="numBtn"
-			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= p %>'"
-			value="<%= p %>">
+			<!-- 맨 처음으로 -->
+			<input type="button" id="firstBtn"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1'"
+				value="처음">
+			<script>
+				if(<%= pi.getCurrentPage() %> == 1) {
+					$('#firstBtn').prop('disabled', true);
+					$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
+				}
+			</script>
+			<!-- 이전 페이지로 -->
+			<input type="button" id="beforeBtn"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+				value="이전">
+			<script>
+				if(<%= pi.getCurrentPage() %> <= 1) {
+					$('#beforeBtn').prop('disabled', true);
+					$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
+				}
+			</script>
+			<!-- 숫자 버튼 -->
+			<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+					<input type="button" id="choosen" disabled value="<%= p %>">
+				<% } else { %>
+					<input type="button" id="numBtn"
+						onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= p %>'"
+						value="<%= p %>">
+				<% } %>
+			<% } %>
+			<!-- 다음 페이지로 -->
+			<input type="button" id="afterBtn"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+				value="다음">
+			<script>
+				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+					$('#afterBtn').prop('disabled', true);
+					$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
+				}
+			</script>
+			<!-- 맨 끝으로 -->
+			<input type="button" id="lastBtn"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"
+				value="끝">
+			<script>
+				if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+					$('#lastBtn').prop('disabled', true);
+					$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
+				}
+			</script>
 		<% } %>
-		<%  } %>
-		<!-- 다음 페이지로 -->
-		<input type="button" id="afterBtn"
-			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
-			value="다음">
-		<script>
-			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
-				$('#afterBtn').prop('disabled', true);
-				$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
-			}
-		</script>
-		<!-- 맨 끝으로 -->
-		<input type="button" id="lastBtn"
-			onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"
-			value="끝">
-		<script>
-			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
-				$('#lastBtn').prop('disabled', true);
-				$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
-			}
-		</script>
-	<% } %>
-	</div>
+		</div>
 	
 		<script>
 			var all = document.getElementById('all');
