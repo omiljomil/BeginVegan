@@ -1,4 +1,4 @@
-package order.controller;
+package cart.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import order.model.service.OrderService;
-import order.model.vo.Order;
+import cart.model.service.CartService;
+import cart.model.vo.Cart;
 
 /**
  * Servlet implementation class CartAllOrderServlet
@@ -37,7 +37,7 @@ public class CartAllOrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		ArrayList<Order> list = new OrderService().cartAllOrder(userId);
+		ArrayList<Cart> list = new CartService().cartAllOrder(userId);
 		
 		String page = "";
 		
@@ -46,7 +46,7 @@ public class CartAllOrderServlet extends HttpServlet {
 		
 		if(list != null) {
 			request.setAttribute("list", list);
-			page = "WEB-INF/views/paiement/paiementPage.jsp";
+			page = "WEB-INF/views/cart/cartOrderPage.jsp";
 		} else {
 			request.setAttribute("msg", "주문페이지 로딩 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";

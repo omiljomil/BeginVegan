@@ -373,7 +373,7 @@ cursor: pointer;
     <section id="notice-list">
 
       <button type="button" id="notice-more-button" onclick="location.href='noticeList.me'">더보기</button>
-      <%if(loginUser!=null&&loginUser.getUserName().equals("운영자")){%>
+      <%if(loginUser!=null&&loginUser.getManager().equals("Y")){%>
       <button type="button" id="notice-write-button" onclick="location.href='noticeWrite.me'">글작성하기</button>
       <% }%>
       <div id="notice-list-title">공지 사항</div>
@@ -469,26 +469,22 @@ cursor: pointer;
 	    						
 	  		    				$innerBox=$('<div>').attr('class','review-list-innerbox');
 	  		    				$innerA=$('<a>').attr({
-	  		    				
 	  		    					style:"background-image: url(thumbnail_uploadFiles/"+data.fList[j].imgChangeName+")",
 	  		    					'class':'review-image'
-	  		    					
+	  
 	  		    				});
 	  		    				$textBox=$('<div>').attr('class','review-list-text');
 	  		    				$textA=$('<a>').html('제목 :'+data.rList[i].reviewTitle+'<br>'+'작성자: '+data.rList[i].userName+'<br>'+'작성일 :'+data.rList[i].modifyDate);
 	  		    				
-	  		    				
 	  		    				$textBox.append($textA);
 	  		    				
 	  		    			    $innerBox.append($innerA);
-	  		    				
 	  		    				
 	  		    				$listBox.append($innerBox);
 	  		    				$listBox.append($textBox);
 	  		    				
 	  		    				$reviewList.append($listBox);
 	    					  }
-		    				
 	    				}
 	    			}		
     			}

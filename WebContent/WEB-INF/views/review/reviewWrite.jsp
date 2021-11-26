@@ -269,7 +269,7 @@ section {
 					<tr>
 						<th width="130px">제목</th>
 						<th><input type="text" id="review-text-title" name="title"
-							placeholder="제목 입력"></th>
+							placeholder="제목 입력" maxlength="15"></th>
 					</tr>
 					<tr>
 						<th>작성자</th>

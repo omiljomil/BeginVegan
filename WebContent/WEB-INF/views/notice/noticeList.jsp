@@ -202,7 +202,7 @@ section {
 		<tr class="notice-table-list">
 			<th height="50px"><%=list.get(i).getNoticeNo() %></th>
 			<th><%=list.get(i).getNoticeTitle() %></th>
-			<th><%=list.get(i).getNoticeWriter()%></th>
+			<th>관리자</th>
 			<th><%=list.get(i).getEnrollDate() %></th>
 		</tr>
 		<%	} %>

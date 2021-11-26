@@ -176,6 +176,7 @@
 							<img id="updateThumImg" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(0).getImgChangeName()%>">
 								<input type="hidden" name="thumbnailImg1" value="<%= fileList.get(0).getImgChangeName()%>">
+								<input type="hidden" name="imgNo1" value="<%= fileList.get(0).getImgNo()%>">
 						</div>
 					</td>
 				</tr>
@@ -186,6 +187,7 @@
 							<img id="updateImgs1" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(1).getImgChangeName()%>">
 								<input type="hidden" name="thumbnailImg2" value="<%= fileList.get(1).getImgChangeName()%>">
+								<input type="hidden" name="imgNo2" value="<%= fileList.get(1).getImgNo()%>">
 						</div>
 					</td>
 					<td style="border: 1px solid black;">
@@ -193,6 +195,7 @@
 							<img id="updateImgs2" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(2).getImgChangeName()%>">
 								<input type="hidden" name="thumbnailImg3" value="<%= fileList.get(2).getImgChangeName()%>">
+								<input type="hidden" name="imgNo3" value="<%= fileList.get(2).getImgNo()%>">
 						</div>
 					</td>
 					<td style="border: 1px solid black;">
@@ -200,6 +203,7 @@
 							<img id="updateImgs3" width="270px" height="170px"
 								src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= fileList.get(3).getImgChangeName()%>">
 								<input type="hidden" name="thumbnailImg4" value="<%= fileList.get(3).getImgChangeName()%>">
+								<input type="hidden" name="imgNo4" value="<%= fileList.get(3).getImgNo()%>">
 						</div>
 					</td>
 				</tr>

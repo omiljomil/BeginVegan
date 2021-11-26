@@ -173,12 +173,12 @@ section {
 					<tr>
 						<th>제목</th>
 						<th><input type="text" id="notice-text-title"
-							placeholder="제목 입력" name="title"
+							placeholder="제목 입력" name="title" maxlength="12"
 							value="<%=request.getAttribute("title") %>"></th>
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<th><%=loginUser.getUserName() %><input type="hidden"
+						<th>관리자<input type="hidden"
 							id="notice-text-title" name="writer"
 							value="<%=request.getAttribute("writer")%>"></th>
 					</tr>
