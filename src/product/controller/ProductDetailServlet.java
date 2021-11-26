@@ -44,16 +44,10 @@ public class ProductDetailServlet extends HttpServlet {
 		MaterialService mService = new MaterialService();
 		Material m = mService.selectMatrial(pNo);
 		//split사용해서 mtrlName분리시키기
-		
-		//System.out.println(material.getMtrlName());
-		//System.out.println(material.getMtrlPrice());
-		
+
 		String mtrlName = m.getMtrlName();
 		String mtrlPrice = m.getMtrlPrice();
-		
-		//int mtrIno=Integer.parseInt(splitMaterial[0]);
-		//int prodNo=Integer.parseInt(splitMaterial[1]);
-		
+
 		String page = null;
 		if(fileList != null) {					
 			request.setAttribute("product",product);

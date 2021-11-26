@@ -358,6 +358,7 @@ a:visited {
 		<span id="Detail_product_name"><%= p.getProdName() %></span>
 		<input type="hidden" name="prodName" value="<%= p.getProdName() %>">
 		
+		
 	<!-- 공유하기 버튼을 클릭하면 하단에 공유가능한 사이트 아이콘 뜨게 하고 클릭하면 공유할 수 있게 하기 -->
 		
 		<!--  카카오API사용하기 -->
@@ -380,6 +381,7 @@ a:visited {
 		<!-- 옵션을 클릭하면 하단에 선택한 옵션이 출력되게 하기 -->
 		<!-- select동적제어로 검색해보기 (테이블)-->
 		<form action="<%= request.getContextPath() %>/insertCart.me" method="post">
+		 <input type="hidden" name="pNo" value="<%= p.getProdNo() %>">
 			<span>옵션</span>
 				<select id="selectBox"class="addProduct" name="addOption">
 				<% if(m != null){ %>
@@ -403,6 +405,7 @@ a:visited {
 			 <button type="button" id="minus" class="add_product" onclick="minusCal(this);">-</button>
 			 <span id="price_product"><%= p.getPrice() %></span>
 			 <input type="hidden" name="mainPrice" id="mainPrice" value="<%= p.getPrice() %>">
+			
 		 </div>
 
 		 <div class="total_cart">
