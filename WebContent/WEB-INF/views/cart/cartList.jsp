@@ -157,7 +157,7 @@
 <!-- 									</div> -->
 									<div id="product_detail" class="product_detail">
 				    					<div class="prodName" name="prodName" id="prodName<%= (list.size() - 1) - i %>">
-				    						<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getCartNo() %>"><%= list.get(i).getProdName() %></a>
+				    						<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>"><%= list.get(i).getProdName() %></a>
 				    						<input type="hidden" name="prodName" id="prodName<%= (list.size() - 1) - i %>" value="<%= list.get(i).getProdName() %>">
 				    					</div>
 				    					<div class="optionList" name="optionList" id="optionList<%= (list.size() - 1) - i %>">
