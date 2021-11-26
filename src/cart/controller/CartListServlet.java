@@ -42,12 +42,14 @@ public class CartListServlet extends HttpServlet {
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
 		ArrayList<Cart> list = new CartService().cartList(userId);
+		ArrayList<Photo> fList = new ProductService().selectFList();
 		
 		String page = null;
 		
 		if(list != null) {
 			page = "WEB-INF/views/cart/cartList.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("fList", fList);
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";
 			request.setAttribute("msg", "장바구니 조회 실패");
