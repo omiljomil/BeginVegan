@@ -33,7 +33,7 @@ public class CartDAO {
 		}
 	}
 	
-	public int insertCart(Connection conn, Cart cart, String[] name, String[] mcount) {
+	public int insertCart(Connection conn, Cart cart, String[] name, String[] count) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -43,10 +43,10 @@ public class CartDAO {
 		for(int i = 0; i < name.length; i++) {
 			if(i == 0) {
 				opn += name[i];
-				opc += mcount[i];
+				opc += count[i];
 			} else {
 				opn += ", " + name[i];
-				opc += ", " + mcount[i];
+				opc += ", " + count[i];
 			}
 		}
 		
