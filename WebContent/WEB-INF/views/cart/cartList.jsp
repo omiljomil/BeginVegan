@@ -176,7 +176,7 @@
 					    							if(j == 0) {
 					    								opArr += "옵션 : " + opn[j] +  " - " + opcArr[j];
 					    							} else {
-					    								opArr += " / " + opn[j] +  " - " + opcArr[j];
+					    								opArr += ", " + opn[j] +  " - " + opcArr[j];
 					    							}
 					    						}
 				    						%>
