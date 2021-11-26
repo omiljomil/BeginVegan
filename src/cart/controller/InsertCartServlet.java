@@ -39,9 +39,21 @@ public class InsertCartServlet extends HttpServlet {
 		
 		int pNo = Integer.parseInt(request.getParameter("prodNo")); // 상품번호
 		int amount = Integer.parseInt(request.getParameter("amount")); // 상품 자체 수량
-		String[] name = request.getParameterValues("name");
+		String[] sub = request.getParameterValues("sub");
 		String[] count = request.getParameterValues("count");
 		int total = Integer.parseInt(request.getParameter("total"));
+		
+		System.out.println(userId);
+		System.out.println(pNo);
+		System.out.println(amount);
+		System.out.println(sub);
+		System.out.println(count);
+		
+		for(int i = 0; i < sub.length; i++) {
+			System.out.println(sub[i]);
+			System.out.println(count[i]);
+		}
+		System.out.println(total);
 		
 		Cart cart = new Cart();
 		cart.setAmount(amount);
@@ -49,7 +61,7 @@ public class InsertCartServlet extends HttpServlet {
 		cart.setProdNo(pNo);
 		cart.setTotal(total);
 		
-		int result = new CartService().insertCart(cart, name, count);
+		int result = new CartService().insertCart(cart, sub, count);
 		
 		PrintWriter out = response.getWriter();
         out.println(result);
