@@ -67,10 +67,10 @@ public class CartService {
 		return c;
 	}
 
-	public int cartOneDelete(String userId, int cartNo) {
+	public int cartOneDelete(String userId, int cartNo, int prodNo) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.cartOneDelete(conn, userId, cartNo);
+		int result = cDAO.cartOneDelete(conn, userId, cartNo, prodNo);
 		
 		if(result > 0) {
 			commit(conn);
@@ -83,10 +83,10 @@ public class CartService {
 		return result;
 	}
 	
-	public int amountUpdate(String userId, int cartNo, int amount, int total) {
+	public int amountUpdate(Cart c) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.amountUpdate(conn, userId, cartNo, amount, total);
+		int result = cDAO.amountUpdate(conn, c);
 		
 		if(result > 0) {
 			commit(conn);

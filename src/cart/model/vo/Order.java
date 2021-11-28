@@ -17,12 +17,13 @@ public class Order {
 	private String message;
 	private Date enrollDate;
 	private int amount;
+	private int prodNo;
 	
 	public Order() {}
 	
 	public Order(String userId, int orderType, String orderNo, String prodName, int price, String receiver, int postal,
 			String address, String deAddress, String normalPhone, String phone, String message, Date enrollDate,
-			int amount) {
+			int amount, int prodNo) {
 		super();
 		this.userId = userId;
 		this.orderType = orderType;
@@ -38,6 +39,7 @@ public class Order {
 		this.message = message;
 		this.enrollDate = enrollDate;
 		this.amount = amount;
+		this.prodNo = prodNo;
 	}
 	
 	public String getUserId() {
@@ -125,11 +127,21 @@ public class Order {
 		this.amount = amount;
 	}
 	
+	public int getProdNo() {
+		return prodNo;
+	}
+
+	public void setProdNo(int prodNo) {
+		this.prodNo = prodNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [userId=" + userId + ", orderType=" + orderType + ", orderNo=" + orderNo + ", prodName="
 				+ prodName + ", price=" + price + ", receiver=" + receiver + ", postal=" + postal + ", address="
 				+ address + ", deAddress=" + deAddress + ", normalPhone=" + normalPhone + ", phone=" + phone
-				+ ", message=" + message + ", enrollDate=" + enrollDate + ", amount=" + amount + "]";
+				+ ", message=" + message + ", enrollDate=" + enrollDate + ", amount=" + amount + ", prodNo=" + prodNo
+				+ "]";
 	}
+
 }
