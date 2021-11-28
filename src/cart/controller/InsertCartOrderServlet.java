@@ -45,8 +45,9 @@ public class InsertCartOrderServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String message = request.getParameter("message");
 		int amount = Integer.parseInt(request.getParameter("amount"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
-		Order o = new Order(userId, 0, orderNo, prodName, price, receiver, postal, address, deAddress, normalPhone, phone, message, null, amount);
+		Order o = new Order(userId, 0, orderNo, prodName, price, receiver, postal, address, deAddress, normalPhone, phone, message, null, amount, prodNo);
 		
 		int result = new CartService().insertOrder(o);
 		
