@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
 import cart.model.service.CartService;
+import cart.model.vo.Cart;
 
 /**
  * Servlet implementation class CartAmountChangeServlet
@@ -35,12 +36,20 @@ public class CartAmountUpdateServlet extends HttpServlet {
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
 		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		int total = Integer.parseInt(request.getParameter("total"));
 		
 		System.out.println(total);
 		
-		int result = new CartService().amountUpdate(userId, cartNo, amount, total);
+		Cart c = new Cart();
+		c.setUserId(userId);
+		c.setCartNo(cartNo);
+		c.setProdNo(prodNo);
+		c.setAmount(amount);
+		c.setTotal(total);
+		
+		int result = new CartService().amountUpdate(c);
 		
 		if(result > 0) {
 			response.sendRedirect("cartList.me");

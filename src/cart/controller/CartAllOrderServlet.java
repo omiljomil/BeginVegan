@@ -52,7 +52,7 @@ public class CartAllOrderServlet extends HttpServlet {
 			request.setAttribute("fList", fList);
 			page = "WEB-INF/views/cart/cartOrderPage.jsp";
 		} else {
-			request.setAttribute("msg", "주문페이지 로딩 실패");
+			request.setAttribute("msg", "주문페이지 이동 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
 		}
 		
