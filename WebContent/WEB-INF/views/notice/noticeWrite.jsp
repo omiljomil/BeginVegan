@@ -30,9 +30,13 @@ section {
 	margin-top: 100px;
 }
 
+#notice{
+ margin-bottom: 50px;
+}
 #notice-title {
 	margin-left: 140px;
 	font-size: 70px;
+	
 }
 
 #notice-route {
@@ -57,10 +61,10 @@ section {
 
 #notice-table {
 	width: 500px;
-	position: absolute;
+	position: relative;
 	left: 150px;
 	height: 100px;
-	bottom: 300px;
+	bottom:100px;
 	border-collapse: collapse;
 }
 
@@ -80,6 +84,7 @@ section {
 	border: none;
 }
 
+
 #option-button-div {
 	border: 1px solid #888;
 	margin-left: 150px;
@@ -94,20 +99,19 @@ section {
 }
 
 #notcie-content {
+   position:relative;
 	width: 1100px;
 	height: 500px;
 	margin-top: 270px;
 	margin-left: 150px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	bottom:300px;	
 }
 
 #go-button {
 	position: relative;
 	width: 80px;
-	left: 1300px;
-	top: 70px;
+	left: 1400px;
+	bottom: 170px;
 	font-size: 18px;
 	font-weight: 800;
 	color: black;
@@ -121,7 +125,7 @@ section {
 	border: 1px solid gray;
 	position: relative;
 	left: 490px;
-	top: 150px;
+	bottom:80px;
 	margin-right: 60px;
 	width: 130px;
 	height: 50px;
@@ -137,7 +141,7 @@ section {
 }
 
 #cke_content {
-	width: 1500px;
+	width: 1200px;
 }
 </style>
 </head>

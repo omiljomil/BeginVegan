@@ -52,53 +52,8 @@ text-decoration: none;
 #route a:hover {
   color: yellowgreen;
 }
+/*루트 타이틀부분  */
 
-#review-porduct {
-  position: relative;
-  margin-left: 150px;
-  margin-bottom: 100px;
-  border: 2px solid gray;
-  width: 550px;
-  height: 200px;
-}
-#review-product-image {
-  display: inline-block;
-  border-collapse: separate;
-   border-right: 2px solid gray;
-  width: 200px;
-  height: 200px;
-}
-#review-product-image img{
-   width: 198px;
-  height: 195px;
-
-}
-
-#product-title {
-  display: inline-block;
-  width: 350px;
-  height: 80px;
-  position: absolute;
-  font-size: 23px;
-  padding-left: 40px;
-  margin-top: 30px;
-  border-bottom: 2px solid gray;
-}
-#review-porduct button {
-  border: 2px solid gray;
-  position: absolute;
-  left: 50%;
-  top: 130px;
-  width: 200px;
-  height: 30px;
-  background-color: rgb(102, 134, 99);
-}
-#review-porduct button a {
-  text-decoration: none;
-  color: beige;
-  font-size: 15px;
-  font-weight: 700;
-}
 #review-list{
 width:800px;
 }
@@ -180,7 +135,7 @@ form input {
   position: relative;
   width: 80px;
   left: 800px;
-  top: 300px;
+  top: 200px;
 }
 
 #go-button a {
@@ -233,13 +188,11 @@ form input {
  display:inline-block;
  margin-top:7px;
  color:black;
- 
 }
-
 #delete-button{
 width:65px;
 position:absolute;
-top:1550px;
+top:1350px;
 left:1280px;
 font-weight:600;
 }
@@ -247,7 +200,7 @@ font-weight:600;
 #modify-button{
 width:65px;
 position:absolute;
-top:1550px;
+top:1350px;
 left:1170px;
 font-weight:600;
 }
@@ -275,19 +228,12 @@ font-weight:600;
         </div>
      <form action="<%= request.getContextPath() %>/reviewUpdateForm.bo" method="post" id="inform"> 
         <div id="review-list" >
-            <div id="review-porduct">
-              <div id="review-product-image">
-		              <a href="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%=f.get(0).getImgChangeName() %>" >
-		              	<img id=detailImg class="detailImg"src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%=f.get(0).getImgChangeName() %>">
-	                   </a>
-	                  <input type="hidden" name="file"value="<%=f.get(0).getImgChangeName() %>">
-	          </div>   
-              <div id="product-title"></div>
-              <button><a href="#">상품 상세 정보</a></button>
-            </div>
-            
             <table id="review-table" >
                 <tr>
+                   <th colspan="2" rowspan="2"> <a href="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%=f.get(0).getImgChangeName() %>" >
+		              	<img id=detailImg width="180" height="199" class="detailImg"src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%=f.get(0).getImgChangeName() %>">
+		              	<input type="hidden" name="file"value="<%=f.get(0).getImgChangeName() %>">
+	                   </a></th>
                     <th  width="130px" height="50px">제목</th>
                     <th width="380px" height="50px"><input type="hidden" name="title" value="<%=r.getReviewTitle() %>"><%=r.getReviewTitle() %></th>    
                 </tr>
@@ -343,7 +289,7 @@ font-weight:600;
 		  	         		<td width="200px"><%=cList.get(i).getModifyDate() %></td>
 		  	         		<td><input type="hidden" id="comtUserId"value="<%=cList.get(i).getUserId() %>" ></td>
 		  	         		<td><input type="hidden" id="comtUserName"value="<%=cList.get(i).getUserName() %>" ></td>
-		  	         		<%if(loginUser.getUserName().equals("운영자")|| loginUser.getUserName().equals(cList.get(i).getUserName())){ %>
+		  	         		<%if(loginUser.getManager().equals("Y")|| loginUser.getUserName().equals(cList.get(i).getUserName())){ %>
 		  	         		<td width="70px"><input type="button" value="수정" onclick="updateComment(<%=cList.get(i).getCommentNo()%>);"></td>
 		  	         		<td width="70px"><input type="button" value="삭제" onclick="deleteComment(<%=cList.get(i).getCommentNo()%>);"></td>
 		  	         		

@@ -187,6 +187,9 @@ padding-left:0px;
 
 #notice-h2{
  width:370px;
+ position:absolute;
+ left:1225px;
+ top:680px;
 }
 
 /*공지사항 부분  */
@@ -260,6 +263,7 @@ padding-left:0px;
  margin-left: 640px;
 
 }
+
 
 .review-list-box {
   border: 2px solid gray;
