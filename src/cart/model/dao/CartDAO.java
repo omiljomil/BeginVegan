@@ -495,6 +495,7 @@ public class CartDAO {
 			pstmt.setString(10, o.getPhone());
 			pstmt.setString(11, o.getMessage());
 			pstmt.setInt(12, o.getAmount());
+			pstmt.setInt(13, o.getProdNo());
 			
 			result = pstmt.executeUpdate();
 			

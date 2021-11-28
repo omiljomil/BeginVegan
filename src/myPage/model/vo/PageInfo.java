@@ -1,7 +1,7 @@
 package myPage.model.vo;
 
 public class PageInfo {
-   private int cuurentPage;
+   private int currentPage;
    private int listCount;
    private int pageLimit;
    private int boardLimit;
@@ -11,10 +11,10 @@ public class PageInfo {
    
    public PageInfo() {}
 
-   public PageInfo(int cuurentPage, int listCount, int pageLimit, int boardLimit, int maxPage, int startPage,
+   public PageInfo(int currentPage, int listCount, int pageLimit, int boardLimit, int maxPage, int startPage,
          int endPage) {
       super();
-      this.cuurentPage = cuurentPage;
+      this.currentPage = currentPage;
       this.listCount = listCount;
       this.pageLimit = pageLimit;
       this.boardLimit = boardLimit;
@@ -23,12 +23,12 @@ public class PageInfo {
       this.endPage = endPage;
    }
 
-   public int getCuurentPage() {
-      return cuurentPage;
+   public int getCurrentPage() {
+      return currentPage;
    }
 
-   public void setCuurentPage(int cuurentPage) {
-      this.cuurentPage = cuurentPage;
+   public void setCurentPage(int currentPage) {
+      this.currentPage = currentPage;
    }
 
    public int getListCount() {
@@ -81,7 +81,7 @@ public class PageInfo {
 
    @Override
    public String toString() {
-      return "PageInfo [cuurentPage=" + cuurentPage + ", listCount=" + listCount + ", pageLimit=" + pageLimit
+      return "PageInfo [currentPage=" + currentPage + ", listCount=" + listCount + ", pageLimit=" + pageLimit
             + ", boardLimit=" + boardLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
             + endPage + "]";
    }
