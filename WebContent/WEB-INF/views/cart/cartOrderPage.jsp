@@ -2,13 +2,30 @@
 	pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart, product.model.vo.*" %>
 <%
 	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
-ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
+	ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 %>
 <%
 	int result = 0;
 	for(int i = 0; i < list.size(); i++) {
 		result += list.get(i).getTotal();
 	}
+	
+
+    String prodNameStr = "";
+    for(int i = 0; i < list.size(); i++) {
+       if(i == 0) {
+          prodNameStr = list.get(0).getProdName();
+       } else {
+          prodNameStr = list.get(0).getProdName() +" 외 " + (list.size() - 1) + "건";
+       }
+    }
+
+   		int amountResult = 0;
+   		for(int i = 0; i < list.size(); i++) {
+   			amountResult += list.get(i).getAmount();
+   		}
+
+
 %>
 <!DOCTYPE html>
 <html>
@@ -218,6 +235,9 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
          <form action="<%= request.getContextPath() %>/insertOrder.me"
          method="post" name="orderForm" autocomplete="off">
          <div class="payment_order">
+         <input type="hidden" name="prodName" id="prodName" value="<%= prodNameStr %>">
+         <input type="hidden" name="amount" id="amount" value="<%= amountResult %>">
+         <input type="hidden" name="prodNo" id="prodNo" value="<%= list.get(0).getProdNo() %>">
             <h6 class="payment_order_h6">상품 주문 내역</h6>
             <table class="payment_table">
                <tr class="payment_table_tr">
@@ -428,7 +448,7 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
                   <td class="all_order_second">2500</td>
                   <td class="all_order_second" name="totalPrice" value="1,000">
                   	= <%= result + 2500 %>
-                  	<input type="hidden" name="totalPrice" value="<%= result + 2500 %>">
+                  	<input type="hidden" name="totalPrice" id="totalPrice" value="<%= result + 2500 %>">
                   </td>
                   
                </tr>
@@ -571,19 +591,8 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 	                    data:{
 	                       userId: $('#userId').val(),
 	                       orderNo: new Date().getTime(),
-	                       prodName:
-	                       	<%
-	                       		String prodNameStr = "";
-	                       		for(int i = 0; i < list.size(); i++) {
-	                       			if(i == 0) {
-	                       				prodNameStr += list.get(i).getProdName();
-	                       			} else {
-	                       				prodNameStr += ", " + list.get(i).getProdName();
-	                       			}
-	                       		}
-	                       	%>
-	                       	<%= prodNameStr %>, 
-	                       price: <%= result + 2500 %>,
+	                       prodName: $('#prodName').val(), 
+	                       price: $('#totalPrice').val(),
 	                       receiver: $('#shipName').val(),
 	                       postal: $('#postal2').val(),
 	                       address: $('#address2').val(),
@@ -591,19 +600,13 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 	                       normalPhone:$('#normalPhone11').val()+$('#normalPhone22').val()+$('#normalPhone33').val(),
 	                       phone:$('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
 	                       message: $('#message').val(),
-	                       amount: 
-		                       	<%
-		                       		int amountResult = 0;
-		                       		for(int i = 0; i < list.size(); i++) {
-		                       			amountResult += list.get(i).getAmount();
-		                       		}
-	                       		%>
-	                       		<%= amountResult %>
+	                       amount: $('#amount').val(),
+	                       prodNo: $('#prodNo').val()
 	                    },
 	                 
 	                    success : function(data){
 	                       alert('주문이 완료되었습니다.');
-	                       location.href="CartOrderComplete.me";
+	                       location.href="complete.me";
 	                    },
 	                    error:function(data){
 	                       alert("결제 실패");

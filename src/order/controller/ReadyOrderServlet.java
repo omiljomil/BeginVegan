@@ -1,4 +1,4 @@
-package cart.controller;
+package order.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,21 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
-import cart.model.service.CartService;
 import cart.model.vo.Cart;
+import order.model.service.OrderService;
+import order.model.vo.Order;
 
 /**
- * Servlet implementation class InsertCartServlet
+ * Servlet implementation class ReadyOrderServlet
  */
-@WebServlet("/insertCart.me")
-public class InsertCartServlet extends HttpServlet {
+@WebServlet("/readyOrder.me")
+public class ReadyOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertCartServlet() {
+    public ReadyOrderServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -55,24 +57,26 @@ public class InsertCartServlet extends HttpServlet {
 		}
 		System.out.println(total);
 		
-		Cart cart = new Cart();
-		cart.setAmount(amount);
-		cart.setUserId(userId);
-		cart.setProdNo(pNo);
-		cart.setTotal(total);
+		Order order = new Order();
+		order.setAmount(amount);
+		order.setUserId(userId);
+		order.setProdNo(pNo);
+		order.setTotal(total);
 		
-		int result = new CartService().insertCart(cart, sub, count);
+		int result = new OrderService().insertReadyOrder(order, sub, count);
 		
 		PrintWriter out = response.getWriter();
         out.println(result);
         out.flush();
         out.close();
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

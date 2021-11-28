@@ -477,7 +477,7 @@ public class CartDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("cartOneOrder");
+		String query = prop.getProperty("insertOrder");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -493,6 +493,7 @@ public class CartDAO {
 			pstmt.setString(10, o.getPhone());
 			pstmt.setString(11, o.getMessage());
 			pstmt.setInt(12, o.getAmount());
+			pstmt.setInt(13, o.getProdNo());
 			
 			result = pstmt.executeUpdate();
 			

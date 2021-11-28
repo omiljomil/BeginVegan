@@ -20,6 +20,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <style>
 div {
 	background-color: white;
@@ -133,6 +134,26 @@ div {
 .proThumb:hover {
 	cursor: pointer;
 }
+.container_img{
+	position:relative;
+}
+.container_img .container_btn{
+  position:absolute;
+  opacity: 100;
+  top:250px;
+  right: 60px;
+  background-color:transparent;
+}
+.zzimBtn{
+	padding: 5px;
+    border: none;
+    color: #77b55a;
+    font-size: 30px;
+    background-color:transparent;
+}
+#heart{
+	color: #77b55a;
+}
 </style>
 </head>
 <body>
@@ -188,9 +209,14 @@ div {
 				<a class="proThumb"> <input type="hidden"
 					value="<%= p.getProdNo() %>">
 					<p>
-						<img
+						<div class="container_img">
+						<img class="image"
 							src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>"
 							width="300px" height="300px">
+						<div class="container_btn">
+							<input type="button" class="zzimBtn" id="zzimBtn" value="&#9825;" onclick="zzim()">
+						</div>
+					</div>
 					<h3><%= p.getProdName() %></h3>
 					<p><%= p.getPrice() %>원
 						<%= p.getProdNo() %></a>
@@ -261,7 +287,11 @@ div {
 	
 	
 	
-	
+	</script>
+	<script>
+		function zzim() {
+			alert('찜 목록에 추가되었습니다.');
+		}
 	</script>
 
 

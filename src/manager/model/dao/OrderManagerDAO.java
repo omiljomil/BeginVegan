@@ -54,7 +54,7 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(Integer.parseInt(rset.getString("order_no")),
+				OrderManager o = new OrderManager(rset.getString("order_no"),
 												  rset.getString("prod_name"),
 												  rset.getInt("amount"),
 												  rset.getInt("price"),
@@ -196,7 +196,7 @@ public class OrderManagerDAO {
 			list = new ArrayList<OrderManager>();
 			
 			while(rset.next()) {
-				OrderManager o = new OrderManager(Integer.parseInt(rset.getString("order_no")),
+				OrderManager o = new OrderManager(rset.getString("order_no"),
 												  rset.getString("prod_name"),
 												  rset.getInt("amount"),
 												  rset.getInt("price"),
