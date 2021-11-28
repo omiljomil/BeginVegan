@@ -24,7 +24,7 @@
 }
 
 .links {
-	max-width: 1000px;
+	max-width: 1200px;
 	height: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -56,6 +56,10 @@ ul {
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
+}
+#searchProductList button{
+	border-style: none;
+	background-color: white;
 }
 
 .nav_items {
@@ -179,8 +183,11 @@ ul {
 
 				<!-- 우측 상단 -->
 				<div class=rightlinks>
-					<input type="text" maxlength="225" tabindex="1" /> <i
-						class="bi bi-search"></i>
+				<form action="<%= request.getContextPath() %>/searchProductList.do"
+		method="post" id="searchProductList">
+					<input type="text" maxlength="225" tabindex="1" name="searchProduct"/>
+					<button type="submit" ><i class="bi bi-search"></i></button>
+				
 					<% if(loginUser==null) { %>
 					<a href="#" id="basket"><i class="bi bi-basket2-fill"></i></a>
 					<script>
@@ -193,6 +200,7 @@ ul {
 					<a href="<%=request.getContextPath() %>/cartList.me"><i
 						class="bi bi-basket2-fill"></i></a>
 					<% } %>
+					</form>
 				</div>
 			</div>
 			<!-- img -->

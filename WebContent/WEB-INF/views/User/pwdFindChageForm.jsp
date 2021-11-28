@@ -92,9 +92,10 @@
 	<%@ include file="../common/bottontitle.jsp"%>
 </footer>
 <script>
+var form = document.Form;
+var isPwdCheck = true;
 function checkValue(){
-	 var form = document.Form;
-	 var isPwdCheck = true;
+	 
 	
 	 
 	 if(!form.userPwd1.value){

@@ -119,8 +119,7 @@ form input[type=button] {
 
 			</tr>
 		</table>
-		<div style="margin-left: 10px; margin-top: 10px; font-size: 12px;">입력/수정하신
-			배송지는 배송지 목록에 저장됩니다.</div>
+		<div style="margin-left: 10px; margin-top: 10px; font-size: 12px;">입력/수정하신 배송지는 배송지 목록에 저장됩니다.</div>
 		<div align="center" class="diBtn">
 			<input type="hidden" name="ship_no" id="ship_no"
 				value="<%=s.getShip_no()%>" /> <input type="button"
@@ -128,7 +127,8 @@ form input[type=button] {
 				style="border: 1px solid black; color: black; background-color: white;" />
 			<input type="button" value="수정" onclick="sbBtn();" id="submitclose" />
 		</div>
-
+		<input type="hidden" name="userId" id="userId"
+			value="<%= s.getUser_id() %>" />
 
 	</form>
 </body>

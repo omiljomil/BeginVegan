@@ -414,7 +414,7 @@ a:visited {
 		 </div>
 		  <div class="buy_button">
 		 <input type="button" id="add_button" value="장바구니">
-		 <input type="button" id="buy_button" value="바로구매">
+		 <input type="button" id="buy_button" value="바로구매" onclick="location.href='<%= request.getContextPath() %>/paie.me'">
 		  </div>
 		  </div> 
 	</div>	
