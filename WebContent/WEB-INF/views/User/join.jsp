@@ -272,7 +272,7 @@ table tr input {
         }    
 
         
-        if(!form.email1.value || !form.email2.value ||form.email3.value=="1" ){
+        if(!form.email1.value || (!form.email2.value ||!form.email3.value=="1") ){
             alert("메일 주소를 입력하세요.");
             return false;
         }

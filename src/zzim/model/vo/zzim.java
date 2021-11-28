@@ -5,18 +5,20 @@ public class zzim {
 	private String userId;
 	private String prod_name;
 	private int price;
-	private int postal;
+	private int prod_no;
 	public zzim() {
 		super();
 	}
-	public zzim(int zzim_no, String userId, String prod_name, int price, int postal) {
+	
+	public zzim(int zzim_no, String userId, String prod_name, int price, int prod_no) {
 		super();
 		this.zzim_no = zzim_no;
 		this.userId = userId;
 		this.prod_name = prod_name;
 		this.price = price;
-		this.postal = postal;
+		this.prod_no = prod_no;
 	}
+
 	public int getZzim_no() {
 		return zzim_no;
 	}
@@ -41,16 +43,20 @@ public class zzim {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getPostal() {
-		return postal;
+	
+	
+	public int getProd_no() {
+		return prod_no;
 	}
-	public void setPostal(int postal) {
-		this.postal = postal;
+
+	public void setProd_no(int prod_no) {
+		this.prod_no = prod_no;
 	}
+
 	@Override
 	public String toString() {
 		return "zzim [zzim_no=" + zzim_no + ", userId=" + userId + ", prod_name=" + prod_name + ", price=" + price
-				+ ", postal=" + postal + "]";
+				+ "]";
 	}
 	
 }

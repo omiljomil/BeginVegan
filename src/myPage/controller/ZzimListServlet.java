@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import product.model.service.ProductService;
+import product.model.vo.PageInfo;
+import product.model.vo.Photo;
+import product.model.vo.Product;
 import zzim.model.service.zzimService;
 import zzim.model.vo.zzim;
 
@@ -31,16 +35,28 @@ public class ZzimListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+		
+		
+		
+		ProductService pService = new ProductService();
+		
 		String uId = request.getParameter("uId");
 		ArrayList<zzim> list = new zzimService().selectZzim(uId);
-		request.setAttribute("list", list);
-		if(list != null) {
+		ArrayList<Photo> fList = pService.selectFList();
+		
+		String page = "";
+		System.out.println(list.size());
+		if(list != null && fList != null) {
+			request.setAttribute("fList", fList);
 			request.setAttribute("list", list);
-			request.getRequestDispatcher("WEB-INF/views/myPage/zzimList.jsp").forward(request, response);
+			page = "WEB-INF/views/myPage/zzimList.jsp";
 		}else {
 			request.setAttribute("msg", "찜 목록 조회에 실패하였습니다,");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+			page = "WEB-INF/views/common/errorPage.jsp";
 		}
+		
+	    request.getRequestDispatcher(page).forward(request, response);
+		
 		
 	}
 

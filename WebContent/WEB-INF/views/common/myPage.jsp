@@ -96,14 +96,14 @@ h2 {
 								href="<%=request.getContextPath() %>/changeOrderList.me"
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 취소/반품/교환 내역</a></li>
-							<li><a href="<%=request.getContextPath() %>/zzim.me"
+							<li><a href="<%=request.getContextPath() %>/zzim.me?uId=<%=loginUser.getUserId() %>"
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 찜 리스트</a></li>
 						</ul>
 					</li>
 					<li class="sub_menu_title">나의 활동
 						<ul class="sub_depth1">
-							<li><a href="<%=request.getContextPath() %>/paie.me"
+							<li><a href="<%=request.getContextPath() %>/insertQuestionForm.qs"
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 문의하기</a></li>
 							<li><a href="<%=request.getContextPath() %>/myQuestionList.qs?userId=<%= loginUser.getUserId() %>" class="sub_depth_href" class="sub_depth_href"><i
