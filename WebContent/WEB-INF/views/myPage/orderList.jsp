@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, paiement.model.vo.Paiement,
-    myPage.model.vo.PageInfo" %>
+    myPage.model.vo.PageInfo, product.model.vo.*" %>
 <%
 	ArrayList<Paiement> list = (ArrayList)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
+	
+
 %>
 
 <!DOCTYPE html>
@@ -20,6 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
+
 	.order_ship{
 		float: left; /*정렬*/
 	    width: 800px; 
@@ -159,13 +163,13 @@
 	}
 
 	.sub_order_left_table{
-		width: 90px;
+		width: 110px;
 		height: 60px;
 		font-size: 14px;
 		text-align: left;
 	}
 	.sub_order_right_table{
-		width: 200px;
+		width: 180px;
 		height: 60px;
 		font-size: 14px;
 		text-align: left;
@@ -241,8 +245,20 @@
 		text-indent: 10px;
 	}
 	/* 주문내역  */
-	.pagingArea{
-		margin-top: 50px;
+
+	.pagingArea .pageBtn{
+	margin-top: 80px;
+	margin-bottom: 40px;
+	background: white;
+	width: 40px;
+	height: 40px;
+	font-size: 14px;
+	color: black;
+	border: 0px;
+	font-size: 16px;
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: rgb(60, 127, 68);
 	}
 </style>
 </head>
@@ -252,10 +268,9 @@
 				<ul class="order_refer">
 					<li>주문 목록/배송 조회</li>
 				</ul>
-				<ul class="order_search">
-					<li><input type="text" id="product_search" size="53" maxlength="20" height="50px;" placeholder="주문한 상품을 검색해 보세요"></li>
-				</ul>
-
+					<ul class="order_search">
+						<li><input type="text" id="product_search" name="search" size="53" maxlength="20" height="50px;" placeholder="주문한 상품을 검색해 보세요"></li>
+					</ul>
        		<%@ include file = "../myPage/dateCheck.jsp" %>
        		<div class="order_product_title" style="width: 100%; position: relative; text-align: left;">
                 <p>주문 상품 정보</p>
@@ -269,6 +284,7 @@
 				<%		for(int i = 0; i < list.size(); i++) { %>
 							<div class="order_both">
 								<input type="hidden" id="orderNo" value="<%= list.get(i).getOrderNo() %>">
+								<input type="hidden" id="orderType" value="<%= list.get(i).getOrderType() %>">
 					            <div class="left" style="margin-top: 30px;">
 					            	<table class="order_left_table">
 					            		<tr>
@@ -297,14 +313,23 @@
 					            			<td colspan="3" class="sub_order_right_table" id="orderType" style="text-indent: 15px;"><%= type %></td>
 					            		</tr>
 					            		<tr>
-					            			<td rowspan="5" style="height: 100px; width: 100px;" style="border: 1px solid black;"></td>
+					            			<td rowspan="5" style="height: 100px; width: 100px; text-indent: 10px;">
+					            			<% for(int j = 0; j < fList.size(); j++) { %>
+												<% Photo ph = fList.get(j); %>
+												<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	
+													<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
+														<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
+													</a>
+												<% } %>
+											<% } %>
+					            			</td>
 					            			<td rowspan="5" style="height: 100px; width: 10px;" ></td>
-					            			<td class="sub_order_left_table"  id="orderName"><%= list.get(i).getProdName() %></td>
+					            			<td class="sub_order_left_table"  id="orderName" style="text-indent: 18px;"><%= list.get(i).getProdName() %></td>
 					            			<td class="sub_order_right_table" id="orderAmount" ><%= list.get(i).getAmount() %>개</td>
 					            		</tr>
 					            		<tr>
-					            			<td class="sub_order_left_table"  id="orderPrice"><%= list.get(i).getPrice()%>원</td>
-					            			<td class="sub_order_right_table"  id="orderAmount"><%= list.get(i).getAmount()%>개</td>
+					            			<td class="sub_order_left_table"  id="orderPrice" style="vertical-align: top; text-indent: 18px;"><%= list.get(i).getPrice() %>원</td>
+					            			<td class="sub_order_right_table"  id="orderAmount" style="vertical-align: top;"><%= list.get(i).getAmount()%>개</td>
 					            		</tr>
 					            	</table>
 								</div>
@@ -325,34 +350,68 @@
 							</div>
 				<% 		} %>
 				<% } %>
-                <div class="pagingArea" align="center">
-            	<!-- 맨 처음으로 -->
-            	<%-- <button onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=1'">&lt;&lt;</button> --%>
-            	<!-- 이전 페이지로 -->
-            	<button id = "beforeBtn" onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getCuurentPage()-1%>'">&lt;</button>
-            	<script>
-            		if(<%= pi.getCuurentPage() %> <= 1) {
-            			$('#beforeBtn').prop('disabled', true);
-            		}
-            	</script>
-            	<!-- 숫자 버튼 -->
-            	<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) {%>
-            	<%		if(p == pi.getCuurentPage()) { %>
-            				<button id="choosen" disabled><%= p %></button>
-            	<%		} else { %>
-            				<button id="numBtn" onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= p %>'"><%= p %></button>
-            	<%		} %>
-            	<% } %>
-            	<!-- 다음 페이지로 -->
-            	<button id = "afterBtn" onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getCuurentPage() +1 %>'">&gt;</button>
-            	<script>
-            		if(<%= pi.getCuurentPage() %> >= <%= pi.getMaxPage() %>) {
-            			$('#afterBtn').prop('disabled', true);
-            		}
-            	</script>
-            	<!-- 맨 끝으로 -->
-            	<%-- <button onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getMaxPage()%>'">&gt;&gt;</button> --%>
-            </div>
+			 <div class="pagingArea" align="center">
+				<% if(list.isEmpty()) { %>
+					<div class="layout" id="space7"></div>
+				<% } else { %>
+					<!-- 맨 처음으로 -->
+					<!-- 
+					<input type="button" id="firstBtn" class="pageBtn"
+						onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=1'"
+						value="처음">
+					<script>
+						if(<%= pi.getCurrentPage() %> == 1) {
+							$('#firstBtn').prop('disabled', true);
+							$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
+						}
+					</script>
+					 -->
+					<!-- 이전 페이지로 -->
+					<input type="button" id="beforeBtn" class="pageBtn"
+						onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+						value="&#11164;">
+					<script>
+						if(<%= pi.getCurrentPage() %> <= 1) {
+							$('#beforeBtn').prop('disabled', true);
+							$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
+						}
+					</script>
+					
+					<!-- 숫자 버튼 -->
+					<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+						<% if(p == pi.getCurrentPage()) { %>
+							<input type="button" class="pageBtn" id="choosen" disabled value="<%= p %>">
+						<% } else { %>
+							<input type="button" id="numBtn" class="pageBtn"
+								onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= p %>'"
+								value="<%= p %>">
+						<% } %>
+					<% } %>
+					
+					<!-- 다음 페이지로 -->
+					<input type="button" id="afterBtn" class="pageBtn"
+						onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+						value="&#11166;">
+					<script>
+						if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+							$('#afterBtn').prop('disabled', true);
+							$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
+						}
+					</script>
+					
+					<!-- 맨 끝으로
+					<input type="button" id="lastBtn" class="pageBtn"
+						onclick="location.href='<%= request.getContextPath() %>/orderList.me?currentPage=<%= pi.getMaxPage() %>'"
+						value="끝">
+					<script>
+						if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+							$('#lastBtn').prop('disabled', true);
+							$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
+						}
+					</script>
+						-->
+		<% } %>
+		</div>
             
             </div>
             
@@ -395,7 +454,17 @@
 			})
 		}
 	}
-</script>      
+</script>   
+
+<script>
+//	$(document).ready(function(){
+		console.log($('#orderType').val());
+//		$.ajax({
+//			url: 'orderCountList.me'
+			
+//		});
+//	})
+</script>   
 
 </body>
 </html>

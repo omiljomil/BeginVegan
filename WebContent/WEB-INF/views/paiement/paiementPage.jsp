@@ -1,9 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="product.model.vo.*"%>
+    pageEncoding="UTF-8" import="order.model.vo.*, java.util.ArrayList, product.model.vo.*,
+    paiement.model.vo.*"%>
 <% 
-	ProductList pl = (ProductList)request.getAttribute("pl");
-	Photo pt = (Photo)request.getAttribute("pt");
+	ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
+	
+	String userId = (String)request.getAttribute("userId");
+	int prodNo = (Integer)request.getAttribute("prodNo");
+	String prodName = (String)request.getAttribute("prodName");
+	int amount = (Integer)request.getAttribute("amount");
+	int price = (Integer)request.getAttribute("price");
+	String[] optionName = (String[])request.getAttribute("optionName");
+	String[] optionCount = (String[])request.getAttribute("optionCount");
+
 %>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,6 +78,11 @@
 	.order_info_table tr{
 		border-bottom: 1px solid #E2E2E2;
 	}
+    table a:link { color: #909090; text-decoration: none;}
+	table a:visited {text-decoration: none; color: #909090;}
+	table a:active {text-decoration: none; color: #909090;}
+	table a:hover {text-decoration: none; color: #909090;}
+	
 	.order_info_table td{
 		height: 60px;
 		font-size: small;
@@ -207,6 +225,7 @@
 			<form action="<%= request.getContextPath() %>/insertOrderInfo.me"
 			method="post" name="orderForm" autocomplete="off">
 			<div class="payment_order">
+			<input type="hidden" id="prodName" name="prodName" value="<%= prodName %>">
 				<h6 class="payment_order_h6">상품 주문 내역</h6>
 				<table class="payment_table">
 					<tr class="payment_table_tr">
@@ -218,16 +237,48 @@
 						<td style="width: 130px;">합계</td>
 					</tr>
 					<tr>
-						<td style="height: 130px; border-bottom: 1px solid #E2E2E2">이미지</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">상품 정보</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">가격</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">1</td>
+						
+						<tr>
+							<td style="height: 130px; border-bottom: 1px solid #E2E2E2;">
+								<% for(int j = 0; j < fList.size(); j++) { %>
+									<% Photo ph = fList.get(j); %>
+									<% if(prodNo == ph.getProdNo() && ph.getType() == 0) { %>	
+										<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= prodNo %>">
+											<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
+										</a>
+									<% } %>
+								<% } %>
+						</td>
+					
+						<td style="height: 130px; border: 1px solid #E2E2E2; text-align: left; text-indent: 2em;">
+							<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= prodNo %>"><b><%= prodName %></b></a>
+								<br>
+								<div style="text-align: left; text-indent: 2em; margin-top: 5px;">
+								<%
+		    						
+		    						String opArr = "";
+		    						
+		    						for(int j = 0; j < optionName.length; j++) {
+		    							if(j == 0) {
+		    								opArr += "옵션 : " + optionName[j] +  " - " + optionCount[j];
+		    							} else {
+		    								opArr += ", " + optionName[j] +  " - " + optionCount[j];
+		    							}
+		    						}
+	    						%>
+				    			<%= opArr %>
+				    			</div>
+						</td>
+						
+						<td style="height: 130px; border: 1px solid #E2E2E2"><%= price %></td>
+						<td style="height: 130px; border: 1px solid #E2E2E2" id="amount"><%= amount %></td>
 						<td style="height: 130px; border: 1px solid #E2E2E2">2500</td>
-						<td style="height: 130px; border: 1px solid #E2E2E2">총 가격</td>
+						<td style="height: 130px; border: 1px solid #E2E2E2" id="totalPrice"><%= price+2500 %></td>
 					</tr>
+					
 					<tr>
 						<td colspan="5"></td>
-						<td>합계 : </td>
+						<td>합계 : <%= price+2500 %></td>
 					</tr>
 				</table>
 			</div>
@@ -379,9 +430,9 @@
 						<td class="all_order_first">총 결제 예정 금액</td>
 					</tr>
 					<tr>
-						<td class="all_order_second">21,400원</td>
-						<td class="all_order_second">2,500원</td>
-						<td class="all_order_second" name="totalPrice" value="1,000">= 23,900원</td>
+						<td class="all_order_second"><%= price %></td>
+						<td class="all_order_second">2500</td>
+						<td class="all_order_second" name="totalPrice" value="<%= price+2500 %>">= <%= price+2500 %></td>
 					</tr>
 					<tr>
 						<td colspan="3" class="all_order_third">
@@ -391,11 +442,8 @@
 					</tr>
 				</table>
 				</form>
-			
+				  <input type="hidden" id="userId" value="<%= loginUser.getUserId() %>">
 			</div>
-			
-			<input type="hidden" id="userId" value="<%= loginUser.getUserId() %>">
-			
 		</div>
 		
 <!--  		<script>
@@ -413,7 +461,6 @@
 		var nameCheck = RegExp(/^[가-힣]+$/);
 		var phoneCheck = RegExp(/^01[0179][0-9]{7,8}$/);
 		var emailCheck = RegExp(/.+@[a-z]+(\.[a-z]+){1,2}$/);
-		
 		
 	
 		if(!$('#orderName').val()){
@@ -522,8 +569,8 @@
 			           data:{
 			        	   userId: $('#userId').val(),
 			        	   orderNo: new Date().getTime(),
-			        	   prodName: '콩고기샐러드', 
-			       		   price: 8000,
+			        	   prodName: $('#prodName').val(),
+			       		   price: $('#totalPrice').text(),
 			        	   receiver: $('#shipName').val(),
 			        	   postal: $('#postal2').val(),
 			        	   address: $('#address2').val(),
@@ -531,8 +578,8 @@
 			        	   normalPhone:$('#normalPhone11').val()+$('#normalPhone22').val()+$('#normalPhone33').val(),
 			        	   phone:$('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
 			        	   message: $('#message').val(),
-			        	   amount: 1
-			        	   
+			        	   amount: $('#amount').text(),
+			        	   prodNo: <%= prodNo %>
 			           },
 			        
 			           success : function(data){

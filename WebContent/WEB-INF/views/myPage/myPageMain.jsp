@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	int result1 = (Integer)request.getAttribute("result1");
+	int result2 = (Integer)request.getAttribute("result2");
+	int result3 = (Integer)request.getAttribute("result3");
+	int result4 = (Integer)request.getAttribute("result4");
+	int result5 = (Integer)request.getAttribute("result5");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,26 +105,21 @@ p {
 		<div class="orderSub">
 			<table class="order_table">
 				<tr>
-					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">입금
-						대기</td>
-					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">결제
-						완료</td>
-					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">상품
-						준비중</td>
+					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">입금대기</td>
+					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">주문완료</td>
+					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">상품 준비중</td>
 					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">배송중</td>
-					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">배송
-						완료</td>
-					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">구매
-						확정</td>
+					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">배송 완료</td>
+					<td width="105" height="40" style="border-right: 1px solid #E2E2E2">구매 확정</td>
 					<td id="rhdqor" width="60" height="20">· 취소</td>
-					<td width="60" height="30">0건</td>
+					<td width="60" height="30"><%= result5 %>건</td>
 				</tr>
 				<tr>
 					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
-					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
-					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
-					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
-					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
+					<td id="number" style="border-right: 1px solid #E2E2E2"><%= result1 %></td>
+					<td id="number" style="border-right: 1px solid #E2E2E2"><%= result2 %></td>
+					<td id="number" style="border-right: 1px solid #E2E2E2"><%= result3 %></td>
+					<td id="number" style="border-right: 1px solid #E2E2E2"><%= result4 %></td>
 					<td id="number" style="border-right: 1px solid #E2E2E2">0</td>
 					<td id="rhdqor" width="60" height="40">· 교환</td>
 					<td>0건</td>

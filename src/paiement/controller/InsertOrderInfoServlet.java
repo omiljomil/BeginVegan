@@ -40,20 +40,16 @@ public class InsertOrderInfoServlet extends HttpServlet {
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
 		int amount = Integer.parseInt(request.getParameter("amount"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
 		
 		String normalPhone = request.getParameter("normalPhone");
 		String message = request.getParameter("message");
 		String deAddress = request.getParameter("deAddress");
 		
-		/*
-		 * if(normalPhone == null) { normalPhone = "null"; } else if(message == null) {
-		 * message = "null"; } else if(deAddress == null) { deAddress = "null"; }
-		 */
-		
-		
+
 		Paiement p = new Paiement(userId, 0, orderNo, prodName, price, receiver, postal, 
-									address, deAddress, normalPhone, phone, message, null, amount);
+									address, deAddress, normalPhone, phone, message, null, amount, prodNo);
 		
 		int result = new PaiementService().insertPaiement(p);
 		

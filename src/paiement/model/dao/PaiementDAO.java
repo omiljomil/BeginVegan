@@ -54,6 +54,7 @@ public class PaiementDAO {
 			pstmt.setString(10, p.getPhone());
 			pstmt.setString(11, p.getMessage());
 			pstmt.setInt(12, p.getAmount());
+			pstmt.setInt(13, p.getProdNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -67,59 +68,4 @@ public class PaiementDAO {
 		return result;
 	}
 
-	public Photo selectPhotoPaiement(int pNo, Connection conn) {
-		Statement stmt = null;
-		ResultSet rset = null;
-		Photo pt = null;
-		
-		String query = prop.getProperty("selectPhotoPaiement");
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			if(rset.next()) {
-				pt = new Photo(rset.getInt("IMG_NO"),
-							   rset.getInt("PROD_NO"),
-							   rset.getString("IMG_NAME"),
-							   rset.getString("IMG_CHANGE_NAME"),
-							   rset.getString("PATH"),
-							   rset.getInt("FILE_LEVEL"),
-							   rset.getInt("TYPE"),
-							   rset.getString("STATUS"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(stmt);
-		}
-		
-		return pt;
-	}
-
-
-
-//	public int selectPListPaiement(Connection conn, ProductList pl) {
-	/*
-	 * PreparedStatement pstmt = null; ResultSet rset = null; ProductList pl = null;
-	 * int result = 0;
-	 * 
-	 * String query = prop.getProperty("selectPListPaiement"); // /// try { // pstmt
-	 * = conn.prepareStatement(query); // pstmt.setInt(1, pl.getProdNo());
-	 * 
-	 * rset = pstmt.executeQuery(); if(rset.next()) { // result = new ProductList(
-	 * // rset.getInt("PROD_NO"), // rset.getString("PROD_NAME"), //
-	 * rset.getInt("PRICE"));
-	 * 
-	 * }
-	 * 
-	 * 
-	 * } catch (SQLException e) { e.printStackTrace(); } finally { close(pstmt); }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * return result; }
-	 */
 }

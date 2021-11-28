@@ -18,13 +18,14 @@ public class Paiement {
 	private String message;
 	private Date enrollDate;
 	private int amount;
+	private int prodNo;
+	
+	public Paiement() {}
 
-	public Paiement() {
-	}
 
 	public Paiement(String userId, int orderType, String orderNo, String prodName, int price, String receiver,
 			int postal, String address, String deAddress, String normalPhone, String phone, String message,
-			Date enrollDate, int amount) {
+			Date enrollDate, int amount, int prodNo) {
 		super();
 		this.userId = userId;
 		this.orderType = orderType;
@@ -40,21 +41,31 @@ public class Paiement {
 		this.message = message;
 		this.enrollDate = enrollDate;
 		this.amount = amount;
+		this.prodNo = prodNo;
 	}
+
+	
 	
 	
 
-	public Paiement(int orderType, String orderNo, String prodName, int price, Date enrollDate, int amount) {
+	public Paiement(int orderType, String orderNo, String userId, String prodName, int price, Date enrollDate, int amount,
+			int prodNo) {
 		super();
 		this.orderType = orderType;
 		this.orderNo = orderNo;
+		this.userId = userId;
 		this.prodName = prodName;
 		this.price = price;
 		this.enrollDate = enrollDate;
 		this.amount = amount;
+		this.prodNo = prodNo;
 	}
-	
-	
+
+
+
+
+
+
 
 	public Paiement(String userId, String prodName, int price, int amount) {
 		super();
@@ -180,13 +191,35 @@ public class Paiement {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
+
+	public int getProdNo() {
+		return prodNo;
+	}
+
+
+	public void setProdNo(int prodNo) {
+		this.prodNo = prodNo;
+	}
+
+
+
+
+
+
 
 	@Override
 	public String toString() {
 		return "Paiement [userId=" + userId + ", orderType=" + orderType + ", orderNo=" + orderNo + ", prodName="
 				+ prodName + ", price=" + price + ", receiver=" + receiver + ", postal=" + postal + ", address="
 				+ address + ", deAddress=" + deAddress + ", normalPhone=" + normalPhone + ", phone=" + phone
-				+ ", message=" + message + ", enrollDate=" + enrollDate + ", amount=" + amount + "]";
+				+ ", message=" + message + ", enrollDate=" + enrollDate + ", amount=" + amount + ", prodNo=" + prodNo
+				+ "]";
 	}
+
+
+
+
+
 
 }
