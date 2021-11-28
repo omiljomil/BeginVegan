@@ -37,6 +37,7 @@ public class InsertCartServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
+		/* <<<<<<< Updated upstream */
 		int pNo = Integer.parseInt(request.getParameter("prodNo")); // 상품번호
 		int amount = Integer.parseInt(request.getParameter("amount")); // 상품 자체 수량
 		String[] sub = request.getParameterValues("sub");
@@ -48,6 +49,16 @@ public class InsertCartServlet extends HttpServlet {
 		System.out.println(amount);
 		System.out.println(sub);
 		System.out.println(count);
+/*=======
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		System.out.println("pNo:" + pNo);
+		int count1 = (request.getParameter("numBox1") == null ? 0 : Integer.parseInt(request.getParameter("numBox1")));
+		int count2 = (request.getParameter("numBox2") == null ? 0 : Integer.parseInt(request.getParameter("numBox2")));
+		int count3 = (request.getParameter("numBox3") == null ? 0 : Integer.parseInt(request.getParameter("numBox3")));
+		int amount = Integer.parseInt(request.getParameter("numBox"));
+		int count = new CartService().countCart(userId, pNo);
+		String[] option = request.getParameterValues("optionName");
+>>>>>>> Stashed changes*/
 		
 		for(int i = 0; i < sub.length; i++) {
 			System.out.println(sub[i]);

@@ -160,20 +160,22 @@ public class ProductDAO {
 		return result;
 	}
 
-	public ArrayList selectPList(Connection conn, PageInfo pi) {
+	public ArrayList selectPList(Connection conn, PageInfo pi, String cNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
 		
-		String query = prop.getProperty("selectPList");
+		String query = prop.getProperty("selectCatePList");
 		
 		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		
 		try {
+			System.out.println("endRow:"+endRow);
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, cNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 				
@@ -182,7 +184,7 @@ public class ProductDAO {
 				list.add(new Product(rset.getInt("PROD_NO"),
 									rset.getString("PROD_NAME"),
 									rset.getInt("PRICE"),
-									rset.getString("CTGRY_Name"),
+									rset.getString("CTGRY_NAME"),
 									rset.getString("MTRL_NAME"),
 									rset.getDate("ENROLL_DATE"),
 									rset.getString("SHORT_INFO"),
@@ -197,7 +199,7 @@ public class ProductDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println("list:"+list);
 		return list;
 		
 	}
@@ -401,9 +403,7 @@ public class ProductDAO {
 			pstmt.setString(3, fileList.get(i).getPath());
 			pstmt.setInt(4, fileList.get(i).getFileLevel());
 			pstmt.setInt(5, fileList.get(i).getImgNo());
-			
-			System.out.println("img:"+ fileList.get(i).getImgName());
-			System.out.println("changeimg:"+ fileList.get(i).getImgChangeName());
+
 			result += pstmt.executeUpdate();
 			}
 
@@ -412,7 +412,7 @@ public class ProductDAO {
 		}finally {
 			close(pstmt);
 		}
-		System.out.println("사진:" + result);
+
 		return result;
 	}
 	
@@ -505,6 +505,136 @@ public class ProductDAO {
 		}
 
 		return result;
+	}
+
+	public ArrayList<Product> selectPListAll(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		
+		String query = prop.getProperty("selectPListAll");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+	
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+				
+			list = new ArrayList<Product>();
+			while(rset.next()) {
+				list.add(new Product(rset.getInt("PROD_NO"),
+									rset.getString("PROD_NAME"),
+									rset.getInt("PRICE"),
+									rset.getString("CTGRY_NAME"),
+									rset.getString("MTRL_NAME"),
+									rset.getDate("ENROLL_DATE"),
+									rset.getString("SHORT_INFO"),
+									rset.getString("PROD_EXPLE"),
+									rset.getString("PROD_TAG"),
+									rset.getString("STATUS")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("list:"+list);
+		return list;
+	}
+
+	public ArrayList<Product> selectManagerPListAll(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		
+		String query = prop.getProperty("selectPList");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+				
+			list = new ArrayList<Product>();
+			while(rset.next()) {
+				list.add(new Product(rset.getInt("PROD_NO"),
+									rset.getString("PROD_NAME"),
+									rset.getInt("PRICE"),
+									rset.getString("CTGRY_Name"),
+									rset.getString("MTRL_NAME"),
+									rset.getDate("ENROLL_DATE"),
+									rset.getString("SHORT_INFO"),
+									rset.getString("PROD_EXPLE"),
+									rset.getString("PROD_TAG"),
+									rset.getString("STATUS")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Product> selectsearchPList(Connection conn, PageInfo pi, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+
+		String query = prop.getProperty("selectsearchPList");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		System.out.println("startRow1:"+startRow);
+		System.out.println("endRow1:"+endRow);
+		
+		try {
+			System.out.println("endRow:"+endRow);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+				
+			list = new ArrayList<Product>();
+			while(rset.next()) {
+				list.add(new Product(rset.getInt("PROD_NO"),
+									rset.getString("PROD_NAME"),
+									rset.getInt("PRICE"),
+									rset.getString("CTGRY_NAME"),
+									rset.getString("MTRL_NAME"),
+									rset.getDate("ENROLL_DATE"),
+									rset.getString("SHORT_INFO"),
+									rset.getString("PROD_EXPLE"),
+									rset.getString("PROD_TAG"),
+									rset.getString("STATUS")));
+				System.out.println("list:"+list);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 	
 	
