@@ -434,6 +434,7 @@
 			// 체크박스
 			function selectOne() {
 				var count = 0;
+				tsp.innerText = 0;
 				
 				for(var i = 0; i < one.length; i++) {
 					if(one[i].checked == true) {
