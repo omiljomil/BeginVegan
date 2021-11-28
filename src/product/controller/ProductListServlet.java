@@ -57,7 +57,7 @@ public class ProductListServlet extends HttpServlet {
 		
 		//3. boardLimit와 pageLimit설정
 		pageLimit = 10;
-		boardLimit = 9;
+		boardLimit = 6;
 		
 		//4. 각 변수 계산식 작성
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
@@ -66,12 +66,14 @@ public class ProductListServlet extends HttpServlet {
 		if(maxPage < endPage) {//maxPage가 endPage보다 작을 수 있다.
 			endPage = maxPage;
 		}
+		String cNo = request.getParameter("cNo");
 		
+
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 	 
-		ArrayList<Product> plist = pService.selectPList(pi);	
+		ArrayList<Product> plist = pService.selectPList(pi, cNo);	
 		ArrayList<Photo> fList = pService.selectFList();
-		
+		System.out.println("plist: "+ plist);
 		String page = "";
 		
 		if(plist != null && fList != null) {

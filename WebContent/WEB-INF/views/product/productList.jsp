@@ -150,14 +150,14 @@ div {
 	<div class="jumbotron" style="background-color: white !important;">
 		<div class="cateNav" id="cateNavDiv">
 			<ul>
-				<li class="active"><a href="#">전체</a></li>
-				<li><a href="#">비건</a></li>
-				<li><a href="#">락토</a></li>
-				<li><a href="#">오보</a></li>
-				<li><a href="#">락토오보</a></li>
-				<li><a href="#">폴로</a></li>
-				<li><a href="#">페스코</a></li>
-				<li><a href="#">플렉시테리안</a></li>
+				<li class="active" value="100" name="cNo" id="total"><a href="#">전체</a></li>
+				<li  value="101" name="cNo" id="vegan"><a href="#">비건</a></li>
+				<li value="102" name="cNo" id="lacto"><a href="#">락토</a></li>
+				<li value="103" name="cNo" id="ovo"><a href="#">오보</a></li>
+				<li value="104" name="cNo" id="lacOvo"><a href="#">락토오보</a></li>
+				<li value="105" name="cNo" id="pollo"><a href="#">폴로</a></li>
+				<li value="106" name="cNo" id="pesco"><a href="#">페스코</a></li>
+				<li value="107" name="cNo" id="flexi"><a href="#">플렉시테리안</a></li>
 			</ul>
 		</div>
 	</div>
@@ -216,7 +216,7 @@ div {
 			if(<%= pi.getCurrentPage() %> <= 1){
 					$('#beforeButton').prop('disabled', true);
 				}
-			</script>
+		</script>
 
 		<!--  숫자 버튼 -->
 		<% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++){ %>
@@ -234,34 +234,57 @@ div {
 				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
 					$('#afterButton').prop('disabled', true);
 				}			
-			</script>
+		</script>
 		<!--  맨 끝으로 가는 버튼 -->
 		<!-- 이전, 이후 버튼은 활성화가 안되야함 -->
-		<button
-			onclick="location.href='<%= request.getContextPath() %>/productList.do?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>
+		
+		<button onclick="location.href='<%= request.getContextPath() %>/productList.do?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>
 
 	</div>
-
-
-
 	<footer>
 		<%@ include file="/WEB-INF/views/common/bottontitle.jsp"%>
 	</footer>
 
-	<script>
-
-		
+	<script>	
  $('.proThumb').click(function(){
 		console.log(123);
 		var pNo = $(this).children().eq(0).val();
 		console.log(pNo);
 		location.href = "<%= request.getContextPath() %>/proDetail.bo?pNo=" + pNo;
 	}); 
-	
-	
-	
-	
-	
+ 
+ $(document).on('click','#cateNavDiv a',function(){
+	 var cateVal = $(this).parent().val();
+	 console.log(cateVal);
+	 var cNo = $(this).parent().eq(0).val();
+	 console.log("cNo:"+cNo);
+	 location.href = "<%= request.getContextPath() %>/productList.do?cNo=" + cNo;
+	 /* switch(cateVal){
+	 case "100":
+		 
+		 break;
+	 case "101":
+		 break;
+	 case "102":
+		 break;
+	 case "103":
+		 break;
+	 case "104":
+		 break;
+	 case "105":
+		 break;
+	 case "106":
+		 break;
+	 case "107":
+		 break;
+	 } */
+ });
+ 
+ 
+ 
+ 
+ 
+ 
 	</script>
 
 
