@@ -27,14 +27,7 @@
 	src="<%=request.getContextPath() %>/ckeditor/ckeditor.js"></script>
 <title>공지사항 상세 페이지</title>
 <style>
-* {
-	box-sizing: border-box;
-}
 
-body {
-	margin: 0 auto;
-	font-family: sans-serif;
-}
 
 section {
 	margin-top: 100px;
@@ -43,7 +36,7 @@ section {
 
 #notice-title {
 	margin-left: 140px;
-	font-size: 70px;
+	font-size: 50px;
 	
 }
 
@@ -60,7 +53,7 @@ section {
 #notice-route a {
 	text-decoration: none;
 	color: gray;
-	font-size: 29px;
+	font-size: 20px;
 }
 
 #notice-route a:hover {
@@ -69,7 +62,6 @@ section {
 
 #notice-list {
 	box-sizing: border-box;
-	margin-top: 60px;
 }
 
 
@@ -114,7 +106,6 @@ section {
 #next-or-back {
 	position: relative;
 	padding-left: 150px;
-	top: 50px;
 	border-collapse: collapse ;
 }
 
@@ -137,8 +128,7 @@ section {
 #go-button {
 	position: relative;
 	width: 80px;
-	left: 750px;
-	top: 170px;
+	left: 650px;
 }
 
 #delete-button, #modify-button, #go-button {
@@ -156,15 +146,16 @@ section {
 #delete-button {
 	width: 65px;
 	position: absolute;
-	top: 1350px;
-	left: 1275px;
+	top: 1330px;
+	left: 1090px;
+	margin-bottom: 50px;
 }
 
 #modify-button {
 	width: 65px;
 	position: absolute;
-	top: 1350px;
-	left: 1190px;
+	top: 1330px;
+	left: 1030px;
 }
 
 #cke_content {
