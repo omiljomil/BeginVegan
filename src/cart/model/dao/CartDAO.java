@@ -40,18 +40,13 @@ public class CartDAO {
 		String opn = "";
 		String opc = "";
 		
-		if((name == null || name.length == 0) && (count == null || count.length == 0)) {
-			opn = "";
-			opc = "";
-		} else {
-			for(int i = 0; i < name.length; i++) {
-				if(i == 0) {
-					opn += name[i];
-					opc += count[i];
-				} else {
-					opn += ", " + name[i];
-					opc += ", " + count[i];
-				}
+		for(int i = 0; i < name.length; i++) {
+			if(i == 0) {
+				opn += name[i];
+				opc += count[i];
+			} else {
+				opn += ", " + name[i];
+				opc += ", " + count[i];
 			}
 		}
 		
@@ -484,7 +479,7 @@ public class CartDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("cartOneOrder");
+		String query = prop.getProperty("insertOrder");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
