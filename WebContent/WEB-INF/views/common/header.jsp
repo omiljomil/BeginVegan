@@ -24,7 +24,7 @@
 }
 
 .links {
-	max-width: 1200px;
+	max-width: 1000px;
 	height: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -56,10 +56,6 @@ ul {
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
-}
-#searchProductList button{
-	border-style: none;
-	background-color: white;
 }
 
 .nav_items {
@@ -183,11 +179,19 @@ ul {
 
 				<!-- 우측 상단 -->
 				<div class=rightlinks>
-				<form action="<%= request.getContextPath() %>/searchProductList.do"
-		method="post" id="searchProductList">
-					<input type="text" maxlength="225" tabindex="1" name="searchProduct"/>
-					<button type="submit" ><i class="bi bi-search"></i></button>
-				
+					<input type="text" maxlength="225" tabindex="1" name="searchProduct" id="searchProduct"/>
+					<a href="#"><i
+						class="bi bi-search" id="searchIcon"></i></a>
+					<script>
+					 	$('#searchIcon').on('click',function(){
+					 		console.log($('#searchProduct').val());
+					 		console.log(123);
+							var search = $('#searchProduct').val();
+							console.log(search);
+							location.href = "<%= request.getContextPath() %>/searchProduct.do?search=" + search;
+					 		
+					 	});
+					</script>	
 					<% if(loginUser==null) { %>
 					<a href="#" id="basket"><i class="bi bi-basket2-fill"></i></a>
 					<script>
@@ -200,7 +204,6 @@ ul {
 					<a href="<%=request.getContextPath() %>/cartList.me"><i
 						class="bi bi-basket2-fill"></i></a>
 					<% } %>
-					</form>
 				</div>
 			</div>
 			<!-- img -->
@@ -218,18 +221,19 @@ ul {
 						<ul class="category">
 							<li class="fir"><a href="#" id="ca"><i
 									class="bi bi-list"></i>카테고리</a>
-								<ul class="sub-menu">
-									<li><a
-										href="<%= request.getContextPath() %>/productList.do">전체</a></li>
-									<li><a href="#">비건</a></li>
-									<li><a href="#">락토</a></li>
-									<li><a href="#">오보</a></li>
-									<li><a href="#">락토오보</a></li>
-									<li><a href="#">폴로</a></li>
-									<li><a href="#">페스코</a></li>
-									<li><a href="#">플렉시테리안</a></li>
-								</ul></li>
+								<ul class="sub-menu" id="#mainPageCate">
+							<li id="allCate"><a href="#"><input type="hidden" value="100" name="cNo1">전체</a></li>							
+							<li id="vegan"><a href="#"><input type="hidden" value="101" name="cNo2">비건</a></li>
+							<li id="lacto"><a href="#"><input type="hidden" value="102" name="cNo3">락토</a></li>
+							<li id="ovo"><a href="#"><input type="hidden" value="103" name="cNo4">오보</a></li>
+							<li id="lacOv"><a href="#"><input type="hidden" value="104" name="cNo5">락토오보</a></li>
+							<li id="pollo"><a href="#"><input type="hidden" value="105" name="cNo6">폴로</a></li>
+							<li id="pesco"><a href="#"><input type="hidden" value="106" name="cNo7">페스코</a></li>
+							<li id="flex"><a href="#"><input type="hidden" value="107" name="cNo8">플렉시테리안</a></li>
+						</ul>
+								</li>
 							<li><a href="#">신상품</a></li>
+							<li><a href="#">베스트상품</a></li>
 							<li><a href="<%= request.getContextPath() %>/community.me">커뮤니티</a></li>
 							<%--관리자로 로그인시 상품관리 탭 보이게 하기 --%>
 							<%if(loginUser != null){ %>
@@ -251,6 +255,19 @@ ul {
 	}).mouseout(function(){
 		$(this).find('.sub-menu').stop().slideUp(500);
 	});
+	$('#adminPage').click(function(){
+		$('#adminPage').attr('action', 'ManagerProductList.pr');
+		$('#adminPage').submit();
+	});
+	
+	//카테고리별 조회
+	$('.fir').find('.sub-menu a').click(function(){
+		 var cNo = $(this).children().eq(0).val();
+
+		 console.log("cNo:"+cNo);
+		 location.href = "<%= request.getContextPath() %>/productList.do?cNo=" + cNo;
+
+	 });
 
 </script>
 </html>

@@ -57,11 +57,28 @@ public class ProductService {
 		return list;
 	}
 	
-	public ArrayList selectPList(PageInfo pi) {
+	public ArrayList selectPList(PageInfo pi, String cNo) {
 		Connection conn = getConnection();
+		ArrayList<Product> list = new ArrayList<Product>();
+		System.out.println("cNo:"+cNo);
+		if(cNo.equals("100")) {
+			list = pDAO.selectPListAll(conn, pi);
+		}else {
+			list = pDAO.selectPList(conn, pi, cNo);
+		}
+
+		close(conn);
+		return list;
+	}
+	
+	
+	public ArrayList selectsearchPList(PageInfo pi, String search) {
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ArrayList<Product>();
 		
-		ArrayList<ProductList> list = pDAO.selectPList(conn, pi);
-		
+			list = pDAO.selectsearchPList(conn, pi, search);
+	
+
 		close(conn);
 		return list;
 	}
@@ -168,7 +185,16 @@ public class ProductService {
 		return result;
 	}
 
-	
+	public ArrayList<Product> selectManagerPListAll(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = pDAO.selectManagerPListAll(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+
+
 	
 
 
