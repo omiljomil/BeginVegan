@@ -163,25 +163,30 @@
 				    					</div>
 				    					<div class="optionList" name="optionList" id="optionList<%= (list.size() - 1) - i %>">
 				    						<%
-				    							
-					    						String[] opn = list.get(i).getOptionName().split(", ");
-					    						String[] opc = list.get(i).getOptionCount().split(", ");
-					    						int[] opcArr = new int[opc.length];
-					    						
-					    						for(int j = 0; j < opc.length; j++) {
-					    							opcArr[j] = Integer.parseInt(opc[j]);
-					    						}
-					    						String opArr = "";
-					    						
-					    						for(int j = 0; j < opn.length; j++) {
-					    							if(j == 0) {
-					    								opArr += "옵션 : " + opn[j] +  " - " + opcArr[j];
-					    							} else {
-					    								opArr += ", " + opn[j] +  " - " + opcArr[j];
-					    							}
-					    						}
+				    							String opResult = "";
+				    						
+				    							if(list.get(i).getOptionName() == null && list.get(i).getOptionCount() == null) {
+				    								opResult = "-";
+				    							} else {
+						    						String[] opn = list.get(i).getOptionName().split(", ");
+						    						String[] opc = list.get(i).getOptionCount().split(", ");
+						    						int[] opcArr = new int[opc.length];
+						    						
+						    						for(int j = 0; j < opc.length; j++) {
+						    							opcArr[j] = Integer.parseInt(opc[j]);
+						    						}
+						    						
+						    						
+						    						for(int j = 0; j < opn.length; j++) {
+						    							if(j == 0) {
+						    								opResult += "옵션 : " + opn[j] +  " - " + opcArr[j];
+						    							} else {
+						    								opResult += ", " + opn[j] +  " - " + opcArr[j];
+						    							}
+						    						}
+				    							}
 				    						%>
-				    							<%= opArr %>
+				    							<%= opResult %>
 				    					</div>
 <%-- 				    					<div class="optionChange" name="optionChange" id="optionChange<%= (list.size() - 1) - i %>"> --%>
 <%-- 					    					<input type="button" name="option" id="option<%= (list.size() - 1) - i %>" value="옵션변경" onclick="optionPop('<%= list.get(i).getCartNo() %>');"> --%>
@@ -206,7 +211,7 @@
 				        		<input type="button" name="pbtn" id="minus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','minus');" value="─"><!--
 				        		 --><input hidden="hidden"><input type="text" id="amount<%= (list.size() - 1) - i %>" name="amount" value="<%= list.get(i).getAmount() %>" oninput="return handleOnInput(this);" onchange="sum()" readonly><!--
 								 --><input type="button" name="mbtn" id="plus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','plus');" value="┼">
-								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>');">
+								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>');">
 							</td>
 							<td><div id="prod_sp">기본배송</div></td>
 							<td>
@@ -269,7 +274,7 @@
 				var all1 = document.getElementById('all1');
 				var all2 = document.getElementById('all2');
 				var one = document.getElementsByName('one');
-				
+				var tsp = document.getElementById('tsp_conts');
 				var count = 0;
 				
 				// 로딩되자마자 체크박스 올 체킹
@@ -279,6 +284,7 @@
 						one[i].checked = true;
 					}
 					all2.checked = true;
+					tsp.innerText = 2500;
 				}
 				
 				// 여기서 구한 총계값은 처음 리스트 받아 왔을때의 값
@@ -326,11 +332,10 @@
 					if($('#one' + i).prop("checked")) {						
 						totalAmt += parseInt($(total).text());
 					}
-					
 				}
-			
+				
 				$('#tpp_conts').text(totalAmt);
- 				$('#tpmp_conts').text(totalAmt + 2500);
+				$('#tpmp_conts').text(totalAmt + parseInt($('#tsp_conts').text()));
 			}
 			
 			function sum2() { // 이렇게도 사용할 수 있다 (대박..)
@@ -360,29 +365,29 @@
 				}
 			});
 			
-			function oneDelete(cartNo) {
-				var bool = confirm('상품을 삭제하시겠습니까?');
-				
-				if(bool) {
-					location.href="<%= request.getContextPath() %>/cartOneDelete.me?cartNo=" + cartNo;
-					alert('정상적으로 삭제되었습니다.');
-				}
-			}
-			
-			function amountChange(amount, total, cartNo) {
+			function amountChange(amount, total, cartNo, prodNo) {
 				var amountValue = $('#' + amount).val();
 // 				var amountValue = amountRes.value;
 				var totalValue = $('#' + total).text();
-				
+				console.log(prodNo);
 				if(amountValue == '' || amountValue.length == 0) {
 					alert('수량을 입력하세요.');
 				} else {
-					location.href='<%= request.getContextPath() %>/amountUpdate.me?cartNo=' + cartNo + '&amount=' + amountValue + '&total=' + totalValue;
+					location.href='<%= request.getContextPath() %>/amountUpdate.me?cartNo=' + cartNo + '&prodNo=' + prodNo + '&amount=' + amountValue + '&total=' + totalValue;
 				}
 			}
 			
 			function cartOneOrder(cartNo, prodNo) {
 				location.href="<%= request.getContextPath() %>/cartOneOrder.me?cartNo=" + cartNo + "&prodNo=" + prodNo;
+			}
+			
+			function oneDelete(cartNo, prodNo) {
+				var bool = confirm('상품을 삭제하시겠습니까?');
+				
+				if(bool) {
+					location.href="<%= request.getContextPath() %>/cartOneDelete.me?cartNo=" + cartNo + "&prodNo=" + prodNo;
+					alert('정상적으로 삭제되었습니다.');
+				}
 			}
 		</script>
 								
@@ -390,6 +395,7 @@
 			var all1 = document.getElementById('all1');
 			var all2 = document.getElementById('all2');
 			var one = document.getElementsByName('one');
+			var tsp = document.getElementById('tsp_conts');
 			
 			// 전체선택 체크박스
 			function selectAll() {
@@ -398,28 +404,30 @@
 						one[i].checked = true;
 					}
 					all2.checked = true;
+					tsp.innerText = 2500;
 				} else {
 					for(var i = 0; i < one.length; i++) {
 						one[i].checked = false;
 					}
 					all2.checked = false;
+					tsp.innerText = 0;
 				}
-				
 				sum();
 			}
-			function selectAllC() {
+			function selectAllCopy() {
 				if(all2.checked == true) {
 					for(var i = 0; i < one.length; i++) {
 						one[i].checked = true;
 					}
 					all1.checked = true;
+					tsp.innerText = 2500;
 				} else {
 					for(var i = 0; i < one.length; i++) {
 						one[i].checked = false;
 					}
 					all1.checked = false;
+					tsp.innerText = 0;
 				}
-				
 				sum();
 			}
 			
@@ -441,7 +449,6 @@
 					all1.checked = false;
 					all2.checked = false;
 				}
-				
 				sum();
 			}
 			
@@ -535,20 +542,6 @@
 				
 			});
 			
-			$('#all_delete').on('click', function() {
-				var bool = window.confirm("전체 상품을 장바구니에서 삭제하시겠습니까?");
-				
-				if(bool) {
-					$('#cartListForm').attr('action', 'cartAllDelete.me');
-					$('#cartListForm').submit();
-					alert('전체 상품을 장바구니에서 삭제 완료하였습니다.');
-				}
-			});
-			
-			$('#continue_shopping').on('click', function() {
-				location.href='<%=request.getContextPath()%>';
-			});
-			
 			$('#select_order').on('click', function(event) {
 				var one = document.getElementsByName('one');
 				var count = 0;
@@ -567,6 +560,21 @@
 					$('#cartListForm').submit();
 				}
 			});
+			
+			$('#all_delete').on('click', function() {
+				var bool = window.confirm("전체 상품을 장바구니에서 삭제하시겠습니까?");
+				
+				if(bool) {
+					$('#cartListForm').attr('action', 'cartAllDelete.me');
+					$('#cartListForm').submit();
+					alert('전체 상품을 장바구니에서 삭제 완료하였습니다.');
+				}
+			});
+			
+			$('#continue_shopping').on('click', function() {
+				location.href='<%=request.getContextPath()%>';
+			});
+			
 		</script>
 		
 	<% } %>

@@ -40,13 +40,18 @@ public class CartDAO {
 		String opn = "";
 		String opc = "";
 		
-		for(int i = 0; i < name.length; i++) {
-			if(i == 0) {
-				opn += name[i];
-				opc += count[i];
-			} else {
-				opn += ", " + name[i];
-				opc += ", " + count[i];
+		if((name == null || name.length == 0) && (count == null || count.length == 0)) {
+			opn = "";
+			opc = "";
+		} else {
+			for(int i = 0; i < name.length; i++) {
+				if(i == 0) {
+					opn += name[i];
+					opc += count[i];
+				} else {
+					opn += ", " + name[i];
+					opc += ", " + count[i];
+				}
 			}
 		}
 		
@@ -214,7 +219,7 @@ public class CartDAO {
 		return c;
 	}
 	
-	public int cartOneDelete(Connection conn, String userId, int cartNo) {
+	public int cartOneDelete(Connection conn, String userId, int cartNo, int prodNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -224,6 +229,7 @@ public class CartDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, cartNo);
+			pstmt.setInt(3, prodNo);
 			
 			result = pstmt.executeUpdate();
 			
@@ -236,7 +242,7 @@ public class CartDAO {
 		return result;
 	}
 	
-	public int amountUpdate(Connection conn, String userId, int cartNo, int amount, int total) {
+	public int amountUpdate(Connection conn, Cart c) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -244,10 +250,11 @@ public class CartDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, amount);
-			pstmt.setInt(2, total);
-			pstmt.setString(3, userId);
-			pstmt.setInt(4, cartNo);
+			pstmt.setInt(1, c.getAmount());
+			pstmt.setInt(2, c.getTotal());
+			pstmt.setString(3, c.getUserId());
+			pstmt.setInt(4, c.getCartNo());
+			pstmt.setInt(5, c.getProdNo());
 			
 			result = pstmt.executeUpdate();
 			
