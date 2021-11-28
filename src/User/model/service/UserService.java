@@ -165,4 +165,15 @@ public class UserService {
 		
 		return result;
 	}
+
+	public String checkManager(String writer) {
+		
+Connection conn = getConnection();
+		
+		String a = mDAO.checkManager(conn, writer);
+		
+		close(conn);
+		
+		return a;
+	}
 }

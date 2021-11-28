@@ -141,7 +141,7 @@
 					%>
 					
 					<tr>
-						<td rowspan="3" style="width: 40px;"><input type="checkbox" value="<%=p.getZzim_no() %>"/></td>
+						<td rowspan="3" style="width: 40px;"><input id="checkZzim" type="checkbox" value="<%=p.getZzim_no() %>"/></td>
 						<%for(int j = 0; j < fList.size(); j++){ %>
 						<%  Photo ph = fList.get(j);%>
 						<% if(ph.getProdNo() == p.getProd_no() && ph.getType() == 0){ %>
@@ -190,6 +190,9 @@
 $('.proThumb').click(function(){
 	var pNo = $(this).children().eq(0).val();
 	location.href = "<%= request.getContextPath() %>/proDetail.bo?pNo=" + pNo;
+});
+$('.zzim_btn_left').click(function(){
+	
 });
 </script>
 </html>

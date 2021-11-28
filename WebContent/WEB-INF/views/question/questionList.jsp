@@ -62,6 +62,10 @@
 	color: black;
 	border: 0px;
 }
+.questionsubTitle a{
+	color: black;
+	text-decoration: none;
+}
 #listArea tr td{
 	text-align: center;
 }
@@ -71,18 +75,12 @@
 	<div class="questionmain">
 		<div class="questionTitle">
 			<div style="font-size: 30px; font-weight: bold;">문의사항</div>
-			<div style="margin-left: 350px;">
+			<div class="questionsubTitle" style="margin-left: 350px;">
 				<a href="<%= request.getContextPath()%>">홈</a>--><a href="<%= request.getContextPath()%>/community.me">커뮤니티</a>--> <a href="questionList.bo">문의 사항</a>
 			</div>
 		</div>
 	</div>
-	<div class="questionSelectList">
-		<select name="questionSelect" id="questionSelect">
-			<option value="all">전체</option>
-			<option value="Title">글 제목</option>
-			<option value="content">글 내용</option>
-		</select> <input type="text" id="questionSearch" />
-	</div>
+	
 	<div class="questionTable">
 		<table border="1" id="listArea" >
 			<tr>
@@ -177,11 +175,11 @@
 </body>
 <script>
 	$('#questionInsertBtn').on('click',function(){
-		if(<%= loginUser == null &&  !loginUser.getManager().equals("Y")%>){
+		if(<%=loginUser!=null%>){
+			location=href="<%= request.getContextPath()%>/insertQuestionForm.qs";
+		}else{
 			alert("회원만 가능합니다.");
 			location.href="<%= request.getContextPath()%>/loginForm.me";
-		}else{
-			location=href="<%= request.getContextPath()%>/insertQuestionForm.qs";
 		}
 	});
 	$('#listArea td').mouseenter(function(){

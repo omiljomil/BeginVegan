@@ -50,7 +50,7 @@ public class QuestionListForm extends HttpServlet {
 		
 		
 		pageLimit=10;
-		boardLimit=5;
+		boardLimit=10;
 		
 		 maxPage=(int)Math.ceil((double)listCount / boardLimit);
 		  startPage=(currentPage-1)/pageLimit*pageLimit+1; 

@@ -22,17 +22,10 @@
     
     
    <style>
-   * {
-  margin: 0;
-  padding: 0;
-}
-body {
-  margin: 0 auto;
-  font-family: sans-serif;
-}
+  
 #title-box {
   width:1500px;
-  height:300px;
+  height:100px;
   margin-top: 100px;
   margin-left:auto;
   margin-right:auto;
@@ -44,13 +37,14 @@ body {
   margin-left:auto;
  
   justify-content:center;
-  font-size: 60px;
+  font-size: 40px;
 }
 #route {
+	width : 1300px;
   display:flex;
   color: #888;
   padding-left: 10px;
-  font-size: 29px;
+  font-size: 20px;
   justify-content: flex-end;
 }
 #route a {

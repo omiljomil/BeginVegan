@@ -107,6 +107,10 @@
 		
 		margin: 0 auto;
 	}
+	.proThumb img{
+		border: 2px solid yellowgreen;
+		
+	}
 </style>
 </head>
 <body>

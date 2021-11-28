@@ -45,6 +45,10 @@ public class User {
 		this.status = status;
 	}
 
+	public User(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getRnum() {
 		return rnum;
 	}
