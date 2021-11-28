@@ -439,6 +439,7 @@
 					if(one[i].checked == true) {
 						count++;
 						console.log(one[i].value);
+						tsp.innerText = 2500;
 					}
 				}
 				
