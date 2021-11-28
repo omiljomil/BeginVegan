@@ -50,9 +50,7 @@ public class OrderManageServlet extends HttpServlet {
 		if(request.getParameter("currentPage") != null) {
 			// currentPage가 null이 아니다 -> 파라미터로 currentPage가 들어왔다 -> 페이징 처리가 된 버튼을 눌렀다
 			// currentPage가 null이다 -> 처음 페이지에 들어왔다 -> currentPage = 1
-			
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			
 		}
 		
 		// 페이징처리 3단계 : boardLimit과 pageLimit 설정

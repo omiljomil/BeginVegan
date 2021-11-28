@@ -3,7 +3,7 @@ package manager.model.vo;
 import java.sql.Date;
 
 public class OrderManager {
-	private int orderNo;
+	private String orderNo;
 	private String prodName;
 	private int amount;
 	private int orderPrice;
@@ -16,8 +16,8 @@ public class OrderManager {
 	
 	public OrderManager() {}
 
-	public OrderManager(int orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
-			String receiver, String address, String phone, int orderType) {
+	public OrderManager(String orderNo, String prodName, int amount, int orderPrice, Date orderDate,
+			String userId, String receiver, String address, String phone, int orderType) {
 		super();
 		this.orderNo = orderNo;
 		this.prodName = prodName;
@@ -31,11 +31,12 @@ public class OrderManager {
 		this.orderType = orderType;
 	}
 
-	public int getOrderNo() {
+
+	public String getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
 

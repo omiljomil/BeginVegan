@@ -21,7 +21,7 @@
 	}
 /* 	input[type="button"] {height: 30px; background : white;	border : none; margin-top:10px;	margin-right:20px;} */
  	input[type="checkbox"] {margin: 10px; width: 13px; height: 13px; vertical-align: middle;}
-	#all2 {margin: 15px;}
+	#all2 {margin: 13px;}
 	.layout {width:100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width: 1100px;}
 	.layout2 {width:100%; max-width: 1300px; margin-right: auto; margin-left: auto;}
 	#space1 {height: 10px;}
@@ -211,7 +211,7 @@
 				        		<input type="button" name="pbtn" id="minus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','minus');" value="─"><!--
 				        		 --><input hidden="hidden"><input type="text" id="amount<%= (list.size() - 1) - i %>" name="amount" value="<%= list.get(i).getAmount() %>" oninput="return handleOnInput(this);" onchange="sum()" readonly><!--
 								 --><input type="button" name="mbtn" id="plus<%= (list.size() - 1) - i %>" onclick="count('price<%= (list.size() - 1) - i %>','amount<%= (list.size() - 1) - i %>','total<%= (list.size() - 1) - i %>','plus');" value="┼">
-								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>');">
+								<input type="button" name="amount_change" id="amount_change<%= (list.size() - 1) - i %>" value="수량변경" onclick="amountChange('amount<%= (list.size() - 1) - i %>', 'total<%= (list.size() - 1) - i %>', '<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>')">
 							</td>
 							<td><div id="prod_sp">기본배송</div></td>
 							<td>
@@ -222,7 +222,7 @@
 							</td>
 							<td>
 								<div><input type="button" name="one_order" id="one_order<%= (list.size() - 1) - i %>" value="주문하기" onclick="cartOneOrder('<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>')"></div>
-								<div><input type="button" name="one_delete" id="one_delete<%= (list.size() - 1) - i %>" value="삭제" onclick="oneDelete('<%= list.get(i).getCartNo() %>');"></div>
+								<div><input type="button" name="one_delete" id="one_delete<%= (list.size() - 1) - i %>" value="삭제" onclick="oneDelete('<%= list.get(i).getCartNo() %>', '<%= list.get(i).getProdNo() %>');"></div>
 							</td>
 						</tr>
 					<% } %>
@@ -233,7 +233,7 @@
 				<div class="layout2" id="space9"></div>
 			<% } else { %>
 			<div class="layout2" id="space9">
-				<input type="checkbox" name="all" id="all2" onclick="selectAllC();"><!-- 
+				<input type="checkbox" name="all" id="all2" onclick="selectAllCopy();"><!-- 
 				--><div class="what-delete" id="what-delete1"><input type="button" id="select_delete" name="select_delete" value="선택상품삭제"></div><!-- 
 				--><div class="what-delete" id="what-delete2"><input type="button" id="all_delete" name="all_delete" value="전체삭제"></div>
 			<% } %>
@@ -249,7 +249,7 @@
 				<% } else { %>
 					<div class="total" id="total_product_price"><div id="tpp_name" class="tpp">총 상품 금액</div><div id="tpp_conts" class="tpp"></div></div><!-- 
 					--><div class="total" id="total_price_bar"></div><!--
-					--><div class="total" id="total_shipping_price"><div id="tsp_name" class="tsp">총 배송비</div><div id="tsp_conts" class="tsp">2500</div></div><!--
+					--><div class="total" id="total_shipping_price"><div id="tsp_name" class="tsp">총 배송비</div><div id="tsp_conts" class="tsp"></div></div><!--
 					--><div class="total" id="total_price_bar"></div><!--
 					--><div class="total" id="total_payment_price"><div id="tpmp_name" class="tpmp">총 결제 금액</div><div id="tpmp_conts" class="tpmp"></div></div>
 				<% } %>
