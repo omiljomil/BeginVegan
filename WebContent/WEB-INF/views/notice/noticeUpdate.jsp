@@ -164,15 +164,8 @@ section {
 			<div id="notice-table">
 				<table>
 					<tr>
-						<th width="150px">말머리</th>
-						<th width="250px"><select name="notice-topic">
-								<option value="notice">공지</option>
-								<option value="number">번호</option>
-						</select></th>
-					</tr>
-					<tr>
-						<th>제목</th>
-						<th><input type="text" id="notice-text-title"
+						<th width="150px" >제목</th>
+						<th width="250px" height="150px"><input type="text" id="notice-text-title"
 							placeholder="제목 입력" name="title" maxlength="12"
 							value="<%=request.getAttribute("title") %>"></th>
 					</tr>
