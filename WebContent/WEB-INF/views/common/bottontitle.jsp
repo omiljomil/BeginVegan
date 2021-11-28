@@ -28,10 +28,15 @@
 </style>
 </head>
 <body>
-	<div class="bottontitle">
+	<div class="bottontitle" style="margin : 0;
+	margin-top: 100px;
+	width: 100%;
+	height: 300px;
+	background-color: #606060;"
+	>
 		<h1 style="padding: 100px; padding-bottom: 50px;">BeginVegan</h1>
-			<div class="buttontext">
-			<div>
+			<div class="buttontext" style="background-color: #606060">
+			<div style="background-color: #606060">
 				<a href="#">회사소개 | </a>
 				<a href="#">이용약관 | </a>
 				<a href="#">개인정보처리방침 | </a>
@@ -39,8 +44,8 @@
 				<a href="<%=request.getContextPath()%>/managerLogin.me">관리자</a>
 			</div>
 			
-			<div>상호 : 주식회사 비긴비건</div>
-			<div>대표번호 1666-1666  광고 마케팅 문의 : omiljomil@naver.com</div>
+			<div style="background-color: #606060">상호 : 주식회사 비긴비건</div>
+			<div style="background-color: #606060">대표번호 1666-1666  광고 마케팅 문의 : omiljomil@naver.com</div>
 		</div>
 		
 

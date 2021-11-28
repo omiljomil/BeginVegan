@@ -177,7 +177,7 @@
 </body>
 <script>
 	$('#questionInsertBtn').on('click',function(){
-		if(<%= loginUser ==null ||  !loginUser.getManager().equals("Y")%>){
+		if(<%= loginUser == null &&  !loginUser.getManager().equals("Y")%>){
 			alert("회원만 가능합니다.");
 			location.href="<%= request.getContextPath()%>/loginForm.me";
 		}else{

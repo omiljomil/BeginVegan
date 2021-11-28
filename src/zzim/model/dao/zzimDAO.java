@@ -41,11 +41,11 @@ private Properties prop = null;
 			rset = pstmt.executeQuery();
 			list = new ArrayList<zzim>();
 			while(rset.next()) {
-				list.add(new zzim(rset.getInt("zzim_no"),
-								rset.getString("user_id"),
-								rset.getString("prod_name"),
-								rset.getInt("price"),
-								rset.getInt("postal")));
+				list.add(new zzim(rset.getInt(1),
+								rset.getString(2),
+								rset.getString(3),
+								rset.getInt(4),
+								rset.getInt(5)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -66,7 +66,7 @@ public class mainProduct extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 	 
-		ArrayList<Product> plist = pService.selectPList(pi);	
+		ArrayList<Product> plist = pService.selectPList(pi,"100");
 		ArrayList<Photo> fList = pService.selectFList();
 		
 		String page = "";

@@ -15,15 +15,7 @@
     <title>커뮤니티 페이지</title>
     <style>
     
-    * {
-  margin: 0;
-  padding: 0;
-}
 
- body {
-  margin: 0 auto;
-  font-family: sans-serif;
-}
 
 section a {
   color: black;
@@ -37,12 +29,15 @@ section a {
 /*커뮤니티 제목부분*/
 #comunity-bar {
   position: absolute;
-  top: 330px;
-  left: 850px;
+  top: 290px;
+  left: 700px;
 }
 
 #comunity-title {
-  font-size: 60px;
+  font-size: 40px;
+}
+#route span{
+	font-size: 20px;
 }
 
 #route {
@@ -71,8 +66,8 @@ section a {
 #want-list {
   font-size: 25px;
   position: absolute;
-  left: 250px;
-  top: 560px;
+  left: 100px;
+  top: 400px;
 }
 #want-list li:hover {
   cursor: pointer;
@@ -94,7 +89,7 @@ padding-left:0px;
   width: 100px;
   height: 30px;
   position: absolute;
-  left: 380px;
+  left: 310px;
   top: 10px;
   background-color: darkgray;
 }
@@ -105,13 +100,13 @@ padding-left:0px;
   width: 100px;
   height: 30px;
   position: absolute;
-  left: 490px;
+  left: 420px;
   top: 10px;
   background-color: darkgray;
 }
 
 #want-list-title {
-  width: 362px;
+  width: 300px;
   position: relative;
   background-color: gray;
   color: white;
@@ -138,8 +133,8 @@ padding-left:0px;
 #notice-list {
   position: absolute;
   font-size: 25px;
-  left: 1220px;
-  top: 560px;
+  left: 900px;
+  top: 400px;
 }
 
 #notice-more-button {
@@ -188,8 +183,8 @@ padding-left:0px;
 #notice-h2{
  width:370px;
  position:absolute;
- left:1225px;
- top:680px;
+ left:910px;
+ top:480px;
 }
 
 /*공지사항 부분  */
@@ -197,14 +192,14 @@ padding-left:0px;
 
 #review {
   position: absolute;
-  top: 1080px;
+  top: 700px;
   left: 40px;
   margin-top: 50px;
 }
 
 #review-titlebar {
   position: absolute;
-  left: 740px;
+  left: 450px;
   width:500px;
 }
 #review-write{
@@ -253,9 +248,8 @@ padding-left:0px;
 
 #review-list {
   position: absolute;
-  width:1100px;
-  margin-left: 80px;
-  top: 150px;
+  width:1300px;
+  top: 100px;
   display:flex;
 }
 #review-list h2{
