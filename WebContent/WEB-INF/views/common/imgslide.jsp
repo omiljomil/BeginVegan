@@ -127,15 +127,18 @@ div#right:hover span {
 <body>
 	<div id="visual">
 		<div class="on">
-			<a href="#"><img src="<%= request.getContextPath() %>/img/1.jpg"
+		<input type="hidden" value="41"/>
+			<a href= '<%= request.getContextPath() %>/proDetail.bo?pNo=41'><img src="<%= request.getContextPath() %>/img/001.jpg"
 				alt="1" width="100%" height="100%"></a>
 		</div>
 		<div>
-			<a href="#"><img src="<%= request.getContextPath() %>/img/2.jpg"
+		<input type="hidden" value="38"/>
+			<a href="<%= request.getContextPath() %>/proDetail.bo?pNo=38"><img src="<%= request.getContextPath() %>/img/002.jpg"
 				alt="2" width="100%" height="100%"></a>
 		</div>
 		<div>
-			<a href="#"><img src="<%= request.getContextPath() %>/img/3.jpg"
+		<input type="hidden" value="37"/>
+			<a href="<%= request.getContextPath() %>/proDetail.bo?pNo=37"><img src="<%= request.getContextPath() %>/img/003.jpg"
 				alt="3" width="100%" height="100%"></a>
 		</div>
 		<section>
@@ -202,6 +205,11 @@ div#right:hover span {
 		 $("#visual>div").eq(srt).addClass('on').siblings().removeClass('on');
 		  $("section>a").eq(srt).addClass('on').siblings().removeClass('on'); 
 		});
+		
+		 $('.on').click(function(){
+				var pNo = $(this).children().eq(0).val();
+				location.href = "<%= request.getContextPath() %>/proDetail.bo?pNo=" + pNo;
+			}); 
 		</script>
 </body>
 </html>

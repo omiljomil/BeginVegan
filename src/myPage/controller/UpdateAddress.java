@@ -46,7 +46,8 @@ public class UpdateAddress extends HttpServlet {
 
 		String basics = request.getParameter("basics");
 		String userId = request.getParameter("userId");
-		
+		System.out.println(basics);
+		System.out.println(userId);
 		if(basics.equals("Y")) {
 			int bNum = new ShppingService().selectBasicsShpping(userId);
 			System.out.println(bNum);

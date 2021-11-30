@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import User.model.service.ShppingService;
 import User.model.vo.Shpping;
+import User.model.vo.User;
 
 /**
  * Servlet implementation class UpdateShppingForm
@@ -30,7 +32,7 @@ public class UpdateShppingForm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String Ship_no = request.getParameter("Ship_no");
-		System.out.println(Ship_no);
+		
 		Shpping s = new ShppingService().insertShip_no(Ship_no);
 		request.setAttribute("s", s);
 		request.getRequestDispatcher("WEB-INF/views/myPage/updateShppingForm.jsp").forward(request, response);

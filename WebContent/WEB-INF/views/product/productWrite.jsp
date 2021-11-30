@@ -340,10 +340,6 @@
 		console.log($('.addPrice option:selected').val());
 		
 	});
-	
-	
-			//옵션 추가하면 value값 저장하기
-		
 
 	//사진
 	$(function(){

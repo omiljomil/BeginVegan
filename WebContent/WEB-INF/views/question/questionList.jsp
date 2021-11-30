@@ -54,6 +54,18 @@
 	margin: 0 auto;
 	justify-content: flex-end;
 }
+.pagingArea input, button {
+	background: white;
+	width: 40px;
+	height: 40px;
+	font-size: 14px;
+	color: black;
+	border: 0px;
+}
+.questionsubTitle a{
+	color: black;
+	text-decoration: none;
+}
 #listArea tr td{
 	text-align: center;
 }
@@ -63,18 +75,12 @@
 	<div class="questionmain">
 		<div class="questionTitle">
 			<div style="font-size: 30px; font-weight: bold;">문의사항</div>
-			<div style="margin-left: 350px;">
+			<div class="questionsubTitle" style="margin-left: 350px;">
 				<a href="<%= request.getContextPath()%>">홈</a>--><a href="<%= request.getContextPath()%>/community.me">커뮤니티</a>--> <a href="questionList.bo">문의 사항</a>
 			</div>
 		</div>
 	</div>
-	<div class="questionSelectList">
-		<select name="questionSelect" id="questionSelect">
-			<option value="all">전체</option>
-			<option value="Title">글 제목</option>
-			<option value="content">글 내용</option>
-		</select> <input type="text" id="questionSearch" />
-	</div>
+	
 	<div class="questionTable">
 		<table border="1" id="listArea" >
 			<tr>
@@ -113,39 +119,67 @@
 			<input type="button" id="questionInsertBtn" onclick="insertQuestion();" value="글쓰기" />
 		</div>
 	</div>
+	
 	<div class="pagingArea" align="center">
-			<!--  맨 처음으로 , 이전 페이지, 숫자 버튼 , 다음 버튼 , 맨 끝으로 버튼 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/questionList.bo?curentPage=1'">&lt;&lt;</button>
-			<button id="beforeBtn" onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
-			<script>
-				if(<%= pi.getCurrentPage()%> <=1){
-					$('#beforeBtn').prop('disabled',true);
-				}
-			</script>
-			<!-- 숫자버튼 -->
-			<%for(int p = pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-			<% 		if(p== pi.getCurrentPage()){ %>
-						<button id="choosen" disabled><%= p %></button>
-			<% 		}else{ %>
-						<button id="numBtn" onclick="location.href='<%=request.getContextPath()%>/questionList.bo?currentPage=<%=p%>'"><%=p %></button>
-			<% 		} %>
-			<% 	} %>
-			<button id="afterBtn" onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-			<script>
-				if(<%= pi.getCurrentPage()%> >= <%= pi.getMaxPage() %>){
-					$('#afterBtn').prop('disabled',true);
-				}
-			</script>
-			<button onclick="location.href='<%=request.getContextPath()%>/questionList.bo?curentPage=<%=pi.getMaxPage()%>'">&gt;&gt;</button>
+		<!-- 맨 처음으로 -->
+		<input type="button" id="firstBtn"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?curentPage=1'"
+			value="처음">
+		<script>
+			if(<%= pi.getCurrentPage() %> == 1) {
+				$('#firstBtn').prop('disabled', true);
+				$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
+			}
+		</script>
+		<!-- 이전 페이지로 -->
+		<input type="button" id="beforeBtn"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()-1%>'"
+			value="이전">
+		<script>
+			if(<%= pi.getCurrentPage() %> <= 1) {
+				$('#beforeBtn').prop('disabled', true);
+				$('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
+			}
+		</script>
+		<!-- 숫자 버튼 -->
+		<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+		<% if(p == pi.getCurrentPage()) { %>
+		<input type="button" id="choosen" disabled value="<%= p %>">
+		<% } else { %>
+		<input type="button" id="numBtn"
+			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?currentPage=<%=p%>'"
+			value="<%= p %>">
+		<% } %>
+		<%  } %>
+		<!-- 다음 페이지로 -->
+		<input type="button" id="afterBtn"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()+1%>'"
+			value="다음">
+		<script>
+			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+				$('#afterBtn').prop('disabled', true);
+				$('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
+			}
+		</script>
+		<!-- 맨 끝으로 -->
+		<input type="button" id="lastBtn"
+			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?curentPage=<%=pi.getMaxPage()%>'"
+			value="끝">
+		<script>
+			if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+				$('#lastBtn').prop('disabled', true);
+				$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
+			}
+		</script>
 	</div>
 </body>
 <script>
 	$('#questionInsertBtn').on('click',function(){
-		if(<%= loginUser ==null ||  loginUser.getManager().equals("Y")%>){
+		if(<%=loginUser!=null%>){
+			location=href="<%= request.getContextPath()%>/insertQuestionForm.qs";
+		}else{
 			alert("회원만 가능합니다.");
 			location.href="<%= request.getContextPath()%>/loginForm.me";
-		}else{
-			location=href="<%= request.getContextPath()%>/insertQuestionForm.qs";
 		}
 	});
 	$('#listArea td').mouseenter(function(){

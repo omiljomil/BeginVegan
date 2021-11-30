@@ -36,8 +36,9 @@ public class CartOneDeleteServlet extends HttpServlet {
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
 		int cartNo = Integer.parseInt(request.getParameter("cartNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
-		int result = new CartService().cartOneDelete(userId, cartNo);
+		int result = new CartService().cartOneDelete(userId, cartNo, prodNo);
 		
 		if(result > 0) {
 			response.sendRedirect("cartList.me");

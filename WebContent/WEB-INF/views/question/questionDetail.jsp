@@ -117,6 +117,10 @@
 			margin: 10px auto 10px 140px;
 			width: 1059px;
 	}
+	.questionTitle a{
+		color: black;
+		text-decoration: none;
+	}
 	
 	
 </style>
@@ -125,7 +129,7 @@
 	<div style="border-top: 2px solid #909090;">
 		<div class="insertTitle">
 			<div style="font-size: 30px; font-weight: bold;">문의사항</div>
-			<div style="margin-left: 350px;">
+			<div style="margin-left: 350px;" class="questionTitle">
 				<a href="<%= request.getContextPath()%>">홈</a>--><a href="<%= request.getContextPath()%>/community.me">커뮤니티</a>--> <a href="questionList.bo">문의 사항</a>
 			</div>
 
@@ -271,15 +275,8 @@
 					var $contentTd = $('<td .contentTable>').text(data[i].qst_cont).css("width",'400px');
 					$tr.append($contentTd);
 					$replyTable.append($tr);
-					
-					
-					
-					
-					
 				}
 				$('#replyQuestion').val("");
-				
-			
 			},
 			error:function(data){
 				console.log(data);

@@ -11,6 +11,7 @@ public class Photo {
 	private int fileLevel;//썸네일(0), 일반적인 사진(1
 	private int type;
 	private String status;
+
 	
 	public Photo() {}
 
@@ -91,6 +92,7 @@ public class Photo {
 		this.status = status;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Photo [imgNo=" + imgNo + ", prodNo=" + prodNo + ", imgName=" + imgName + ", imgChangeName="

@@ -1,9 +1,10 @@
+
 <%@page import="zzim.model.vo.zzim"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.ArrayList, product.model.vo.*"%>
 	<%
 		ArrayList<zzim> list = (ArrayList<zzim>)request.getAttribute("list");
+		ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 	%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,6 @@
 	margin-top: 80px;
 	margin-left: 40px;
 	width: 100%;
-	height: 220px;
 	border: 2px solid #E2E2E2;
 	border-radius: 10px;
 }
@@ -133,20 +133,30 @@
 			</div>
 			<div class="div_zzim_down">
 				<table class="zzim_down_table">
-				<%if(list.isEmpty()){ %>
+				<%if(fList.isEmpty() || list.isEmpty()){ %>
 					<tr style="font-size: 30px;"><td style=" text-align: center;" width="771px;">찜 리스트가 없습니다.</td></tr>
 				<%}else{ %>
-					<%for(zzim z : list){ %>
-				
-				
+					<%for(int i = 0; i < list.size(); i++){
+						zzim p = list.get(i);
+					%>
+					
 					<tr>
-						<td rowspan="3" style="width: 40px;"></td>
-						<td rowspan="3" style="width: 150px;">사진</td>
-						<td rowspan="3" style="width: 200px;"><%= z.getProd_name() %></td>
-						<td rowspan="3" style="width: 90px;"><%=z.getPrice() %></td>
+						<td rowspan="3" style="width: 40px;"><input id="checkZzim" type="checkbox" value="<%=p.getZzim_no() %>"/></td>
+						<%for(int j = 0; j < fList.size(); j++){ %>
+						<%  Photo ph = fList.get(j);%>
+						<% if(ph.getProdNo() == p.getProd_no() && ph.getType() == 0){ %>
+						<td rowspan="3" style="width: 150px; height: 180px;">
+						<a class="proThumb"> <input type="hidden" value="<%= p.getProd_no() %>">
+						<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>"
+							width="130px" height="130px"></a></td>
+							<%} %>
+						<% } %>
+					
+						<td rowspan="3" style="width: 200px;"><%=p.getProd_name() %></td>
+						<td rowspan="3" style="width: 90px;"><%=p.getPrice() %></td>
 						<td rowspan="3" style="width: 90px;">2500</td>
-						<td rowspan="3" style="width: 90px;"><%=z.getPostal() %>
-							<input type="hidden" id="userId" value="<%= z.getUserId()%>"/>
+						<td rowspan="3" style="width: 90px;"><%=p.getPrice()+2500 %>
+							<input type="hidden" id="userId" value=""/>
 						</td>
 						<td><input type="button" value="주문하기" class="zzimBtn"></td>
 					</tr>
@@ -176,4 +186,13 @@
 	</div>
 
 </body>
+<script>
+$('.proThumb').click(function(){
+	var pNo = $(this).children().eq(0).val();
+	location.href = "<%= request.getContextPath() %>/proDetail.bo?pNo=" + pNo;
+});
+$('.zzim_btn_left').click(function(){
+	
+});
+</script>
 </html>

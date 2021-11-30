@@ -15,15 +15,7 @@ PageInfo pi=(PageInfo)request.getAttribute("pi");
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>공지사항 목록 페이지</title>
 <style>
-* {
-	margin: 0;
-	padding: 0;
-}
 
-body {
-	margin: 0 auto;
-	font-family: sans-serif;
-}
 
 section a {
 	color: black;
@@ -32,8 +24,8 @@ section a {
 
 section {
 	position: absolute;
-	top: 330px;
-	left: 840px;
+	top: 280px;
+	left: 700px;
 }
 
 #notice-title {
@@ -46,7 +38,7 @@ section {
 	padding-left: 10px;
 	width: 500px;
 	left: 480px;
-	font-size: 30px;
+	font-size: 20px;
 }
 
 #route a {
@@ -103,8 +95,8 @@ section {
 -->
 #notice-table {
 	position: absolute;
-	top: 680px;
-	left: 320px;
+	top: 420px;
+	left: 190px;
 	width: 1250px;
 	border: 1px solid darkgray;
 }
@@ -128,8 +120,8 @@ section {
 
 #paising {
 	position: absolute;
-	top: 1270px;
-	left: 870px;
+	top: 800px;
+	left: 810px;
 	display: flex;
 	text-align: center;
 	border-radius: 10px;

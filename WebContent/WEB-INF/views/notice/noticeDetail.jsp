@@ -27,22 +27,17 @@
 	src="<%=request.getContextPath() %>/ckeditor/ckeditor.js"></script>
 <title>공지사항 상세 페이지</title>
 <style>
-* {
-	box-sizing: border-box;
-}
 
-body {
-	margin: 0 auto;
-	font-family: sans-serif;
-}
 
 section {
 	margin-top: 100px;
 }
 
+
 #notice-title {
 	margin-left: 140px;
-	font-size: 70px;
+	font-size: 50px;
+	
 }
 
 #notice-route {
@@ -58,7 +53,7 @@ section {
 #notice-route a {
 	text-decoration: none;
 	color: gray;
-	font-size: 29px;
+	font-size: 20px;
 }
 
 #notice-route a:hover {
@@ -67,15 +62,16 @@ section {
 
 #notice-list {
 	box-sizing: border-box;
-	margin-top: 60px;
 }
 
-#notice-table {
+
+#notice-table { 
 	position: relative;
 	left: 150px;
 	height: 100px;
 	border: 2px solid darkgray;
 }
+
 
 #notice-table th {
 	text-align: center;
@@ -87,6 +83,7 @@ section {
 	width: 450px;
 	height: 35px;
 	border: 1px solid darkgray;
+	position:relative;
 	margin-left: 150px;
 }
 
@@ -96,14 +93,12 @@ section {
 }
 
 #notcie-content {
+    position:relative;
+    bottom:100px;
 	border: 2px solid grey;
-	width: 1100px;
+	width: 900px;
 	height: 500px;
-	margin-top: 70px;
-	margin-left: 150px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	
 }
 /* -공지작성부분> */
 
@@ -111,7 +106,6 @@ section {
 #next-or-back {
 	position: relative;
 	padding-left: 150px;
-	top: 150px;
 	border-collapse: collapse ;
 }
 
@@ -134,8 +128,7 @@ section {
 #go-button {
 	position: relative;
 	width: 80px;
-	left: 750px;
-	top: 250px;
+	left: 650px;
 }
 
 #delete-button, #modify-button, #go-button {
@@ -153,20 +146,23 @@ section {
 #delete-button {
 	width: 65px;
 	position: absolute;
-	top: 1450px;
-	left: 1235px;
+	top: 1330px;
+	left: 1090px;
+	margin-bottom: 50px;
 }
 
 #modify-button {
 	width: 65px;
 	position: absolute;
-	top: 1450px;
-	left: 1150px;
+	top: 1330px;
+	left: 1030px;
 }
 
 #cke_content {
-	margin-top: 80px;
+    position:relative;
+	margin-top: 100px;
 	margin-left: 150px;
+	bottom:100px;
 	width: 1000px;
 }
 </style>
@@ -203,7 +199,9 @@ section {
 					</tr>
 				</table>
 				<div id="notice-date">
-					작성일 : <input type="hidden" name="date" value="<%=date%>"><%=date %></div>
+					작성일 : <%=date %>
+				    <input type="hidden" name="date" value="<%=date%>">
+				</div>
 				<input type="hidden" name="no" id="noticeNo" value="<%=no %>" id="num"> <input
 					type="hidden" size="50" name="writer" value="<%=userName %>">
 			</div>

@@ -532,4 +532,31 @@ public class UserDAO {
 		
 		return result;
 	}
+
+	public String checkManager(Connection conn, String writer) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String a = "";
+		
+		String query = prop.getProperty("checkManager");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				a =rset.getString("MANAGER");
+									
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return a;
+	}
 }

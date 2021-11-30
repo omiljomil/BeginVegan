@@ -16,8 +16,8 @@ public class OrderManager {
 	
 	public OrderManager() {}
 
-	public OrderManager(String orderNo, String prodName, int amount, int orderPrice, Date orderDate, String userId,
-			String receiver, String address, String phone, int orderType) {
+	public OrderManager(String orderNo, String prodName, int amount, int orderPrice, Date orderDate,
+			String userId, String receiver, String address, String phone, int orderType) {
 		super();
 		this.orderNo = orderNo;
 		this.prodName = prodName;
@@ -30,6 +30,7 @@ public class OrderManager {
 		this.phone = phone;
 		this.orderType = orderType;
 	}
+
 
 	public String getOrderNo() {
 		return orderNo;

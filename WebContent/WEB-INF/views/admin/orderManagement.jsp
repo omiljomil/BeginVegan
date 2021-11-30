@@ -162,31 +162,16 @@
 							<td>
 								<%
 									String status = "";
-									if(list.get(i).getOrderType() == 0) {
-										status = "주문완료";
+									switch(list.get(i).getOrderType()) {
+									case 0: status = "주문완료"; break;
+									case 1: status = "상품준비중"; break;
+									case 2: status = "배송중"; break;
+									case 3: status = "배송완료"; break;
+									case 4: status = "주문취소"; break;
+									default: status = "관리자 문의";
+									}
 								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 1) {
-										status = "상품준비중";	
-								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 2) {
-										status = "배송중";	
-								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 3) {
-										status = "배송완료";	
-								%>
-										<%= status %>
-								<%	} else if(list.get(i).getOrderType() == 4) {
-										status = "주문취소";	
-								%>
-										<%= status %>
-								<%	} else {
-										status = "관리자 문의";	
-								%>
-										<%= status %>
-								<% } %>
+								<%= status %>
 							</td>
 						</tr>
 					<% } %>
@@ -207,7 +192,7 @@
 				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1'"
 				value="처음">
 			<script>
-				if(<%= pi.getCurrentPage() %> == 1) {
+				if(<%= pi.getCurrentPage() %> <= 1) {
 					$('#firstBtn').prop('disabled', true);
 					$('#firstBtn').css({'cursor':'text', 'color':'#bbb'});
 				}
@@ -251,7 +236,7 @@
 				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"
 				value="끝">
 			<script>
-				if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
 					$('#lastBtn').prop('disabled', true);
 					$('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
 				}
