@@ -10,32 +10,32 @@ import order.model.vo.Order;
 
 public class OrderService {
 
-	private OrderDAO oDAO = new OrderDAO();
-	
-	public int insertReadyOrder(Order order, String[] sub, String[] count) {
-		Connection conn = getConnection();
-		
-		int result = oDAO.insertReadyOrder(conn, order, sub, count);
-		
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result;
-	}
+   private OrderDAO oDAO = new OrderDAO();
+   
+   public int insertReadyOrder(Order order, String[] sub, String[] count) {
+      Connection conn = getConnection();
+      
+      int result = oDAO.insertReadyOrder(conn, order, sub, count);
+      
+      if(result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
+      
+      close(conn);
+      
+      return result;
+   }
 
-	public ArrayList<Order> orderList(String userId) {
-		Connection conn = getConnection();
-		
-		ArrayList<Order> list = oDAO.orderList(conn, userId);
-		
-		close(conn);
-		
-		return list;
-	}
+   public ArrayList<Order> orderList(String userId) {
+      Connection conn = getConnection();
+      
+      ArrayList<Order> list = oDAO.orderList(conn, userId);
+      
+      close(conn);
+      
+      return list;
+   }
 
 }

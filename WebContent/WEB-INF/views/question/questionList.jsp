@@ -7,6 +7,7 @@
 	
     ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("q");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String cNo = (String)request.getAttribute("cNo");
     %>
 <!DOCTYPE html>
 <html>
@@ -69,6 +70,42 @@
 #listArea tr td{
 	text-align: center;
 }
+
+   #questionInsertBtn{
+      box-shadow: 3px 4px 0px 0px #3e7327;
+      background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+      background-color:#77b55a;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border:1px solid #4b8f29;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size: 13px;
+      padding:6px 10px;
+      text-decoration:none;
+      text-shadow:0px 1px 0px #5b8a3c;
+   }
+   .changeBtn{
+      box-shadow: 3px 4px 0px 0px #3e7327;
+      background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+      background: rgb(60, 127, 68);
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border:1px solid #4b8f29;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size: 13px;
+      padding:6px 10px;
+      text-decoration:none;
+      text-shadow:0px 1px 0px #5b8a3c;
+      
+   }
+   
+   
 </style>
 <body>
 	<%@ include file="../common/header.jsp"%>
@@ -123,7 +160,7 @@
 	<div class="pagingArea" align="center">
 		<!-- 맨 처음으로 -->
 		<input type="button" id="firstBtn"
-			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?curentPage=1'"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?curentPage=1&cNo=<%=cNo %>'"
 			value="처음">
 		<script>
 			if(<%= pi.getCurrentPage() %> == 1) {
@@ -133,7 +170,7 @@
 		</script>
 		<!-- 이전 페이지로 -->
 		<input type="button" id="beforeBtn"
-			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()-1%>'"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()-1%>&cNo=<%=cNo %>'"
 			value="이전">
 		<script>
 			if(<%= pi.getCurrentPage() %> <= 1) {
@@ -147,13 +184,13 @@
 		<input type="button" id="choosen" disabled value="<%= p %>">
 		<% } else { %>
 		<input type="button" id="numBtn"
-			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?currentPage=<%=p%>'"
+			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?currentPage=<%=p%>&cNo=<%=cNo %>'"
 			value="<%= p %>">
 		<% } %>
 		<%  } %>
 		<!-- 다음 페이지로 -->
 		<input type="button" id="afterBtn"
-			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()+1%>'"
+			onclick="location.href='<%= request.getContextPath()%>/questionList.bo?currentPage=<%=pi.getCurrentPage()+1%>&cNo=<%=cNo %>'"
 			value="다음">
 		<script>
 			if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
@@ -163,7 +200,7 @@
 		</script>
 		<!-- 맨 끝으로 -->
 		<input type="button" id="lastBtn"
-			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?curentPage=<%=pi.getMaxPage()%>'"
+			onclick="location.href='<%=request.getContextPath()%>/questionList.bo?curentPage=<%=pi.getMaxPage()%>&cNo=<%=cNo %>'"
 			value="끝">
 		<script>
 			if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
