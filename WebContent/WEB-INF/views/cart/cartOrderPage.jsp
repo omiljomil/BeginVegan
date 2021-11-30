@@ -1,14 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart, product.model.vo.*" %>
+   pageEncoding="UTF-8" import="java.util.ArrayList, cart.model.vo.Cart, product.model.vo.*" %>
 <%
-	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
-ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
+   ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
+   ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 %>
 <%
-	int result = 0;
-	for(int i = 0; i < list.size(); i++) {
-		result += list.get(i).getTotal();
-	}
+   int result = 0;
+   for(int i = 0; i < list.size(); i++) {
+      result += list.get(i).getTotal();
+   }
+   
+
+    String prodNameStr = "";
+    for(int i = 0; i < list.size(); i++) {
+       if(i == 0) {
+          prodNameStr = list.get(0).getProdName();
+       } else {
+          prodNameStr = list.get(0).getProdName() +" 외 " + (list.size() - 1) + "건";
+       }
+    }
+
+         int amountResult = 0;
+         for(int i = 0; i < list.size(); i++) {
+            amountResult += list.get(i).getAmount();
+         }
+
+
 %>
 <!DOCTYPE html>
 <html>
@@ -22,10 +39,10 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
 <style>
       /*결제 페이지*/
       table a:link {text-decoration: none; color: #909090;}
-		table a:visited {text-decoration: none; color: #909090;}
-		table a:active {text-decoration: none; color: #909090;}
-		table a:hover {text-decoration: none; color: #909090;}
-		
+      table a:visited {text-decoration: none; color: #909090;}
+      table a:active {text-decoration: none; color: #909090;}
+      table a:hover {text-decoration: none; color: #909090;}
+      
       .payment{
       position: realative;
       width: 1200px;
@@ -218,6 +235,9 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
          <form action="<%= request.getContextPath() %>/insertOrder.me"
          method="post" name="orderForm" autocomplete="off">
          <div class="payment_order">
+         <input type="hidden" name="prodName" id="prodName" value="<%= prodNameStr %>">
+         <input type="hidden" name="amount" id="amount" value="<%= amountResult %>">
+         <input type="hidden" name="prodNo" id="prodNo" value="<%= list.get(0).getProdNo() %>">
             <h6 class="payment_order_h6">상품 주문 내역</h6>
             <table class="payment_table">
                <tr class="payment_table_tr">
@@ -229,51 +249,51 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
                   <td style="width: 130px;">합계</td>
                </tr>
 
-					<% for(int i = 0; i < list.size(); i++) { %>
-						<tr>
-							<td style="height: 130px; border-bottom: 1px solid #E2E2E2">
-								<% for(int j = 0; j < fList.size(); j++) { %>
-									<% Photo ph = fList.get(j); %>
-									<% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>	
-										<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
-											<img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
-										</a>
-									<% } %>
-								<% } %>
-							</td>
-							<td style="height: 130px; border: 1px solid #E2E2E2">
-								<a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>"><b><%= list.get(i).getProdName() %></b></a>
-								<br>
-								<%
-		    						String[] opn = list.get(i).getOptionName().split(", ");
-		    						String[] opc = list.get(i).getOptionCount().split(", ");
-		    						int[] opcArr = new int[opc.length];
-		    						
-		    						for(int j = 0; j < opc.length; j++) {
-		    							opcArr[j] = Integer.parseInt(opc[j]);
-		    						}
-		    						String opArr = "";
-		    						
-		    						for(int j = 0; j < opn.length; j++) {
-		    							if(j == 0) {
-		    								opArr += "옵션 : " + opn[j] +  " - " + opcArr[j];
-		    							} else {
-		    								opArr += ", " + opn[j] +  " - " + opcArr[j];
-		    							}
-		    						}
-	    						%>
-				    			<%= opArr %>
-							</td>
-							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getPrice() %></td>
-							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getAmount() %></td>
-							<td style="height: 130px; border: 1px solid #E2E2E2">0원</td>
-							<td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getTotal() %></td>
-						</tr>
-					<% } %>
-					<tr>
-						<td colspan="5"></td>
-						<td>합계 : <%= result %></td>
-					</tr>
+               <% for(int i = 0; i < list.size(); i++) { %>
+                  <tr>
+                     <td style="height: 130px; border-bottom: 1px solid #E2E2E2">
+                        <% for(int j = 0; j < fList.size(); j++) { %>
+                           <% Photo ph = fList.get(j); %>
+                           <% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>   
+                              <a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
+                                 <img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
+                              </a>
+                           <% } %>
+                        <% } %>
+                     </td>
+                     <td style="height: 130px; border: 1px solid #E2E2E2">
+                        <a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>"><b><%= list.get(i).getProdName() %></b></a>
+                        <br>
+                        <%
+                            String[] opn = list.get(i).getOptionName().split(", ");
+                            String[] opc = list.get(i).getOptionCount().split(", ");
+                            int[] opcArr = new int[opc.length];
+                            
+                            for(int j = 0; j < opc.length; j++) {
+                               opcArr[j] = Integer.parseInt(opc[j]);
+                            }
+                            String opArr = "";
+                            
+                            for(int j = 0; j < opn.length; j++) {
+                               if(j == 0) {
+                                  opArr += "옵션 : " + opn[j] +  " - " + opcArr[j];
+                               } else {
+                                  opArr += ", " + opn[j] +  " - " + opcArr[j];
+                               }
+                            }
+                         %>
+                         <%= opArr %>
+                     </td>
+                     <td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getPrice() %></td>
+                     <td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getAmount() %></td>
+                     <td style="height: 130px; border: 1px solid #E2E2E2">0원</td>
+                     <td style="height: 130px; border: 1px solid #E2E2E2"><%= list.get(i).getTotal() %></td>
+                  </tr>
+               <% } %>
+               <tr>
+                  <td colspan="5"></td>
+                  <td>합계 : <%= result %></td>
+               </tr>
             </table>
          </div>
          
@@ -427,8 +447,8 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
                   <td class="all_order_second"><%= result %></td>
                   <td class="all_order_second">2500</td>
                   <td class="all_order_second" name="totalPrice" value="1,000">
-                  	= <%= result + 2500 %>
-                  	<input type="hidden" name="totalPrice" value="<%= result + 2500 %>">
+                     = <%= result + 2500 %>
+                     <input type="hidden" name="totalPrice" id="totalPrice" value="<%= result + 2500 %>">
                   </td>
                   
                </tr>
@@ -454,430 +474,413 @@ ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
       </script>  -->
       
 
-	<script>
-	   
-	   
-	   function a() {
-	      
-	      var nameCheck = RegExp(/^[가-힣]+$/);
-	      var phoneCheck = RegExp(/^01[0179][0-9]{7,8}$/);
-	      var emailCheck = RegExp(/.+@[a-z]+(\.[a-z]+){1,2}$/);
-	      
-	      
-	   
-	      if(!$('#orderName').val()){
-	         alert('주문자를 입력해 주세요.');
-	         return false;
-	      } else if(!nameCheck.test($('#orderName').val())){
-	         alert('주문자는 한글로 입력해 주세요.');
-	         return false;
-	      } else if(!$('#postal1').val()){
-	         alert('우편번호를 입력해 주세요.');
-	         return false;
-	      } else if(phoneCheck.test($('#normalPhone22').val() || $('#normalPhone33').val())) {
-	         alert('일반전화는 숫자로 입력해 주세요.');
-	         $('#normalPhone2').focus();
-	         return false;
-	      } else if(!$('#phone2').val() || !$('#phone3').val()){
-	         alert('휴대전화를 입력해 주세요.')
-	         return false;
-	      } else if(phoneCheck.test($('#phone2').val() || $('#phone3').val())) {
-	         alert('휴대전화는 숫자로 입력해 주세요.');
-	         $('#phone2').focus();
-	         return false;
-	      } else if(emailCheck.test($('#email').val() || $('#email').val())) {
-	         alert('이메일을 영문으로 입력해 주세요.');
-	         return false;
-	      } else if(!$('#shipName').val()) {
-	         alert('주문자를 입력해 주세요.');
-	         return false;
-	      } else if(!nameCheck.test($('#shipName').val())){
-	         alert('주문자는 한글로 입력해 주세요.');
-	         return false;
-	      } else if(!$('#postal2').val()){
-	         alert('우편번호를 입력해 주세요.');
-	         return false;
-	      } else if(phoneCheck.test($('#normalPhone22').val() || $('#normalPhone33').val())) {
-	         alert('일반전화는 숫자로 입력해 주세요.');
-	         $('#normalPhone2').focus();
-	         return false;
-	      } else if(!$('#phone22').val() || !$('#phone33').val()){
-	         alert('휴대전화를 입력해 주세요.')
-	         return false;
-	      } else if(phoneCheck.test($('#phone22').val() || $('#phone33').val())) {
-	         alert('휴대전화는 숫자로 입력해 주세요.');
-	         $('#phone2').focus();
-	         return false;
-	      }
-	       
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      else {
-	      
-	         IMP.init('imp45319267');
-	   
-	            IMP.request_pay({
-	               pg : 'inicis', // version 1.1.0부터 지원.
-	               pay_method : 'card',
-	               merchant_uid : 'merchant_' + new Date().getTime(),
-	               name : '주문명:비긴테스트',
-	               amount : 100, //판매 가격
-	               buyer_email : $('#email1').val()+$('#email2').val(),
-	               buyer_name : $('#shipName').val(),
-	               buyer_tel : $('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
-	               buyer_addr : $('#address2').val()+$('#deAddress2').val(),
-	               buyer_postcode : $('#postal2').val()
-	            }, function(rsp) {
-	               if ( rsp.success ) {
-	                  //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                  jQuery.ajax({
-	                     url: "ticketing/success", //cross-domain error가 발생하지 않도록 주의해주세요
-	                     type: 'POST',
-	                     dataType: 'json',
-	                     data: {
-	         
-	                        //기타 필요한 데이터가 있으면 추가 전달
-	                     }
-	                  }).done(function(data) {
-	                     //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	                     if ( everythings_fine ) {
-	                        msg = '결제가 완료되었습니다.';
-	                        msg += '\n고유ID : ' + rsp.imp_uid;
-	                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	                        msg += '\n결제 금액 : ' + rsp.paid_amount;
-	                        msg += '카드 승인번호 : ' + rsp.apply_num;
-	         
-	                        alert(msg);
-	                     } else {
-	                        //[3] 아직 제대로 결제가 되지 않았습니다.
-	                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	                     }
-	                  });
-	                  //성공시 이동할 페이지
-	                 $.ajax({
-	                    url:'InsertCartOrder.me',
-	                    data:{
-	                       userId: $('#userId').val(),
-	                       orderNo: new Date().getTime(),
-	                       prodName:
-	                       	<%
-	                       		String prodNameStr = "";
-	                       		for(int i = 0; i < list.size(); i++) {
-	                       			if(i == 0) {
-	                       				prodNameStr += list.get(i).getProdName();
-	                       			} else {
-	                       				prodNameStr += ", " + list.get(i).getProdName();
-	                       			}
-	                       		}
-	                       	%>
-	                       	<%= prodNameStr %>, 
-	                       price: <%= result + 2500 %>,
-	                       receiver: $('#shipName').val(),
-	                       postal: $('#postal2').val(),
-	                       address: $('#address2').val(),
-	                       deAddress: $('#deAddress2').val(),
-	                       normalPhone:$('#normalPhone11').val()+$('#normalPhone22').val()+$('#normalPhone33').val(),
-	                       phone:$('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
-	                       message: $('#message').val(),
-	                       amount: 
-		                       	<%
-		                       		int amountResult = 0;
-		                       		for(int i = 0; i < list.size(); i++) {
-		                       			amountResult += list.get(i).getAmount();
-		                       		}
-	                       		%>
-	                       		<%= amountResult %>
-	                    },
-	                 
-	                    success : function(data){
-	                       alert('주문이 완료되었습니다.');
-	                       location.href="CartOrderComplete.me";
-	                    },
-	                    error:function(data){
-	                       alert("결제 실패");
-	                       
-	                    }
-	                 });
-	               } else {
-	                  msg = '결제에 실패하였습니다.';
-	                  msg += '에러내용 : ' + rsp.error_msg;
-	                  //실패시 이동할 페이지
-	                  alert(msg);
-	               }
-	            });
-	      }
-	};
-	</script>
+   <script>
+      
+      
+      function a() {
+         
+         var nameCheck = RegExp(/^[가-힣]+$/);
+         var phoneCheck = RegExp(/^01[0179][0-9]{7,8}$/);
+         var emailCheck = RegExp(/.+@[a-z]+(\.[a-z]+){1,2}$/);
+         
+         
+      
+         if(!$('#orderName').val()){
+            alert('주문자를 입력해 주세요.');
+            return false;
+         } else if(!nameCheck.test($('#orderName').val())){
+            alert('주문자는 한글로 입력해 주세요.');
+            return false;
+         } else if(!$('#postal1').val()){
+            alert('우편번호를 입력해 주세요.');
+            return false;
+         } else if(phoneCheck.test($('#normalPhone22').val() || $('#normalPhone33').val())) {
+            alert('일반전화는 숫자로 입력해 주세요.');
+            $('#normalPhone2').focus();
+            return false;
+         } else if(!$('#phone2').val() || !$('#phone3').val()){
+            alert('휴대전화를 입력해 주세요.')
+            return false;
+         } else if(phoneCheck.test($('#phone2').val() || $('#phone3').val())) {
+            alert('휴대전화는 숫자로 입력해 주세요.');
+            $('#phone2').focus();
+            return false;
+         } else if(emailCheck.test($('#email').val() || $('#email').val())) {
+            alert('이메일을 영문으로 입력해 주세요.');
+            return false;
+         } else if(!$('#shipName').val()) {
+            alert('주문자를 입력해 주세요.');
+            return false;
+         } else if(!nameCheck.test($('#shipName').val())){
+            alert('주문자는 한글로 입력해 주세요.');
+            return false;
+         } else if(!$('#postal2').val()){
+            alert('우편번호를 입력해 주세요.');
+            return false;
+         } else if(phoneCheck.test($('#normalPhone22').val() || $('#normalPhone33').val())) {
+            alert('일반전화는 숫자로 입력해 주세요.');
+            $('#normalPhone2').focus();
+            return false;
+         } else if(!$('#phone22').val() || !$('#phone33').val()){
+            alert('휴대전화를 입력해 주세요.')
+            return false;
+         } else if(phoneCheck.test($('#phone22').val() || $('#phone33').val())) {
+            alert('휴대전화는 숫자로 입력해 주세요.');
+            $('#phone2').focus();
+            return false;
+         }
+          
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         else {
+         
+            IMP.init('imp45319267');
+      
+               IMP.request_pay({
+                  pg : 'inicis', // version 1.1.0부터 지원.
+                  pay_method : 'card',
+                  merchant_uid : 'merchant_' + new Date().getTime(),
+                  name : '주문명:비긴테스트',
+                  amount : 100, //판매 가격
+                  buyer_email : $('#email1').val()+$('#email2').val(),
+                  buyer_name : $('#shipName').val(),
+                  buyer_tel : $('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
+                  buyer_addr : $('#address2').val()+$('#deAddress2').val(),
+                  buyer_postcode : $('#postal2').val()
+               }, function(rsp) {
+                  if ( rsp.success ) {
+                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                     jQuery.ajax({
+                        url: "ticketing/success", //cross-domain error가 발생하지 않도록 주의해주세요
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+            
+                           //기타 필요한 데이터가 있으면 추가 전달
+                        }
+                     }).done(function(data) {
+                        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                        if ( everythings_fine ) {
+                           msg = '결제가 완료되었습니다.';
+                           msg += '\n고유ID : ' + rsp.imp_uid;
+                           msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                           msg += '\n결제 금액 : ' + rsp.paid_amount;
+                           msg += '카드 승인번호 : ' + rsp.apply_num;
+            
+                           alert(msg);
+                        } else {
+                           //[3] 아직 제대로 결제가 되지 않았습니다.
+                           //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                        }
+                     });
+                     //성공시 이동할 페이지
+                    $.ajax({
+                       url:'InsertCartOrder.me',
+                       data:{
+                          userId: $('#userId').val(),
+                          orderNo: new Date().getTime(),
+                          prodName: $('#prodName').val(), 
+                          price: $('#totalPrice').val(),
+                          receiver: $('#shipName').val(),
+                          postal: $('#postal2').val(),
+                          address: $('#address2').val(),
+                          deAddress: $('#deAddress2').val(),
+                          normalPhone:$('#normalPhone11').val()+$('#normalPhone22').val()+$('#normalPhone33').val(),
+                          phone:$('#phone1').val() + $('#phone2').val() + $('#phone3').val(),
+                          message: $('#message').val(),
+                          amount: $('#amount').val(),
+                          prodNo: $('#prodNo').val()
+                       },
+                    
+                       success : function(data){
+                          alert('주문이 완료되었습니다.');
+                          location.href="complete.me";
+                       },
+                       error:function(data){
+                          alert("결제 실패");
+                          
+                       }
+                    });
+                  } else {
+                     msg = '결제에 실패하였습니다.';
+                     msg += '에러내용 : ' + rsp.error_msg;
+                     //실패시 이동할 페이지
+                     alert(msg);
+                  }
+               });
+         }
+   };
+   </script>
       
    <script>
-	   function execDaumPostcode() {
-	       new daum.Postcode({
-	           oncomplete: function(data) {
-	               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	               // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-	               // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	               var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-	               var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-	
-	               // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	               // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	               if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                   extraRoadAddr += data.bname;
-	               }
-	               // 건물명이 있고, 공동주택일 경우 추가한다.
-	               if(data.buildingName !== '' && data.apartment === 'Y'){
-	                  extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	               }
-	               // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	               if(extraRoadAddr !== ''){
-	                   extraRoadAddr = ' (' + extraRoadAddr + ')';
-	               }
-	               // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-	               if(fullRoadAddr !== ''){
-	                   fullRoadAddr += extraRoadAddr;
-	               }
-	
-	               // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	               document.getElementById('postal1').value = data.zonecode; //5자리 새우편번호 사용
-	               document.getElementById('address1').value = fullRoadAddr; // 주소 
-	               document.getElementById('deAddress1').focus();   // 상세 주소
-	           }
-	       }).open();
-	   }
-	   
-	   function execDaumPostcode2() {
-	       new daum.Postcode({
-	           oncomplete: function(data) {
-	               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	               // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-	               // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	               var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-	               var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-	
-	               // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	               // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	               if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                   extraRoadAddr += data.bname;
-	               }
-	               // 건물명이 있고, 공동주택일 경우 추가한다.
-	               if(data.buildingName !== '' && data.apartment === 'Y'){
-	                  extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	               }
-	               // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	               if(extraRoadAddr !== ''){
-	                   extraRoadAddr = ' (' + extraRoadAddr + ')';
-	               }
-	               // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-	               if(fullRoadAddr !== ''){
-	                   fullRoadAddr += extraRoadAddr;
-	               }
-	
-	               // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	               document.getElementById('postal2').value = data.zonecode; //5자리 새우편번호 사용
-	               document.getElementById('address2').value = fullRoadAddr; // 주소 
-	               document.getElementById('deAddress2').focus();   // 상세 주소
-	           }
-	       }).open();
-	   }
-	</script>
-	<script>
-	   
-	   function checkValue(){
-	      var form = document.orderForm;
-	      
-	      if(!checkOrderName(form.orderName.value)) {
-	         return false;
-	      } else if(!checkPostal(form.postal.value)) {
-	         return false;
-	      } else if(!checkAddress(form.address.value)){
-	         return false;
-	      } else if(!checkDeAddress(form.deAddress.value)){
-	         return false;
-	      } 
-	      
-	      return true
-	   }
-	      
-	      
-	      
-	/*       for (var i=0; i<$("#orderName").val().length; i++)  { 
-	          var chk = $("#orderName").val().substring(i,i+1); 
-	
-	          if(chk.match(/[0-9]|[a-z]|[A-Z]/)) { 
-	             alert("주문자를 정확히 입력해 주세요");
-	              return false;
-	          }
-	
-	          if(chk.match(/([^가-힣\x20])/i)){
-	             alert("주문자를 정확히 입력해 주세요");
-	              return false;
-	          }
-	
-	          if($("#orderName").val() == ""){
-	             alert("주문자를 정확히 입력해 주세요");
-	              return false;
-	
-	          }
-	
-	      }  
-	      
-	   } 
-	      */
-	      
-	      
-	
-	      
-	      
-	   
-	</script>
-	<script type="text/javascript">
-	   
-	   // 주문자 정보와 동일을 누르면 주문 정보의 정보가 배송 정보에 세팅됨
-	         $(function(){
-	       
-	       var form = document.orderForm;
-	       
-	      $('#deliverCheckbox1').on('click', function(){
-	         var same = this.checked;
-	         
-	         $('#shipName').val(same ? $('#orderName').val():'');
-	         $('#phone11').val(same ? $('#phone1').val():'');
-	         $('#phone22').val(same ? $('#phone2').val():'');
-	         $('#phone33').val(same ? $('#phone3').val():'');
-	         $('#normalPhone11').val(same ? $('#normalPhone1').val():'');
-	         $('#normalPhone22').val(same ? $('#normalPhone2').val():'');
-	         $('#normalPhone33').val(same ? $('#normalPhone3').val():'');
-	         $('#postal2').val(same ? $('#postal1').val():'');
-	         $('#address2').val(same ? $('#address1').val():'');
-	         $('#deAddress2').val(same ? $('#deAddress1').val():'');
-	         if(same == true){
-	            $('#deliver_info input').filter('input:text').attr('readonly', true);
-	         } else {
-	            $('#deliver_info input').filter('input:text').removeAttr('readonly');
-	         }
-	         
-	         
-	         
-	      })
-	   })  
-	
-	
-	/* 
-	   var name = "";
-	   var postal = false;
-	   var address = false;
-	   var de_address = "";
-	
-	   function copy(frm){
-	      
-	
-	      
-	      name = frm.orderName.value; */
-	/*       postal = frm.postal1.value;
-	      address = frm.address1.value;
-	      de_addres s = frm.de_address.value; */
-	      
-	//   }
-	   
-	/*    function shipCopy(frm){
-	      if(frm.copy.checked){
-	          initValue(frm); 
-	          
-	          document.getElementById('shipName').value = document.getElementById('orderName').value;
-	          
-	          frm.deliver_checkbox1.checked = name;
-	      } else {
-	         frm.shipCopy.value = "";
-	      }
-	   } */
-	   
-	   
-	/*     $("input[name=deliverCheckbox]").click(function(){
-	      if($(this).value() == "Y"){
-	         samech();
-	      } else{
-	         notSameCh();
-	      }
-	   }) */
-	   
-	/*    function notSameCh(){
-	      $('#shipName').val('');
-	      $('#phone11').val('');
-	      $('#phone22').val('');
-	      $('#phone33').val('');
-	      $('#normalPhone11').val('');
-	      $('#normalPhone22').val('');
-	      $('#normalPhone33').val('');
-	      $('#postal2').val('');
-	      $('#address2').val('');
-	      $('#deAddress2').val('');
-	   } */
-	   
-	
-	   
-	</script>
-	
-	<script>
-	   $('#deliverCheckbox2').click(function(){
-	      $(".deliver_label option").prop('selected', false);
-	      
-	/*       $(':select:not([id=normalPhone1])').val('');
-	      $(':text:not([id=normalPhone2])').val('');
-	      $(':text:not([id=normalPhone3])').val('');
-	      
-	      $(':select:not([id=phone1])').val('');
-	      $(':text:not([id=phone2])').val('');
-	      $(':text:not([id=phone3])').val(''); */
-	   })
-	
-	</script>
-	
-	<script>
-	   function doOpenCheck(chk){
-	      var obj = document.getElementsByName('deliverCheckbox');
-	      for(var i = 0; i < obj.length; i++) {
-	         if(obj[i] != chk) {
-	            obj[i].checked =false;
-	         }
-	      }
-	   }
-	</script>
-	
-	
-	<script>
-	
-	   $('#email').change(function(){ 
-	      $("#email option:selected").each(function () { 
-	         if($(this).val()== '1'){ 
-	            $("#email2").val(''); 
-	            $("#email2").attr("readonly",false);
-	         }else{
-	            $("#email2").val($(this).text());
-	            $("#email2").attr("readonly",true); 
-	         } 
-	         }); 
-	   });
-	/*    function clickCheck(target){
-	      
-	      document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
-	   
-	      target.checked = true;
-	   } */
-	</script>
+      function execDaumPostcode() {
+          new daum.Postcode({
+              oncomplete: function(data) {
+                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+   
+                  // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                  var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                  var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+   
+                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraRoadAddr += data.bname;
+                  }
+                  // 건물명이 있고, 공동주택일 경우 추가한다.
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                  if(extraRoadAddr !== ''){
+                      extraRoadAddr = ' (' + extraRoadAddr + ')';
+                  }
+                  // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                  if(fullRoadAddr !== ''){
+                      fullRoadAddr += extraRoadAddr;
+                  }
+   
+                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                  document.getElementById('postal1').value = data.zonecode; //5자리 새우편번호 사용
+                  document.getElementById('address1').value = fullRoadAddr; // 주소 
+                  document.getElementById('deAddress1').focus();   // 상세 주소
+              }
+          }).open();
+      }
+      
+      function execDaumPostcode2() {
+          new daum.Postcode({
+              oncomplete: function(data) {
+                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+   
+                  // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                  var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                  var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+   
+                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraRoadAddr += data.bname;
+                  }
+                  // 건물명이 있고, 공동주택일 경우 추가한다.
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                  if(extraRoadAddr !== ''){
+                      extraRoadAddr = ' (' + extraRoadAddr + ')';
+                  }
+                  // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                  if(fullRoadAddr !== ''){
+                      fullRoadAddr += extraRoadAddr;
+                  }
+   
+                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                  document.getElementById('postal2').value = data.zonecode; //5자리 새우편번호 사용
+                  document.getElementById('address2').value = fullRoadAddr; // 주소 
+                  document.getElementById('deAddress2').focus();   // 상세 주소
+              }
+          }).open();
+      }
+   </script>
+   <script>
+      
+      function checkValue(){
+         var form = document.orderForm;
+         
+         if(!checkOrderName(form.orderName.value)) {
+            return false;
+         } else if(!checkPostal(form.postal.value)) {
+            return false;
+         } else if(!checkAddress(form.address.value)){
+            return false;
+         } else if(!checkDeAddress(form.deAddress.value)){
+            return false;
+         } 
+         
+         return true
+      }
+         
+         
+         
+   /*       for (var i=0; i<$("#orderName").val().length; i++)  { 
+             var chk = $("#orderName").val().substring(i,i+1); 
+   
+             if(chk.match(/[0-9]|[a-z]|[A-Z]/)) { 
+                alert("주문자를 정확히 입력해 주세요");
+                 return false;
+             }
+   
+             if(chk.match(/([^가-힣\x20])/i)){
+                alert("주문자를 정확히 입력해 주세요");
+                 return false;
+             }
+   
+             if($("#orderName").val() == ""){
+                alert("주문자를 정확히 입력해 주세요");
+                 return false;
+   
+             }
+   
+         }  
+         
+      } 
+         */
+         
+         
+   
+         
+         
+      
+   </script>
+   <script type="text/javascript">
+      
+      // 주문자 정보와 동일을 누르면 주문 정보의 정보가 배송 정보에 세팅됨
+            $(function(){
+          
+          var form = document.orderForm;
+          
+         $('#deliverCheckbox1').on('click', function(){
+            var same = this.checked;
+            
+            $('#shipName').val(same ? $('#orderName').val():'');
+            $('#phone11').val(same ? $('#phone1').val():'');
+            $('#phone22').val(same ? $('#phone2').val():'');
+            $('#phone33').val(same ? $('#phone3').val():'');
+            $('#normalPhone11').val(same ? $('#normalPhone1').val():'');
+            $('#normalPhone22').val(same ? $('#normalPhone2').val():'');
+            $('#normalPhone33').val(same ? $('#normalPhone3').val():'');
+            $('#postal2').val(same ? $('#postal1').val():'');
+            $('#address2').val(same ? $('#address1').val():'');
+            $('#deAddress2').val(same ? $('#deAddress1').val():'');
+            if(same == true){
+               $('#deliver_info input').filter('input:text').attr('readonly', true);
+            } else {
+               $('#deliver_info input').filter('input:text').removeAttr('readonly');
+            }
+            
+            
+            
+         })
+      })  
+   
+   
+   /* 
+      var name = "";
+      var postal = false;
+      var address = false;
+      var de_address = "";
+   
+      function copy(frm){
+         
+   
+         
+         name = frm.orderName.value; */
+   /*       postal = frm.postal1.value;
+         address = frm.address1.value;
+         de_addres s = frm.de_address.value; */
+         
+   //   }
+      
+   /*    function shipCopy(frm){
+         if(frm.copy.checked){
+             initValue(frm); 
+             
+             document.getElementById('shipName').value = document.getElementById('orderName').value;
+             
+             frm.deliver_checkbox1.checked = name;
+         } else {
+            frm.shipCopy.value = "";
+         }
+      } */
+      
+      
+   /*     $("input[name=deliverCheckbox]").click(function(){
+         if($(this).value() == "Y"){
+            samech();
+         } else{
+            notSameCh();
+         }
+      }) */
+      
+   /*    function notSameCh(){
+         $('#shipName').val('');
+         $('#phone11').val('');
+         $('#phone22').val('');
+         $('#phone33').val('');
+         $('#normalPhone11').val('');
+         $('#normalPhone22').val('');
+         $('#normalPhone33').val('');
+         $('#postal2').val('');
+         $('#address2').val('');
+         $('#deAddress2').val('');
+      } */
+      
+   
+      
+   </script>
+   
+   <script>
+      $('#deliverCheckbox2').click(function(){
+         $(".deliver_label option").prop('selected', false);
+         
+   /*       $(':select:not([id=normalPhone1])').val('');
+         $(':text:not([id=normalPhone2])').val('');
+         $(':text:not([id=normalPhone3])').val('');
+         
+         $(':select:not([id=phone1])').val('');
+         $(':text:not([id=phone2])').val('');
+         $(':text:not([id=phone3])').val(''); */
+      })
+   
+   </script>
+   
+   <script>
+      function doOpenCheck(chk){
+         var obj = document.getElementsByName('deliverCheckbox');
+         for(var i = 0; i < obj.length; i++) {
+            if(obj[i] != chk) {
+               obj[i].checked =false;
+            }
+         }
+      }
+   </script>
+   
+   
+   <script>
+   
+      $('#email').change(function(){ 
+         $("#email option:selected").each(function () { 
+            if($(this).val()== '1'){ 
+               $("#email2").val(''); 
+               $("#email2").attr("readonly",false);
+            }else{
+               $("#email2").val($(this).text());
+               $("#email2").attr("readonly",true); 
+            } 
+            }); 
+      });
+   /*    function clickCheck(target){
+         
+         document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
+      
+         target.checked = true;
+      } */
+   </script>
 
 
 

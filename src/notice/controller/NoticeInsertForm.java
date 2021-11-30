@@ -51,7 +51,7 @@ public class NoticeInsertForm extends HttpServlet {
 			noticeDate=new Date(new GregorianCalendar(year,month,day).getTimeInMillis());
 			
 		}
-		Notice n=new Notice(0,noticeTitle,noticeContent,writer,noticeDate,null,null);
+		Notice n=new Notice(0,noticeTitle,noticeContent,writer,noticeDate,noticeDate,null);
 		int result=new NoticeService().insertNotice(n);
 		
 		if(result>0) {

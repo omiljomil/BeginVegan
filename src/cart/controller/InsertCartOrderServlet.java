@@ -38,7 +38,7 @@ public class InsertCartOrderServlet extends HttpServlet {
 		String prodName = request.getParameter("prodName");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String receiver = request.getParameter("receiver");
-		int postal = Integer.parseInt("postal");
+		int postal = Integer.parseInt(request.getParameter("postal"));
 		String address = request.getParameter("address");
 		String deAddress = request.getParameter("deAddress");
 		String normalPhone = request.getParameter("normalPhone");

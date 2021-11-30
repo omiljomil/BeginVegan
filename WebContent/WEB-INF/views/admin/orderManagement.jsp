@@ -3,6 +3,7 @@
 <%
 	ArrayList<OrderManager> list = (ArrayList<OrderManager>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String cNo = (String)request.getAttribute("cNo");
 %>
 <!DOCTYPE html>
 <html>
@@ -189,7 +190,7 @@
 		<% } else { %>
 			<!-- 맨 처음으로 -->
 			<input type="button" id="firstBtn"
-				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1'"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=1&cNo=<%= cNo %>'"
 				value="처음">
 			<script>
 				if(<%= pi.getCurrentPage() %> <= 1) {
@@ -200,7 +201,7 @@
 			
 			<!-- 이전 페이지로 -->
 			<input type="button" id="beforeBtn"
-				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() - 1 %>&cNo=<%= cNo %>'"
 				value="이전">
 			<script>
 				if(<%= pi.getCurrentPage() %> <= 1) {
@@ -215,14 +216,14 @@
 					<input type="button" id="choosen" disabled value="<%= p %>">
 				<% } else { %>
 					<input type="button" id="numBtn"
-						onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= p %>'"
+						onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= p %>&cNo=<%= cNo %>'"
 						value="<%= p %>">
 				<% } %>
 			<% } %>
 			
 			<!-- 다음 페이지로 -->
 			<input type="button" id="afterBtn"
-				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getCurrentPage() + 1 %>&cNo=<%= cNo %>'"
 				value="다음">
 			<script>
 				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
@@ -233,7 +234,7 @@
 			
 			<!-- 맨 끝으로 -->
 			<input type="button" id="lastBtn"
-				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>'"
+				onclick="location.href='<%= request.getContextPath() %>/orderManagement.no?currentPage=<%= pi.getMaxPage() %>&cNo=<%= cNo %>'"
 				value="끝">
 			<script>
 				if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {

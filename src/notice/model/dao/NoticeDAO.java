@@ -130,7 +130,8 @@ public class NoticeDAO {
 				pstmt.setString(1,n.getNoticeTitle());
 				pstmt.setString(2,n.getNoticeContent());
 				pstmt.setString(3,n.getNoticeWriter());
-				pstmt.setDate(4, n.getEnrollDate());
+				pstmt.setDate(5, n.getEnrollDate());
+				pstmt.setDate(4, n.getModifyDate());
 				result=pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

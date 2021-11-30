@@ -39,7 +39,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>	
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -380,7 +380,7 @@ a:visited {
 		<dl class="product_option">
 		<!-- 옵션을 클릭하면 하단에 선택한 옵션이 출력되게 하기 -->
 		<!-- select동적제어로 검색해보기 (테이블)-->
-		<form action="<%= request.getContextPath() %>/insertCart.me" method="post">
+		<form action="<%= request.getContextPath() %>/paie.me" method="post">
 		 <input type="hidden" name="pNo" value="<%= p.getProdNo() %>">
 			<span>옵션</span>
 				<select id="selectBox"class="addProduct" name="addOption">
@@ -398,8 +398,11 @@ a:visited {
 				</div>
 		</dlv>
 		
+		<input type="hidden" name="prodName2" value="<%= p.getProdName() %>">
+		
 		<div id="cart">
-			<div id="product_name_select"><%= p.getProdName() %></div>	
+		
+			<div id="product_name_select" name="prodName"><%= p.getProdName() %></div>
 			<button type="button" id="plus" class="add_product">+</button>
 			 <input type="text" id="numBox" name="numBox" min="1" max=10 value="1" readonly="readonly"/>
 			 <button type="button" id="minus" class="add_product" onclick="minusCal(this);">-</button>
@@ -411,10 +414,11 @@ a:visited {
 		 <div class="total_cart">
 			 <div id="total_price_title">총 주문 금액</div>
 			 <div id="total_price"><%= p.getPrice() %></div>
+			 <input type="hidden" id="servletPrice" name="price" value="<%= p.getPrice() %>">
 		 </div>
 		  <div class="buy_button">
 		 <input type="button" id="add_button" value="장바구니">
-		 <input type="button" id="buy_button" value="바로구매" onclick="location.href='<%= request.getContextPath() %>/paie.me'">
+		 <input type="submit" id="buy_button" value="바로구매">
 		  </div>
 		  </div> 
 	</div>	
@@ -459,8 +463,9 @@ a:visited {
 				"<ul class='optionUl'>"+
 					"<li class='optionFlex'>"+
 						"<div class='optionName'>"+$('#selectBox option:selected').html().split("   ")[0]+"</div>"+
+						"<input type='hidden' name='optionName' value='"+$('#selectBox option:selected').html().split("   ")[0]+"'>"+
 						"<button type='button' class='plus1' onclick='plusBtn(this);'>+</button>"+
-						" <input type='text' class='numBox1' name='count' min='0' max='10' value='0' readonly='readonly'/>"+
+						" <input type='text' class='numBox1' name='count2' min='0' max='10' value='0' readonly='readonly'/>"+
 						" <input type='hidden'name='count'value='"+$('#selectBox option:selected').html().split("   ")[1]+"' readonly='readonly'/>"+
 						" <button type='button' class='minus1'  onclick='minusBtn(this);'>-</button>"+
 						 "<span class='optionPrice1'>"+$('#selectBox option:selected').html().split("   ")[1]+"</span>"+
@@ -498,38 +503,40 @@ a:visited {
 		}
 		
 		function plusBtn(a){
-		      var num = $(a).parent().children().eq(2).val();
+		      var num = $(a).parent().children().eq(3).val();
 		      num = Number(num);
 		      num +=1;
 		      console.log(num);
-		      $(a).parent().children().eq(2).val(num);
-		      var price =   Number($(a).parent().children().eq(3).val());
+		      $(a).parent().children().eq(3).val(num);
+		      var price =   Number($(a).parent().children().eq(4).val());
 		    //var price = $('#selectBox option:selected').text().split("   ")[1];
 		    console.log(price);
 		    var total = price * num;
 		    console.log(total);
-		    $(a).parent().children().eq(5).html(total);
+		    $(a).parent().children().eq(6).html(total);
 			mainPrice += price;
 			 $('#total_price').html(mainPrice);
+			 $('#servletPrice').val(mainPrice);
 		   
 		   }
 		   
 		   function minusBtn(a){
-		      var num = $(a).parent().children().eq(2).val();
+		      var num = $(a).parent().children().eq(3).val();
 		      num = Number(num);
 		     
 		      if(num>1){
 		         num -=1;
-		         $(a).parent().children().eq(2).val(num);
-		         var price =    $(a).parent().children().eq(3).val();
+		         $(a).parent().children().eq(3).val(num);
+		         var price =    $(a).parent().children().eq(4).val();
 		        // var price = $('#selectBox option:selected').text().split("   ")[1];
 				    console.log(price);
 				    var total = price * num;
 				
 				    console.log(total);
-				    $(a).parent().children().eq(5).html(total);
+				    $(a).parent().children().eq(6).html(total);
 				    mainPrice -= price;
 				    $('#total_price').html(mainPrice);
+				    $('#servletPrice').val(mainPrice);
 		      }
 		   }
 		   
@@ -545,6 +552,7 @@ a:visited {
 			   mainPrice += <%= p.getPrice()%>
 			   $('#price_product').html(total);
 			   $('#total_price').html(mainPrice);
+			   $('#servletPrice').val(mainPrice);
 		   });
 		   
 		   $('#minus').click(function(){
@@ -560,15 +568,24 @@ a:visited {
 			   mainPrice -= <%= p.getPrice()%>
 			   $('#price_product').html(total);
 			   $('#total_price').html(mainPrice);
+			   $('#servletPrice').val(mainPrice);
 			      }
 		   });
 	
+		   
+		   
+		   
+		   
+		   
+		   
+		   /* 장바구니 카트로 넘어가는 부분 */
+		   
 		   $('#add_button').click(function() {
 			   var sub = new Array();
 			   var count = new Array();
 			   for(var i = 0; i < $('#addOpt').children().length; i++) {
 			     sub[i] = $('.optionFlex').eq(i).children().eq(0).text();
-			     count[i] = $('.optionFlex').eq(i).children().eq(2).val();
+			     count[i] = $('.optionFlex').eq(i).children().eq(3).val();
 			     console.log('count[i] : ' + count[i]);
 			     console.log('sub[i] : ' + sub[i]);
 			   }
@@ -606,6 +623,9 @@ a:visited {
 			  
 			 });
 		  
+
+		   
+		   
 		    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
 		  //  Kakao.init('aa1819ed95de3c68d5c3cb1a5b174bcb');
 		    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.

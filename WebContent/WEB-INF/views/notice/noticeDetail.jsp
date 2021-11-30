@@ -129,6 +129,7 @@ section {
 	position: relative;
 	width: 80px;
 	left: 650px;
+	top : 100px;
 }
 
 #delete-button, #modify-button, #go-button {
@@ -146,16 +147,16 @@ section {
 #delete-button {
 	width: 65px;
 	position: absolute;
-	top: 1330px;
-	left: 1090px;
+	top: 1230px;
+	left: 1200px;
 	margin-bottom: 50px;
 }
 
 #modify-button {
 	width: 65px;
 	position: absolute;
-	top: 1330px;
-	left: 1030px;
+	top: 1230px;
+	left: 1130px;
 }
 
 #cke_content {

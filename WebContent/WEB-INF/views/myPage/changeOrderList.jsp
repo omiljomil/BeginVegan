@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, paiement.model.vo.Paiement"%>
-<% ArrayList<Paiement> list = (ArrayList)request.getAttribute("list"); %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, paiement.model.vo.Paiement,
+      product.model.vo.*, myPage.model.vo.PageInfo"%>
+<% 
+   ArrayList<Paiement> list = (ArrayList)request.getAttribute("list"); 
+   PageInfo pi = (PageInfo)request.getAttribute("pi");
+   ArrayList<Photo> fList = (ArrayList<Photo>)request.getAttribute("fList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
@@ -149,13 +155,13 @@
    }
 
    .sub_order_left_table{
-      width: 90px;
+      width: 110px;
       height: 60px;
       font-size: 14px;
       text-align: left;
    }
    .sub_order_right_table{
-      width: 200px;
+      width: 180px;
       height: 60px;
       font-size: 14px;
       text-align: left;
@@ -228,6 +234,21 @@
       text-align: left;
    }
    
+   .pagingArea .pageBtn{
+   margin-top: 80px;
+   margin-bottom: 40px;
+   background: white;
+   width: 40px;
+   height: 40px;
+   font-size: 14px;
+   color: black;
+   border: 0px;
+   font-size: 16px;
+   font-family: 'Black Han Sans', sans-serif;
+   font-family: 'Noto Sans KR', sans-serif;
+   color: rgb(60, 127, 68);
+   }
+   
 </style>
 </head>
 <body>
@@ -236,6 +257,7 @@
             <ul class="order_refer">
                <li>주문 취소 조회</li>
             </ul>
+            
             <ul class="order_search">
                <li><input type="text" id="product_search" size="53" maxlength="20" height="50px;" placeholder="주문한 상품을 검색해 보세요"></li>
             </ul>
@@ -282,14 +304,23 @@
                         <td colspan="3" class="sub_order_right_table" id="orderType" style="text-indent: 15px;"><%= type %></td>
                         </tr>
                         <tr>
-                           <td rowspan="5" style="height: 100px; width: 100px;"></td>
+                           <td rowspan="5" style="height: 100px; width: 100px; text-indent: 10px;">
+                           <% for(int j = 0; j < fList.size(); j++) { %>
+                           <% Photo ph = fList.get(j); %>
+                           <% if(list.get(i).getProdNo() == ph.getProdNo() && ph.getType() == 0) { %>   
+                              <a href="<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>">
+                                 <img src="<%=request.getContextPath() %>/thumbnail_uploadFiles/<%= ph.getImgChangeName() %>" width="100%" height="100%">
+                              </a>
+                           <% } %>
+                        <% } %>
+                           </td>
                            <td rowspan="5" style="height: 100px; width: 10px;"></td>
-                           <td class="sub_order_left_table" id="orderName"><%= list.get(i).getProdName() %></td>
+                           <td class="sub_order_left_table" id="orderName"  style="text-indent: 18px;"><%= list.get(i).getProdName() %></td>
                            <td class="sub_order_right_table" id="orderAmount"><%= list.get(i).getAmount() %>개</td>
                         </tr>
                         <tr>
-                           <td class="sub_order_left_table"  id="orderPrice"><%= list.get(i).getPrice()%>원</td>
-                           <td class="sub_order_right_table" id="orderAmount"><%= list.get(i).getAmount()%>개</td>
+                           <td class="sub_order_left_table"  id="orderPrice" style="vertical-align: top; text-indent: 18px;"><%= list.get(i).getPrice()%>원</td>
+                           <td class="sub_order_right_table" id="orderAmount" style="vertical-align: top;"><%= list.get(i).getAmount()%>개</td>
                         </tr>
                      </table>
                </div>
@@ -300,7 +331,9 @@
                            <td class="sub_right_table"><input type="button" id="shipBtn" value="배송 조회" class="orderBtn"></td>
                         </tr>
                         <tr>
-                           <td class="sub_right_table"><input type="button"  id="reorderBtn" value="상품 재주문" class="orderBtn"></td>
+                           <td class="sub_right_table"><input type="button"  id="reorderBtn" value="상품 재주문" class="orderBtn"
+                           onclick="location.href='<%=request.getContextPath() %>/proDetail.bo?pNo=<%= list.get(i).getProdNo() %>'">
+                           </td>
                         </tr>
                      </table>
                   </div>
@@ -309,11 +342,60 @@
             <%      } %>
          <% } %>
          
+         <div class="pagingArea" align="center">
+            <% if(list.isEmpty()) { %>
+               <div class="layout" id="space7"></div>
+            <% } else { %>
+               <!-- 이전 페이지로 -->
+               <input type="button" id="beforeBtn" class="pageBtn"
+                  onclick="location.href='<%= request.getContextPath() %>/deleteOrderList.pe?currentPage=<%= pi.getCurrentPage() - 1 %>'"
+                  value="&#11164;">
+               <script>
+                  if(<%= pi.getCurrentPage() %> <= 1) {
+                     $('#beforeBtn').prop('disabled', true);
+                     $('#beforeBtn').css({'cursor':'text', 'color':'#bbb'});
+                  }
+               </script>
+               
+               <!-- 숫자 버튼 -->
+               <% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+                  <% if(p == pi.getCurrentPage()) { %>
+                     <input type="button" class="pageBtn" id="choosen" disabled value="<%= p %>">
+                  <% } else { %>
+                     <input type="button" id="numBtn" class="pageBtn"
+                        onclick="location.href='<%= request.getContextPath() %>/deleteOrderList.pe?currentPage=<%= p %>'"
+                        value="<%= p %>">
+                  <% } %>
+               <% } %>
+               
+               <!-- 다음 페이지로 -->
+               <input type="button" id="afterBtn" class="pageBtn"
+                  onclick="location.href='<%= request.getContextPath() %>/deleteOrderList.pe?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+                  " value="&#11166;">
+               <script>
+                  if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>) {
+                     $('#afterBtn').prop('disabled', true);
+                     $('#afterBtn').css({'cursor':'text', 'color':'#bbb'});
+                  }
+               </script>
+               
+               <!-- 맨 끝으로
+               <input type="button" id="lastBtn" class="pageBtn"
+                  onclick="location.href='<%= request.getContextPath() %>/deleteOrderList.pe?currentPage=<%= pi.getMaxPage() %>'"
+                  value="끝">
+               <script>
+                  if(<%= pi.getCurrentPage() %> == <%= pi.getMaxPage() %>) {
+                     $('#lastBtn').prop('disabled', true);
+                     $('#lastBtn').css({'cursor':'text', 'color':'#bbb'});
+                  }
+               </script>
+                  -->
+            <% } %>
+            </div>
          
             </div>
  <script>
-    console.log('#startDate1');
-    console.log('#endDate1');
+
  </script>        
    
 

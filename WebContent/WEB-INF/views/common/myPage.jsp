@@ -93,7 +93,7 @@ h2 {
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 주문 목록/배송 조회</a></li>
 							<li><a
-								href="<%=request.getContextPath() %>/changeOrderList.me"
+								href="<%=request.getContextPath() %>/deleteOrderList.pe"
 								class="sub_depth_href"><i
 									class="fa-solid fa-angle-right fa-xs"></i> 취소/반품/교환 내역</a></li>
 							<li><a href="<%=request.getContextPath() %>/zzim.me?uId=<%=loginUser.getUserId() %>"

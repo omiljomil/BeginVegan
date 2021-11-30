@@ -108,10 +108,10 @@ padding-left:0px;
 #want-list-title {
   width: 300px;
   position: relative;
-  background-color: gray;
+  background-color: yellowgreen;
   color: white;
   text-align: center;
-  border: 2px solid gray;
+  border: 2px solid yellowgreen;
   border-radius: 5px;
 }
 
@@ -171,11 +171,11 @@ padding-left:0px;
 }
 
 #notice-list-title {
-  background-color: grey;
+  background-color: yellowgreen;
   color: white;
   margin-bottom: 20px;
   width: 350px;
-  border: 2px solid gray;
+  border: 2px solid yellowgreen;
   border-radius: 5px;
   text-align: center;
 }
@@ -227,11 +227,11 @@ padding-left:0px;
 
 #review-title {
   width: 340px;
-  background-color: gray;
+  background-color: yellowgreen;
   text-align: center;
   color: white;
   font-size: 28px;
-  border: 1px solid gray;
+  border: 1px solid yellowgreen;
   border-radius: 5px;
 }
 #review-button {
@@ -306,6 +306,41 @@ cursor: pointer;
 #review-more-button:hover {
   color: gray;
 }  
+
+	#want-button, #notice-more-button, #review-write {
+      box-shadow: 3px 4px 0px 0px #3e7327;
+      background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+      background-color:#77b55a;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border:1px solid #4b8f29;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size: 13px;
+      padding:6px 10px;
+      text-decoration:none;
+      text-shadow:0px 1px 0px #5b8a3c;
+   }
+   #want-more-button ,#notice-write-button, #review-more-button{
+      box-shadow: 3px 4px 0px 0px #3e7327;
+      background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+      background: rgb(60, 127, 68);
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border:1px solid #4b8f29;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size: 13px;
+      padding:6px 10px;
+      text-decoration:none;
+      text-shadow:0px 1px 0px #5b8a3c;
+      
+   }
+   
   </style>
 </head>
 <body>
@@ -428,7 +463,14 @@ cursor: pointer;
     	}
      }
      
-     
+     $('#want-button').on('click',function(){
+ 		if(<%=loginUser!=null%>){
+ 			location=href="<%= request.getContextPath()%>/insertQuestionForm.qs";
+ 		}else{
+ 			alert("회원만 가능합니다.");
+ 			location.href="<%= request.getContextPath()%>/loginForm.me";
+ 		}
+ 	});
      </script> 
           
     <div id="review-list">

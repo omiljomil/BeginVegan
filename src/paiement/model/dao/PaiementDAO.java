@@ -54,6 +54,7 @@ public class PaiementDAO {
          pstmt.setString(10, p.getPhone());
          pstmt.setString(11, p.getMessage());
          pstmt.setInt(12, p.getAmount());
+         pstmt.setInt(13, p.getProdNo());
          
          result = pstmt.executeUpdate();
          
@@ -66,4 +67,5 @@ public class PaiementDAO {
       
       return result;
    }
+
 }

@@ -3,6 +3,7 @@ package paiement.model.service;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import paiement.model.dao.PaiementDAO;
 import paiement.model.vo.Paiement;
@@ -28,4 +29,8 @@ public class PaiementService {
       
       return result;
    }
+
+
+   
+
 }
