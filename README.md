@@ -21,7 +21,7 @@ BeginVegan프로젝트는 이름 그대로 비건을 시작하자는 뜻으로 �
 ==============
 os : window 10
 Server : Apache Tomcat 9.0
-Database : Oracle 12g
+Database : Oracle
 Development Tool : Eclipse, sql Developer
 Development Language :  JAVA , HTML5, CSS3, JavaScript, jQuery, SQL, JSP, Servlet
 Team Coop : Github, ERDCloud, kakaoOven
