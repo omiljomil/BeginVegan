@@ -206,7 +206,7 @@
 	
 	<script>
 		$(function() {
-			$('#userPwd').on('keyup keypress blur change paste input focus', function() {
+			$('#userPwd').on('change paste keyup focus', function() {
 				if($(this).val().length == 0 || $(this).val() == '' || $(this).val() == ' ') {
 					$('#checkPwd').html('');
 				} else if($(this).val().length < 8) {
@@ -220,7 +220,7 @@
 					$('#checkPwd').html('안전한 비밀번호입니다.');
 				}
 			});
-			$('#userPwd2').on('keyup keypress blur change paste input focus', function() {
+			$('#userPwd2').on('change paste keyup focus', function() {
 				if($(this).val().length == 0 || $(this).val() == '' || $(this).val() == ' ') {
 					$('#checkPwd2').html('');
 				} else if($(this).val() !== $('#userPwd').val()) {
@@ -232,60 +232,12 @@
 				}
 			});
 			
-			var num = /[0-9]*/gi;
-			var kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi;
-			var eng = /[a-zA-Z]/gi;
-			var teuk = /[`~!@#$%^&*()_|+\-=?;:,.<>\{\}\[\]\\\/ 	]/gi;
-			var teuk2 = /[`~!@#$%^&*()|+\=?;:,<>\{\}\[\]\\\/ 	]/gi;
-			var teuk3 = /[`~!@#$%^&*()_|+\-=?;:,<>\{\}\[\]\\\/ 	]/gi;
-			
-// 			$('#phone1').on('change paste keyup', function() {
-// 				if(teuk.test($('#phone1').val()) || eng.test($('#phone1').val()) ||	kor.test($('#phone1').val())) {
-// 					$('#checkPhone').html('숫자로 입력하셔야 합니다.');
-// 					$('#checkPhone').css('color', 'red');
-// 				} else if($('#phone1').val().length == 0 || num.test($('#phone1').val())) {
-// 					$('#checkPhone').html('');
-// 				}
-// 			});
-// 			$('#phone2').on('change paste keyup', function() {
-// 				if(teuk.test($('#phone2').val()) || eng.test($('#phone2').val()) || kor.test($('#phone2').val())) {
-// 					$('#checkPhone').html('숫자로 입력하셔야 합니다.');
-// 					$('#checkPhone').css('color', 'red');
-// 				} else if($('#phone2').val().length == 0 || num.test($('#phone2').val())) {
-// 					$('#checkPhone').html('');
-// 				}
-// 			});
-// 			$('#phone3').on('change paste keyup', function() {
-// 				if(teuk.test($('#phone3').val()) || eng.test($('#phone3').val()) || kor.test($('#phone3').val())) {
-// 					$('#checkPhone').html('숫자로 입력하셔야 합니다.');
-// 					$('#checkPhone').css('color', 'red');
-// 				} else if($('#phone3').val().length == 0 || num.test($('#phone3').val())) {
-// 					$('#checkPhone').html('');
-// 				}
-// 			});
-			
-			$('#phone').on('change paste onblur', function() {
-				if(teuk.test($('#phone').val()) || eng.test($('#phone').val()) || kor.test($('#phone').val())) {
-					$('#checkPhone').html('폰번호는 - 제외한 숫자로만 입력하셔야 합니다.');
+			$('#phone').on('change paste onblur focus', function() {
+				if(isNaN($(this).val())) {
+					$('#checkPhone').html('폰 번호는 - 제외한 숫자로만 입력하셔야 합니다.');
 					$('#checkPhone').css('color', 'red');
-				} else if($('#phone').val().length == 0 || num.test($('#phone').val())) {
+				} else if($(this).val().length == 0 || !isNaN($(this).val())) {
 					$('#checkPhone').html('');
-				}
-			});
-			$('#email1').on('change paste keyup', function() {
-				if(teuk2.test($('#email1').val()) || kor.test($('#email1').val())) {
-					$('#checkEmail').html('-_. 외의 특수문자와 한글은 사용할 수 없습니다.');
-					$('#checkEmail').css('color', 'red');
-				} else if($('#email1').val().length == 0 || !teuk2.test($('#email1').val()) || eng.test($('#email1').val()) || num.test($('#email1').val())) {
-					$('#checkEmail').html('');
-				}
-			});
-			$('#email2').on('change paste keyup', function() {
-				if(teuk3.test($('#email2').val()) || kor.test($('#email2').val()) || num.test($('#email2').val())) {
-					$('#checkEmail').html(' . 외의 특수문자와 한글, 숫자는 사용할 수 없습니다.');
-					$('#checkEmail').css('color', 'red');
-				} else if($('#email2').val().length == 0 || !teuk3.test($('#email2').val()) || eng.test($('#email2').val())) {
-					$('#checkEmail').html('');
 				}
 			});
 		});
@@ -311,33 +263,6 @@
 				$(this).val(piece);
 			}
 		});
-// 		$('#phone1').on('keyup', function() {
-// 			var input = $(this).val();
-// 			var inputLength = input.length;
-			
-// 			if(inputLength > 3) {
-// 				var piece = input.substring(0, 3);
-// 				$(this).val(piece);
-// 			}
-// 		});
-// 		$('#phone2').on('keyup', function() {
-// 			var input = $(this).val();
-// 			var inputLength = input.length;
-			
-// 			if(inputLength > 4) {
-// 				var piece = input.substring(0, 4);
-// 				$(this).val(piece);
-// 			}
-// 		});
-// 		$('#phone3').on('keyup', function() {
-// 			var input = $(this).val();
-// 			var inputLength = input.length;
-			
-// 			if(inputLength > 4) {
-// 				var piece = input.substring(0, 4);
-// 				$(this).val(piece);
-// 			}
-// 		});
 		$('#userPwd').on('keyup', function() {
 			var input = $(this).val();
 			var inputLength = input.length;
@@ -400,18 +325,6 @@
 		function checkValue() {
 			var form = document.updateForm;
 			
-			var num = /[0-9]/gi;
-			var kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi;
-			var eng = /[a-zA-Z]/gi;
-			var teuk = /[`~!@#$%^&*()_|+\-=?;:,.<>\{\}\[\]\\\/ 	]/gi;
-			var teuk2 = /[`~!@#$%^&*()|+\=?;:,<>\{\}\[\]\\\/ 	]/gi;
-			var teuk3 = /[`~!@#$%^&*()_|+\-=?;:,<>\{\}\[\]\\\/ 	]/gi;
-			var phone1 = document.getElementById('phone1');
-			var phone2 = document.getElementById('phone2');
-			var phone3 = document.getElementById('phone3');
-			var email1 = document.getElementById('email1');
-			var email2 = document.getElementById('email2');
-			
 			if(!form.userPwd.value) {
 				alert('비밀번호를 입력하세요');
 				form.userPwd.focus();
@@ -436,67 +349,18 @@
 	            alert("메일 주소를 입력하세요.");
 	            form.email2.focus();
 	            return false;
-// 			} else if(!form.phone1.value) {
-// 				alert("휴대폰 번호를 입력하세요.");
-// 				form.phone1.focus();
-// 				return false;
-// 			} else if(form.phone1.value.length < 3) {
-// 				alert("3자로 입력하세요.");
-// 				form.phone1.focus();
-// 				return false;
-// 			} else if(!form.phone2.value) {
-// 				alert("휴대폰 번호를 입력하세요.");
-// 				form.phone2.focus();
-// 				return false;
-// 			} else if(form.phone2.value.length < 4) {
-// 				alert("4자로 입력하세요.");
-// 				form.phone2.focus();
-// 				return false;
-// 			} else if(!form.phone3.value) {
-// 				alert("휴대폰 번호를 입력하세요.");
-// 				form.phone3.focus();
-// 				return false;
-// 			} else if(form.phone3.value.length < 4) {
-// 				alert("4자로 입력하세요.");
-// 				form.phone3.focus();
-// 				return false;
 			} else if(!form.phone.value) {
 				alert("휴대폰 번호를 입력하세요.");
+				form.phone.focus();
+				return false;
+			} else if(isNaN(form.phone.value)) {
+				alert("휴대폰 번호는 - 제외한 숫자로 입력하셔야 합니다.");
+				phone.value = '';
 				form.phone.focus();
 				return false;
 			} else if(form.phone.value.length < 11) {
 				alert("휴대폰 번호를 11자로 입력하세요.");
 				form.phone.focus();
-				return false;
-			}
-			
-// 			if(teuk.test(phone1.value) || eng.test(phone1.value) ||	kor.test(phone1.value)) {
-// 				alert('숫자로 입력하셔야 합니다.');
-// 				phone1.value = '';
-// 				phone1.focus();
-// 				return false;
-// 			} else if(teuk.test(phone2.value) || eng.test(phone2.value) || kor.test(phone2.value)) {
-// 				alert('숫자로 입력하셔야 합니다.');
-// 				phone2.value = '';
-// 				phone2.focus();
-// 				return false;
-// 			} else if(teuk.test(phone3.value) || eng.test(phone3.value) || kor.test(phone3.value)) {
-// 				alert('숫자로 입력하셔야 합니다.');
-// 				phone3.value = '';
-// 				phone3.focus();
-// 				return false;
-			if(teuk.test(phone.value) || eng.test(phone.value) ||	kor.test(phone.value)) {
-				alert('휴대폰 번호는 - 제외한 숫자로 입력하셔야 합니다.');
-				phone.value = '';
-				phone.focus();
-				return false;
-			} else if(teuk2.test(email1.value) || kor.test(email1.value)) {
-				alert('-_.외의 특수문자와 한글은 사용할 수 없습니다.');
-				email1.focus();
-				return false;
-			} else if(teuk3.test(email2.value) || kor.test(email1.value) || num.test(email2.value)) {
-				alert('.외의 특수문자와 한글, 숫자는 사용할 수 없습니다.');
-				email2.focus();
 				return false;
 			} else if($('#ceNum').val() == '' || $('#ceNum').val().length == 0) {
 				alert('이메일 인증 해주세요.');

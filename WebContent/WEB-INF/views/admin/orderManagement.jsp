@@ -29,9 +29,14 @@
 	.order_search_select {display:inline-block; height: 30px; text-align: center; vertical-align: middle; margin: 60px 5px 0px 5px;}
 	.order_search_input {display:inline-block; height: 30px; text-align: center; vertical-align: middle; margin: 60px 5px 0px 5px;}
 	.order_search_button {display:inline-block; height: 30px; text-align: center; vertical-align: middle; margin: 60px 0px 0px 5px;}
+	.order_allList_button {display:inline-block; height: 30px; text-align: center; vertical-align: middle; margin: 60px 0px 0px 5px;}
 	select {width: 120px; height: 30px; border-radius: 0px; border: 1px solid #A4A4A4; margin: 0px; vertical-align: middle;}
 	#order_search {border: 1px solid #a4a4a4; height: 30px; padding: 0px 5px 0px 5px;}
 	#search_btn {
+		width: 80px; height: 30px; background: #5E5E5E; color: white;
+		border: 1px solid #5E5E5E; border-radius: 5px; font-weight: bold;
+	}
+	#allList_btn {
 		width: 80px; height: 30px; background: #5E5E5E; color: white;
 		border: 1px solid #5E5E5E; border-radius: 5px; font-weight: bold;
 	}
@@ -102,6 +107,9 @@
 				 </div><!--
 				 --><div class="order_search_button">
 				 	<input type="submit" id="search_btn" value="검색" onclick="user_search();">
+				 </div><!--
+				 --><div class="order_allList_button">
+				 	<input type="button" id="allList_btn" value="전체목록">
 				 </div>
 			</div>
 			<div class="layout" id="space5"></div>
@@ -302,6 +310,10 @@
 						return true;
 					}
 				}
+			});
+			
+			$('#allList_btn').click(function() {
+				location.href='<%=request.getContextPath() %>/orderManagement.no';
 			});
 		</script>
 		
