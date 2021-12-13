@@ -131,6 +131,14 @@ p {
 	margin: 60px 0px 0px 5px;
 }
 
+.user_allList_button {
+	display: inline-block;
+	height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 60px 0px 0px 5px;
+}
+
 select {
 	width: 120px;
 	height: 30px;
@@ -146,6 +154,16 @@ select {
 }
 
 #search_btn {
+	width: 80px;
+	height: 30px;
+	background: #5E5E5E;
+	color: white;
+	border: 1px solid #5E5E5E;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+#allList_btn {
 	width: 80px;
 	height: 30px;
 	background: #5E5E5E;
@@ -235,7 +253,8 @@ input[type="checkbox"] {
 	<% } else { %>
 		<!-- 회원 목록 -->
 		<div class="layout" id="space"></div>
-		<div class="layout" id="subject">회원 목록 조회</div>
+		<div class="layout" id="subject">회원 목록 조회
+		</div>
 		<div class="layout" id="line2"></div>
 		<div class="layout" id="space4"></div>
 		<form action="<%= request.getContextPath() %>/searchUserManagement.no"
@@ -264,6 +283,9 @@ input[type="checkbox"] {
 					 -->
 				<div class="user_search_button">
 					<input type="submit" id="search_btn" value="검색">
+				</div>
+				<div class="user_allList_button">
+					<input type="button" id="allList_btn" value="전체목록">
 				</div>
 			</div>
 			<div class="layout" id="space5"></div>
@@ -400,7 +422,7 @@ input[type="checkbox"] {
 			</script>
 		<% } %>
 		</div>
-	
+		
 		<script>
 				var all = document.getElementById('all');
 				var user = document.getElementsByName('user');
@@ -459,6 +481,10 @@ input[type="checkbox"] {
 						}
 					}
 				}
+				
+				$('#allList_btn').click(function() {
+					location.href='<%=request.getContextPath() %>/userManagement.no';
+				});
 			</script>
 	
 		<div class="layout" id="line"></div>
