@@ -25,10 +25,10 @@ public class OrderListService {
 	
 }
 
-	public int deleteOrderList(String orderNo) {
+	public int deleteOrderList(String orderNo, String userId) {
 		Connection conn = getConnection();
 		
-		int result = oDAO.deleteOrderList(orderNo, conn);
+		int result = oDAO.deleteOrderList(orderNo, conn, userId);
 		
 		if(result > 0) {
 			commit(conn);

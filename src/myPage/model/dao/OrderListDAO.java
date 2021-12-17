@@ -79,7 +79,7 @@ public class OrderListDAO {
 		return list;
 	}
 
-	public int deleteOrderList(String orderNo, Connection conn) {
+	public int deleteOrderList(String orderNo, Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -88,6 +88,7 @@ public class OrderListDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, orderNo);
+			pstmt.setString(2, userId);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -195,15 +196,16 @@ public class OrderListDAO {
 
 
 	public int selectOListCount1(Connection conn, String userId) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("selectOListCount1");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
@@ -211,22 +213,23 @@ public class OrderListDAO {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return result;
 	}
 	
 	public int selectOListCount2(Connection conn, String userId) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("selectOListCount2");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
@@ -234,22 +237,23 @@ public class OrderListDAO {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return result;
 	}
 	
 	public int selectOListCount3(Connection conn, String userId) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("selectOListCount3");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
@@ -257,22 +261,23 @@ public class OrderListDAO {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return result;
 	}
 	
 	public int selectOListCount4(Connection conn, String userId) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("selectOListCount4");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
@@ -280,22 +285,22 @@ public class OrderListDAO {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return result;
 	}
-	
 	public int selectOListCount5(Connection conn, String userId) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("selectOListCount5");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
@@ -303,7 +308,7 @@ public class OrderListDAO {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return result;

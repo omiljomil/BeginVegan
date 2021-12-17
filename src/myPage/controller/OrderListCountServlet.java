@@ -10,19 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
 import myPage.model.service.OrderListService;
-import paiement.model.vo.Paiement;
 
 /**
- * Servlet implementation class DeleteOrderList
+ * Servlet implementation class OrderCountServlet
  */
-@WebServlet("/deleteOrderList.me")
-public class DeleteOrderList extends HttpServlet {
+@WebServlet("/orderCountList.me")
+public class OrderListCountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteOrderList() {
+    public OrderListCountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +31,11 @@ public class DeleteOrderList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String orderNo = request.getParameter("orderNo");
-		
-		
 		
 		HttpSession session = request.getSession();
 		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int result = new OrderListService().deleteOrderList(orderNo, userId);
+		int result = new OrderListService().selectOListCount(userId);
 		
 	}
 

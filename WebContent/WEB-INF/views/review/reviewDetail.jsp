@@ -12,6 +12,11 @@ String userName=r.getUserName();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,11 +32,19 @@ section{
 }
 body {
   margin: 0 auto;
-  font-family: sans-serif;
+   font-family: 'Black Han Sans', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 }
-#review-title {
+.review-title {
   margin-left: 140px;
-  font-size: 70px;
+  font-size: 30px;
+  font-family: 'Black Han Sans', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+}
+#review{
+  font-size: 30px;
+  font-family: 'Black Han Sans', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 }
 
 #route {
@@ -217,7 +230,8 @@ font-weight:600;
     <%@ include file = "../common/header.jsp" %>     
     <section>
         <div id="review">
-                <span id="review-title">상품후기</span>
+                <div class="review-title" style="font-size: 30px;">상품후기</div>
+                
                 <div id="route">
                     <span><a href='<%=request.getContextPath() %>/'>홈</a></span>
                     <span>-></span>

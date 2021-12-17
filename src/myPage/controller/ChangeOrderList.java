@@ -1,6 +1,8 @@
 package myPage.controller;
-
+  
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +12,22 @@ import javax.servlet.http.HttpSession;
 
 import User.model.vo.User;
 import myPage.model.service.OrderListService;
+import myPage.model.vo.PageInfo;
 import paiement.model.vo.Paiement;
+import product.model.service.ProductService;
+import product.model.vo.Photo;
 
 /**
- * Servlet implementation class DeleteOrderList
+ * Servlet implementation class ChangeOrderList
  */
-@WebServlet("/deleteOrderList.me")
-public class DeleteOrderList extends HttpServlet {
+@WebServlet("/changeOrderList.me")
+public class ChangeOrderList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteOrderList() {
+    public ChangeOrderList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,16 +36,15 @@ public class DeleteOrderList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String orderNo = request.getParameter("orderNo");
+
+		request.getRequestDispatcher("WEB-INF/views/myPage/changeOrderList.jsp").forward(request, response);
 		
 		
 		
-		HttpSession session = request.getSession();
-		String userId = ((User)session.getAttribute("loginUser")).getUserId();
 		
-		int result = new OrderListService().deleteOrderList(orderNo, userId);
 		
+		
+	
 	}
 
 	/**

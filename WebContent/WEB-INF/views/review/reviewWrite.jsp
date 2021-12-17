@@ -13,6 +13,11 @@ User user=(User)request.getSession().getAttribute("loginUser");
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -39,8 +44,10 @@ section {
 }
 
 #review-title {
-	margin-left: 140px;
-	font-size: 70px;
+	margin-left: 150px;
+	font-size: 50px;
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 #route {
@@ -48,8 +55,8 @@ section {
 	display: flex;
 	justify-content: right;
 	bottom: 100px;
-	right: 180px;
-	font-size: 32px;
+	right: 480px;
+	font-size: 20px;
 	color:gray;
 }
 
@@ -84,7 +91,8 @@ section {
 
 #review-table th {
 	height: 65px;
-	border: 1px solid gray;
+	border: 1px solid #E2E2E2;
+	border-radius: 3px;
 	text-align: center;
 }
 
@@ -92,6 +100,8 @@ section {
     width:300px;
 	height: 60px;
 	border: none;
+	border-radius: 3px;
+	margin-right: 370px;
 }
 
 
@@ -125,38 +135,75 @@ section {
 	border: 1px solid gray;
 }
 
-#go-button {
-	position: absolute;
-	width: 80px;
-	left: 1200px;
-	top: 1400px;
-	text-decoration: none;
-	font-size: 18px;
-	font-weight: 800;
-	color: black;
-}
-
 #go-button:hover {
 	color: yellowgreen;
 }
 
-#input-cancle, #input-save {
+#input-cancle, #input-save, #go-button {
 	border: 1px solid gray;
 	position: relative;
-	left: 540px;
+	left: 480px;
 	top: 750px;
-	margin-right: 60px;
-	width: 130px;
+	margin-right: 30px;
+	margin-bottom: 50px;
+	width: 100px;
 	height: 50px;
 	font-weight: 900;
 }
 
+#go-button{
+	box-shadow: 3px 4px 0px 0px #3e7327;
+		background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+		background: rgb(60, 127, 68);
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border:1px solid #4b8f29;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size: 15px;
+		padding:6px 10px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #5b8a3c;
+}
+
 #input-cancle {
-	background-color: darkgrey;
+	box-shadow: 3px 4px 0px 0px #3e7327;
+		background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+		background-color:#77b55a;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border:1px solid #4b8f29;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size: 15px;
+		padding:6px 10px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #5b8a3c;
 }
 
 #input-save {
-	background-color: greenyellow;
+	box-shadow: 3px 4px 0px 0px #3e7327;
+		background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+		background: rgb(60, 127, 68);
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border:1px solid #4b8f29;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size: 15px;
+		padding:6px 10px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #5b8a3c;
+}
+.Btn{
+	padding-bottom: 50px;
+	margin-bottom: 50px;
 }
 
 #fileArea {
@@ -179,9 +226,9 @@ section {
 		<div id="review">
 			<span id="review-title">상품후기</span>
 			<div id="route">
-				<span id="home"><a href="#">홈</a></span> <span>-></span> <span
-					id="community"><a href="#">커뮤니티</a></span> <span>-></span> <span
-					id="reviewList"><a href="#">상품후기</a></span>
+				<span id="home" ><a href="#" style="font-size: 22px;">홈</a></span> <span>&nbsp;&nbsp;&#11166;&nbsp;&nbsp;</span> <span
+					id="community" ><a href="#"  style="font-size: 22px;">커뮤니티</a></span> <span>&nbsp;&nbsp;&#11166;&nbsp;&nbsp;</span> <span
+					id="reviewList" ><a href="#"  style="font-size: 22px;">상품 후기</a></span>
 			</div>
 		</div>
 		<br>
@@ -195,12 +242,12 @@ section {
 					<tr>
 					   <th colspan="2" rowspan="2" ><img id="titleImg" width="180" height="199"></th>
 						<th width="100">제목</th>
-						<th width="330px"><input type="text" id="review-text-title"  name="title"
+						<th width="720px"><input type="text" id="review-text-title"  name="title"
 							placeholder="제목 입력" maxlength="15"></th>
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<th><%=loginUser.getUserName() %><input type="hidden"
+						<th style="text-align: left; text-indent: 13px;"><%=loginUser.getUserName() %><input type="hidden"
 							id="review-text-title" placeholder="이름 입력" name="name"
 							value="<%=user.getUserName() %>"></th>
 					</tr>
@@ -249,9 +296,12 @@ section {
 						}
 					}
 			</script>
+			<div class="Btn">
 			<button type="button" id="go-button">목록</button>
-			<input type="button" value="취소" id="input-cancle"> <input
+			<input
 				type="button" value="저장" id="input-save">
+			<input type="button" value="취소" id="input-cancle"> 
+			</div>
 		</form>
 	</section>
 
